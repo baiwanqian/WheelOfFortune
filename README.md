@@ -1,4 +1,4 @@
-# {PROJECT NAME} by Wheel of Fortune
+# {PROJECT NAME} by WheelofFortune
 
 ## Roster/Roles:
 Project Manager: Christine Chen  
