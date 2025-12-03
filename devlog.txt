@@ -4,10 +4,17 @@
 firstL -- TIMESTAMP\n ( e.g.: topherM -- 1999-12-31 23:59 )
 - Explain changes made and any errors/bugs discovered or created
 
-christineC, naomiK -- 2025-12-3 8:00
+christineC, naomiK -- 2025-12-2 23:15
 [INITIAL DD REVIEW]
+Feedback Summary
+  - Confusing component map
+  - FEF not present in Program Components section (present in individual section)
+  - Wrong names and missing APIs
+
+christineC, naomiK -- 2025-12-3 8:00
 Summary of DD Changes:
   - Modified component map's color coding to accurately depict front-end and back-end
   - Simplified component map by reducing and combining parts
   - Added FEF to Program Components
   - Clarified Front-End Framework section to better explain how Bootstrap will be used
+  - Ensured all APIs are present in KB and included usages for each one
