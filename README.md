@@ -2,9 +2,9 @@
 
 ## Roster/Roles:
 Project Manager: Christine Chen  
-...: Naomi Kurian  
-...: Ethan Cheung  
-...: Owen Zeng
+Dev1: Naomi Kurian  
+Dev2: Ethan Cheung  
+Dev3: Owen Zeng
 
 ## Description of Website:
 

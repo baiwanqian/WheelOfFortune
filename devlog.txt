@@ -1,0 +1,10 @@
+(Reminder for devlog formatting, remove later):
+
+- Each entry should begin with the following format:
+firstL -- TIMESTAMP\n ( e.g.: topherM -- 1999-12-31 23:59 )
+- Explain changes made and any errors/bugs discovered or created
+
+christineC, naomiK -- 2025-12-2 19:59
+[INITIAL DD REVIEW]
+Summary of DD Changes:
+  - Modified component map to
