@@ -1,3 +1,4 @@
+
 import sqlite3
 import random
 from flask import Flask, render_template
@@ -29,7 +30,17 @@ def homepage():
 @app.route('/login', methods=["GET", "POST"])
 def login():
     if request.method == 'POST':
-        usernames = [row[0] for row in fetch("user_base", "TRUE", "username")]
+        usernames = [row[0] for row in fetch("users", "TRUE", "username")]
+        if not request.form['username'] in usernames:
+                return render_template("login.html",error="Wrong &nbsp username &nbsp or &nbsp password!<br><br>")
+            elif request.form['password'] != fetch("users", "username = ?", "password", (request.form['username'],))[0][0]:
+                    return render_template("login.html",error="Wrong &nbsp username &nbsp or &nbsp password!<br><br>")
+            else:
+                session["user_id"] = fetch("users", "username = ?", "rowid", (request.form['username'],))[0]
+    if 'user_id' in session:
+        return redirect("/")
+    session.clear()
+    return render_template("login.html")
 
 
 @app.route('/logout', methods=["GET", "POST"])
@@ -37,7 +48,10 @@ def logout():
     session.pop("u_rowid", None)
     return redirect("/login")
 
-
+@app.route('/register', methods=["GET", "POST"])
+def register():
+    session
+    return 
 
 
 
