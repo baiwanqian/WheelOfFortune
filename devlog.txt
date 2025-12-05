@@ -4,7 +4,7 @@ ethanC -- 2025-11-26 11:00
 
 ethanC -- 2025-12-01 11:00
 - creation of team flag
-- rename team flag 
+- rename team flag
 
 christineC, naomiK -- 2025-12-02 23:15
 [INITIAL DD REVIEW]
@@ -32,7 +32,10 @@ naomiK -- 2025-12-05 3:00
 - finished login/register functions
 - added register, home, and login html files
 
-ethanC -- 2025-12-05 11:14 
+ethanC -- 2025-12-05 11:14
 - add os library for background photo
 - remove extra template folder
 
+owenZ -- 2025-12-05 11:46
+- working on wordle
+- added route to wordle page and html

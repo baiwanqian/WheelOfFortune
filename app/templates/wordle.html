@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+
+  </head>
+
+  <nav>
+
+  </nav>
+
+
+    <div class="main">
+      <form method='POST' action="/register">
+        <h1> Play &nbsp Wordle  </h1>
+        <p>
+          {{ error|safe }}
+          USERNAME:
+        </p>
+        <input type="text" name="word" maxLength="5" required>
+        <br>
+
+        <input type="submit" value="Register" id= "sub1" name="sub1">
+      </form>
+    </div>
+  </body>
+
+  <footer>
+
+  </footer>
+
+</html>

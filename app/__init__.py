@@ -73,6 +73,12 @@ def register():
     return render_template("register.html")
 
 
+@app.route('/wordle', methods=["GET", "POST"])
+def wordlePage():
+    if not 'user_id' in session:
+        return redirect("/login")
+    if request.method = "POST":
+        word_input = 
 
 
 def fetch(table, criteria, data, params = ()):
