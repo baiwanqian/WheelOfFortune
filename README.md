@@ -10,7 +10,7 @@ Dev3: Owen Zeng
 A collection of various mini-games where users play to earn XP and collect virtual creatures. Creatures hatch from eggs obtained from the user leveling up and can also be leveled up themselves.
 
 ### Install Guide:
-1. **Clone the repository**: `git@github.com:baiwanqian/WheelOfFortune.git`
+1. **Clone the repository**: `git clone git@github.com:baiwanqian/WheelOfFortune.git`
 2. **Navigate into directory**: `cd WheelOfFortune`
 3. **Create virtual environment**: `python3 -m venv venv`
 4. **Activate virtual environment**:
