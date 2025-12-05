@@ -25,7 +25,7 @@ db.close()
 # LANDING PAGE
 @app.route('/', methods=["GET", "POST"])
 def homepage():
-    if 'user_id' not in session:
+    if not 'user_id' in session:
         return redirect("/login")
     return render_template("home.html")
 
@@ -39,7 +39,7 @@ def login():
         elif request.form['password'] != fetch("users", "username = ?", "password", (request.form['username'],))[0][0]:
                 return render_template("login.html",error="Wrong &nbsp username &nbsp or &nbsp password!<br><br>")
         else:
-            session["user_id"] = fetch("users", "username = ?", "rowid", (request.form['username'],))[0]
+            session["user_id"] = fetch("users", "username = ?", "rowid", (request.form['username'],))[0][0]
     if 'user_id' in session:
         return redirect("/")
     session.clear()
@@ -48,7 +48,7 @@ def login():
 
 @app.route('/logout', methods=["GET", "POST"])
 def logout():
-    session.pop("u_rowid", None)
+    session.pop("user_id", None)
     return redirect("/login")
 
 @app.route('/register', methods=["GET", "POST"])
