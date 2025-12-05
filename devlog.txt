@@ -27,3 +27,8 @@ ethanC -- 2025-12-03 11:00
 naomiK -- 2025-12-05 3:00
 - finished login/register functions
 - added register, home, and login html files
+
+ethanC -- 2025-12-05 11:14 
+- add os library for background photo
+- remove extra template folder
+
