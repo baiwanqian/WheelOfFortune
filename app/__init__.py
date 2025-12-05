@@ -3,6 +3,7 @@ import sqlite3
 import random
 from flask import Flask, render_template
 from flask import session, request, redirect
+import os
 
 # Flask
 app = Flask(__name__)
@@ -92,4 +93,3 @@ def fetch(table, criteria, data, params = ()):
 if __name__=='__main__':
     app.debug = True
     app.run()
-
