@@ -21,5 +21,9 @@ Summary of DD Changes:
   - Clarified Front-End Framework section to better explain how Bootstrap will be used
   - Ensured all APIs are present in KB and included usages for each one
 
-echeung60 -- 2025-12-03 11:00
+ethanC -- 2025-12-03 11:00
 - removal of header in devlog
+
+naomiK -- 2025-12-05 3:00
+- finished login/register functions
+- added register, home, and login html files
