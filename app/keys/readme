@@ -1,0 +1,11 @@
+National Weather Service API
+- Doesn't require a key, but requires a User-Agent header.
+
+Free Recipe API
+- Doesn't require key generation, provides test key.
+
+Booze API
+- Doesn't require a key.
+
+Random Word API
+- Doesn't require a key.
