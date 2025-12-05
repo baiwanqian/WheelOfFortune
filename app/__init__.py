@@ -5,6 +5,7 @@ from flask import Flask, render_template
 from flask import session, request, redirect
 import os
 
+
 # Flask
 app = Flask(__name__)
 app.secret_key = 'bdzfgetdzhezt'
@@ -91,8 +92,41 @@ def fetch(table, criteria, data, params = ()):
     db.close()
     return data
 
+headers = {'IDontKnowWhatTheNameIs' : 'WheelOfFortune'}
 
+def currentWeather(lat, lon):
+    try:
+        #gets data at lat and lon coordinates
+        endpoint = f'https://api.weather.gov/points/{lat},{lon}'
+        print(lat)
+        print(lon)
+        print(endpoint)
+        response = requests.get(endpoint, headers = headers)
+        data = response.json()
 
+        #gets all links about at pt (hourly daily etc)
+        links = data["forecastGridData"]
+        print(links)
+
+        #gets link relating to daily forecast at pt
+        forecast_link = data["properties"]["forecast"]
+        print(forecast_link)
+
+        #retrieves forecast data at coordinates
+        forecast_response = requests.get(forecast_link, headers = headers)
+        forecast_data = forecast_response.json()
+        print(forecast_data)
+
+        #gets most recently updated forecast for next period (for example: Monday, Monday Night, Tuesday, etc.)
+        forecast = forecast_data["properties"]["periods"][0]["shortForecast"]
+        print(forecast)
+
+def bg_file():
+
+    basepath = './static/background_images'
+    print(os.listdir(basepath))
+    image = random.choice(os.listdir(basepath))
+    print(image)
 
 
 # Flask
