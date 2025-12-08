@@ -3,6 +3,7 @@ import random
 from flask import Flask, render_template
 from flask import session, request, redirect
 import os
+import spellingBee
 #import requests
 
 # Flask
@@ -46,6 +47,11 @@ c.execute("""
 
 db.commit()
 db.close()
+
+# Global variables for spelling bee
+word = ""
+goodWords = []
+lttrs = spellingBee.randNums()
 
 # HTML PAGES
 # LANDING PAGE
@@ -202,14 +208,22 @@ def connectionsPage():
 def spellingBeePage():
     if not 'user_id' in session:
         return redirect("/login")
-    word = ""
-    lttrs = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
+    global word, goodWords, ltters
+    error = ""
+    #lttrs = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
     if request.method == "POST":
         if list(request.form.keys()) != ["sub"]:
             print(list(request.form.keys()))
             word += lttrs[int(list(request.form.keys())[0])]
-        pass #temp placeholder so it runs)
-    return render_template("spelling.html", letters = lttrs, w = word)
+        else:
+            if (spellingBee.checkword(word)[0] == True):
+                goodWords += [word]
+            elif spellingBee.checkword(word)[1] == False:
+                error = "There was an error with the API"
+            else:
+                error = "Word does not exist"
+            word = ""
+    return render_template("spelling.html", letters = lttrs, w = word, error = error, words = goodWords)
 
 @app.route('/ingredients', methods=["GET", "POST"])
 def ingredientsGuesserPage():

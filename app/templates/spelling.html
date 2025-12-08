@@ -19,6 +19,8 @@
         <h1> Play Spelling Bee!!!  </h1>
         <p>
           Be careful! You can only submit three scores per day!
+        </p>
+        <p>
           {{ error|safe }}
         </p>
         {% for i in range(7) %}
@@ -28,6 +30,13 @@
         <br>
         <h2> {{ w }}</h2>
         <input type="submit" value="Submit" id= "sub" name="sub">
+
+        <p>
+          {% for wrd in words %}
+            {{ wrd }}, 
+          {% endfor %}
+        </p>
+
       </form>
     </div>
 

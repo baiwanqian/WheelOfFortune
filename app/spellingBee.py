@@ -18,6 +18,9 @@ def randNums():
     letters = []
     for i in range(7):
         letters += [chr(random.randint(65, 90))] #ASCII values for A-Z
+    vowels = ['A', 'E', 'I', 'O', 'U']
+    for i in range(2):
+        letters[random.randint(0, 6)] = vowels[random.randint(0, 4)]
     return letters
 
 def checkword(word):
@@ -42,5 +45,5 @@ def checkword(word):
     return [exists, True]
 
 
-print(checkword("cat"))
-print(randNums())
+#print(checkword("cat"))
+#print(randNums())
