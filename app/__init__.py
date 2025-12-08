@@ -12,7 +12,14 @@ app.secret_key = 'bdzfgetdzhezt'
 # SQLite
 DB_FILE = "data.db"
 
-db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
+# allows sqlite rows to be accessed like dictionaries instead of tuples
+def get_db():
+    conn = sqlite3.connect(DB_FILE)
+    conn.row_factory = sqlite3.Row
+    return conn
+
+# database creation
+db = get_db()
 c = db.cursor()
 
 c.execute("""
@@ -70,6 +77,7 @@ def logout():
     session.pop("user_id", None)
     return redirect("/login")
 
+
 @app.route('/register', methods=["GET", "POST"])
 def register():
     if 'user_id' in session:
@@ -92,6 +100,31 @@ def register():
             db.close()
             return redirect("/")
     return render_template("register.html")
+
+
+@app.route('/profile')
+def profile():
+    if 'user_id' not in session:
+        return redirect("/login")
+
+    db = get_db()
+    c = db.cursor()
+
+    c.execute("SELECT * FROM users WHERE user_id = ?", (session["user_id"],))
+    user = c.fetchone()
+    c.execute("SELECT * FROM creatures WHERE user_id = ?", (session["user_id"],))
+    creatures = c.fetchall()
+
+    db.close()
+
+    return render_template(
+        "profile.html",
+        username = user["username"],
+        xp = user["xp"],
+        level = user["level"],
+        creatures = creatures
+    )
+
 
 # <-------------------- MINIGAMES -------------------->
 @app.route('/wordle', methods=["GET", "POST"])

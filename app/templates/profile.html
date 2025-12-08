@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+    <title> Profile </title>
+  </head>
+
+  <body style="background-image: url({{bg_img_path}});">
+
+    <h1> Profile Page </h1>
+    <h3> {{ username }}'s Profile </h3>
+    <h5> Level: {{ level }} </h5>
+    <h5> Experience: {{ xp }} </h5>
+
+    {% for c in creatures %}
+      <p> {{ c["name"] }}: - Level {{ c["level"] }} -  Rarity {{ c["rarity"] }} </p>
+    {% endfor %}
+
+  </body>
+
+  <footer>
+  </footer>
+
+</html>
