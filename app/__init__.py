@@ -16,8 +16,27 @@ DB_FILE = "data.db"
 db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
 c = db.cursor()
 
-c.execute("CREATE TABLE IF NOT EXISTS users(user_id INTEGER PRIMARY KEY, username TEXT UNIQUE, password TEXT, exp INTEGER, level INTEGER)")
-c.execute("CREATE TABLE IF NOT EXISTS creatures(creature_id creature_id, user_id INTEGER, name TEXT, rarity TEXT, exp INTEGER, level INTEGER, image_path TEXT, status TEXT)")
+c.execute("""
+    CREATE TABLE IF NOT EXISTS users (
+    user_id INTEGER PRIMARY KEY,
+    username TEXT UNIQUE,
+    password TEXT,
+    xp INTEGER,
+    level INTEGER)
+    """);
+
+c.execute("""
+    CREATE TABLE IF NOT EXISTS creatures (
+    creature_id INTEGER PRIMARY KEY,
+    user_id INTEGER,
+    name TEXT,
+    rarity TEXT,
+    xp INTEGER,
+    level INTEGER,
+    image_path TEXT,
+    status TEXT,
+    FOREIGN KEY(user_id) REFERENCES users(user_id))
+    """);
 
 db.commit()
 db.close()
@@ -79,7 +98,7 @@ def wordlePage():
     if not 'user_id' in session:
         return redirect("/login")
     if request.method = "POST":
-        word_input = 
+        word_input =
 
 
 def fetch(table, criteria, data, params = ()):
