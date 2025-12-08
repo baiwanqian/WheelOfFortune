@@ -48,3 +48,9 @@ christineC -- 2025-12-08 4:40
 - Updated register to directly start user session
 - Created basic templates and routes for all mini-games and profile page
 - Added navbar
+
+naomiK -- 2025-12-08 17:00
+Spelling Bee:
+- edited spelling bee functions and html
+- added buttons for differnt letters and jinja to display corresponding values
+- implemented Merriam Webster API (Christine added key) to check for existence of a word
