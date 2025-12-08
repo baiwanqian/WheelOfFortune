@@ -30,7 +30,7 @@ def checkword(word):
             js = response.read()
         l = json.loads(js) #coverts to dict
         d = l[0] #list of dictionaries -- now dictionary
-        cant = ["abbreviation", "geographical name", "trademark", "biographical name", "symbol", "slang"] #words that eist but don't meet requirements for game
+        cant = ["abbreviation", "combining form", "geographical name", "trademark", "biographical name", "symbol", "slang"] #words that eist but don't meet requirements for game
         if "meta" in d and "fl" in d: #"meta" is to check it's not a list of suggested words
             exists = True
             for typ in cant: 
