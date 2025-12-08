@@ -88,7 +88,10 @@ def register():
             u_id = c.fetchall()[0][0]
             c.execute("INSERT INTO users VALUES (?, ?, ?, ?, ?)",(u_id, request.form['username'], request.form['password'], 0, 0,))
             db.commit()
+            c.execute("SELECT user_id FROM users WHERE username = ?", (request.form['username'],))
+            session["user_id"] = c.fetchone()[0]
             db.close()
+            return redirect("/")
     return render_template("register.html")
 
 
