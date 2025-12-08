@@ -1,9 +1,9 @@
-
 import sqlite3
 import random
 from flask import Flask, render_template
 from flask import session, request, redirect
 import os
+import requests
 
 
 # Flask
@@ -41,7 +41,6 @@ c.execute("""
 db.commit()
 db.close()
 
-
 # HTML PAGES
 # LANDING PAGE
 @app.route('/', methods=["GET", "POST"])
@@ -60,7 +59,7 @@ def login():
         elif request.form['password'] != fetch("users", "username = ?", "password", (request.form['username'],))[0][0]:
                 return render_template("login.html",error="Wrong &nbsp username &nbsp or &nbsp password!<br><br>")
         else:
-            session["user_id"] = fetch("users", "username = ?", "rowid", (request.form['username'],))[0][0]
+            session["user_id"] = fetch("users", "username = ?", "user_id", (request.form['username'],))[0][0]
     if 'user_id' in session:
         return redirect("/")
     session.clear()
@@ -97,9 +96,10 @@ def register():
 def wordlePage():
     if not 'user_id' in session:
         return redirect("/login")
-    if request.method = "POST":
-        word_input =
-
+    if request.method == "POST":
+        #word_input =
+        pass #temp placeholder so it runs)
+    return render_template("wordle.html")
 
 def fetch(table, criteria, data, params = ()):
     db = sqlite3.connect(DB_FILE)
@@ -114,7 +114,7 @@ def fetch(table, criteria, data, params = ()):
 headers = {'IDontKnowWhatTheNameIs' : 'WheelOfFortune'}
 
 def currentWeather(lat, lon):
-    try:
+    #try:
         #gets data at lat and lon coordinates
         endpoint = f'https://api.weather.gov/points/{lat},{lon}'
         print(lat)
@@ -141,7 +141,6 @@ def currentWeather(lat, lon):
         print(forecast)
 
 def bg_file():
-
     basepath = './static/background_images'
     print(os.listdir(basepath))
     image = random.choice(os.listdir(basepath))
