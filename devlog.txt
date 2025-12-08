@@ -6,7 +6,7 @@ ethanC -- 2025-12-01 11:00
 - creation of team flag
 - rename team flag
 
-christineC, naomiK -- 2025-12-02 23:15
+christineC -- 2025-12-02 23:15
 [INITIAL DD REVIEW]
 Feedback Summary
   - Confusing component map
@@ -44,8 +44,7 @@ owenZ -- 2025-12-05 11:46
 - added route to wordle page and html
 
 christineC -- 2025-12-08 4:40
-Changes Made:
-  - Fixed bugs, imported request, and adjusted database logic
-  - Updated register to directly start user session
-  - Created basic templates and routes for all mini-games and profile page
-  - Added navbar
+- Fixed bugs, imported request, and adjusted database logic
+- Updated register to directly start user session
+- Created basic templates and routes for all mini-games and profile page
+- Added navbar
