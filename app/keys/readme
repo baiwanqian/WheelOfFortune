@@ -1,3 +1,6 @@
+Merriam Webster API
+- Requires a key.
+
 National Weather Service API
 - Doesn't require a key, but requires a User-Agent header.
 
@@ -9,3 +12,4 @@ Booze API
 
 Random Word API
 - Doesn't require a key.
+
