@@ -122,8 +122,61 @@ def profile():
         username = user["username"],
         xp = user["xp"],
         level = user["level"],
-        creatures = creatures
+        creatures = creatures,
+        background_img = bg_file
     )
+
+headers = {'IDontKnowWhatTheNameIs' : 'WheelOfFortune'}
+
+STUY_LAT = 40.7127
+STUY_LON = -74.0061
+
+def currentWeather():
+    #try:
+        #gets data at lat and lon coordinates
+        endpoint = f'https://api.weather.gov/points/{STUY_LAT},{STUY_LON}'
+        print(lat)
+        print(lon)
+        print(endpoint)
+        response = requests.get(endpoint, headers = headers)
+        data = response.json()
+
+        #gets all links about at pt (hourly daily etc)
+        links = data["forecastGridData"]
+        print(links)
+
+        #gets link relating to daily forecast at pt
+        forecast_link = data["properties"]["forecast"]
+        print(forecast_link)
+
+        #retrieves forecast data at coordinates
+        forecast_response = requests.get(forecast_link, headers = headers)
+        forecast_data = forecast_response.json()
+        print(forecast_data)
+
+        #gets most recently updated forecast for next period (for example: Monday, Monday Night, Tuesday, etc.)
+        forecast = forecast_data["properties"]["periods"][0]["shortForecast"]
+        print(forecast)
+
+        return forecast
+
+def bg_file():
+    basepath = './static/background_images'
+    print(os.listdir(basepath))
+
+    if "Sunny" in currentWeather() or "sunny" in currentWeather():
+        basepath = './static/background_images/sunny_weather'
+    if "Cloudy" in currentWeather() or "cloudy" in currentWeather():
+        basepath = './static/background_images/cloudy_weather'
+    if "Rainy" in currentWeather() or "rainy" in currentWeather():
+        basepath = './static/background_images/rainy_weather'
+    if "Snowy" in currentWeather() or "snowy" in currentWeather():
+        basepath = './static/background_images/snowy_weather'
+
+    image = random.choice(os.listdir(basepath))
+    print(image)
+
+    return image
 
 
 # <-------------------- MINIGAMES -------------------->
@@ -173,40 +226,7 @@ def fetch(table, criteria, data, params = ()):
     db.close()
     return data
 
-headers = {'IDontKnowWhatTheNameIs' : 'WheelOfFortune'}
 
-def currentWeather(lat, lon):
-    #try:
-        #gets data at lat and lon coordinates
-        endpoint = f'https://api.weather.gov/points/{lat},{lon}'
-        print(lat)
-        print(lon)
-        print(endpoint)
-        response = requests.get(endpoint, headers = headers)
-        data = response.json()
-
-        #gets all links about at pt (hourly daily etc)
-        links = data["forecastGridData"]
-        print(links)
-
-        #gets link relating to daily forecast at pt
-        forecast_link = data["properties"]["forecast"]
-        print(forecast_link)
-
-        #retrieves forecast data at coordinates
-        forecast_response = requests.get(forecast_link, headers = headers)
-        forecast_data = forecast_response.json()
-        print(forecast_data)
-
-        #gets most recently updated forecast for next period (for example: Monday, Monday Night, Tuesday, etc.)
-        forecast = forecast_data["properties"]["periods"][0]["shortForecast"]
-        print(forecast)
-
-def bg_file():
-    basepath = './static/background_images'
-    print(os.listdir(basepath))
-    image = random.choice(os.listdir(basepath))
-    print(image)
 
 
 # Flask
