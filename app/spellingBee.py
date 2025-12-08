@@ -17,18 +17,30 @@ def get_key():
 def randNums():
     letters = []
     for i in range(7):
-        letters += [chr(random.randint(65, 90))]
+        letters += [chr(random.randint(65, 90))] #ASCII values for A-Z
     return letters
 
 def checkword(word):
     key = get_key()
-    with urllib.request.urlopen(f'https://www.dictionaryapi.com/api/v3/references/collegiate/json/cat?key={key}') as response:
-        js = response.read()
-    l = json.loads(js) #coverts to dict
-    dict = l[0]
-    print(l)
+    try:
+        with urllib.request.urlopen(f'https://www.dictionaryapi.com/api/v3/references/collegiate/json/{word}?key={key}') as response:
+            js = response.read()
+        l = json.loads(js) #coverts to dict
+        d = l[0] #list of dictionaries -- now dictionary
+        cant = ["abbreviation", "geographical name", "trademark", "biographical name", "symbol", "slang"] #words that eist but don't meet requirements for game
+        if "meta" in d and "fl" in d: #"meta" is to check it's not a list of suggested words
+            exists = True
+            for typ in cant: 
+                if d["fl"] == typ: #"fl" specifies what type of work
+                    exists = False
+        else:
+            exists = False
+        #print(exists)
+    except Exception as e:
+        print("An error occurred")
+        return [False, False] #second value says if ran without error
+    return [exists, True]
 
-    return 1
 
-checkword(1)
+print(checkword("cat"))
 print(randNums())

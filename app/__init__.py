@@ -3,7 +3,7 @@ import random
 from flask import Flask, render_template
 from flask import session, request, redirect
 import os
-import requests
+#import requests
 
 # Flask
 app = Flask(__name__)
@@ -202,10 +202,14 @@ def connectionsPage():
 def spellingBeePage():
     if not 'user_id' in session:
         return redirect("/login")
+    word = ""
+    lttrs = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
     if request.method == "POST":
-        #word_input =
+        if list(request.form.keys()) != ["sub"]:
+            print(list(request.form.keys()))
+            word += lttrs[int(list(request.form.keys())[0])]
         pass #temp placeholder so it runs)
-    return render_template("spelling.html")
+    return render_template("spelling.html", letters = lttrs, w = word)
 
 @app.route('/ingredients', methods=["GET", "POST"])
 def ingredientsGuesserPage():

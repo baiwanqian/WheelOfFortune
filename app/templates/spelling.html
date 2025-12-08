@@ -15,16 +15,19 @@
     </nav>
 
     <div class="main">
-      <form method='POST' action="/register">
-        <h1> Play &nbsp Spelling Bee  </h1>
+      <form method='POST' action="/spelling">
+        <h1> Play Spelling Bee!!!  </h1>
         <p>
+          Be careful! You can only submit three scores per day!
           {{ error|safe }}
-          USERNAME:
         </p>
-        <input type="text" name="word" maxLength="5" required>
+        {% for i in range(7) %}
+          <input type="submit" value= '{{ letters[i] }}'  id= '{{ i }}' name= '{{ i }}'>
+        {% endfor %}
+        
         <br>
-
-        <input type="submit" value="Register" id= "sub1" name="sub1">
+        <h2> {{ w }}</h2>
+        <input type="submit" value="Submit" id= "sub" name="sub">
       </form>
     </div>
 
