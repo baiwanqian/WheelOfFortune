@@ -5,7 +5,6 @@ from flask import session, request, redirect
 import os
 import requests
 
-
 # Flask
 app = Flask(__name__)
 app.secret_key = 'bdzfgetdzhezt'
@@ -94,7 +93,7 @@ def register():
             return redirect("/")
     return render_template("register.html")
 
-
+# <-------------------- MINIGAMES -------------------->
 @app.route('/wordle', methods=["GET", "POST"])
 def wordlePage():
     if not 'user_id' in session:
@@ -103,6 +102,33 @@ def wordlePage():
         #word_input =
         pass #temp placeholder so it runs)
     return render_template("wordle.html")
+
+@app.route('/connections', methods=["GET", "POST"])
+def connectionsPage():
+    if not 'user_id' in session:
+        return redirect("/login")
+    if request.method == "POST":
+        #word_input =
+        pass #temp placeholder so it runs)
+    return render_template("connections.html")
+
+@app.route('/spelling', methods=["GET", "POST"])
+def spellingBeePage():
+    if not 'user_id' in session:
+        return redirect("/login")
+    if request.method == "POST":
+        #word_input =
+        pass #temp placeholder so it runs)
+    return render_template("spelling.html")
+
+@app.route('/ingredients', methods=["GET", "POST"])
+def ingredientsGuesserPage():
+    if not 'user_id' in session:
+        return redirect("/login")
+    if request.method == "POST":
+        #word_input =
+        pass #temp placeholder so it runs)
+    return render_template("ingredients.html")
 
 def fetch(table, criteria, data, params = ()):
     db = sqlite3.connect(DB_FILE)

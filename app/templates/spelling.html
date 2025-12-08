@@ -3,7 +3,7 @@
 <html>
 
   <head>
-    <title> Register </title>
+    <title> Spelling Bee </title>
   </head>
 
   <nav>
@@ -13,19 +13,14 @@
 
     <div class="main">
       <form method='POST' action="/register">
-        <h1> Create &nbsp an &nbsp Account </h1>
+        <h1> Play &nbsp Spelling Bee  </h1>
         <p>
           {{ error|safe }}
           USERNAME:
         </p>
-        <input type="text" name="username" required>
+        <input type="text" name="word" maxLength="5" required>
         <br>
-        <p> PASSWORD: </p>
-        <input type="password" name="password" required>
-        <br>
-        <p> CONFIRM &nbsp PASSWORD: </p>
-        <input type="password" name="confirm" required>
-        <br><br>
+
         <input type="submit" value="Register" id= "sub1" name="sub1">
       </form>
     </div>
