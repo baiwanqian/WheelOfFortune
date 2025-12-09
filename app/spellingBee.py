@@ -11,7 +11,7 @@ import json
 #make accepted words, check words
 
 def get_key():
-    with open("keys/key_MerriamWebster.txt", "r") as k:
+    with open("keys/key_MerriamWebsterDictionary.txt", "r") as k:
         return k.read().strip()
 
 def randNums():
@@ -31,9 +31,9 @@ def checkword(word):
         l = json.loads(js) #coverts to dict
         d = l[0] #list of dictionaries -- now dictionary
         cant = ["abbreviation", "combining form", "geographical name", "trademark", "biographical name", "symbol", "slang"] #words that eist but don't meet requirements for game
+        exists = True
+        short = False
         if "meta" in d and "fl" in d: #"meta" is to check it's not a list of suggested words
-            exists = True
-            short = False
             for typ in cant: 
                 if d["fl"] == typ: #"fl" specifies what type of work
                     exists = False

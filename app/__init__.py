@@ -212,10 +212,10 @@ def spellingBeePage():
     error = ""
     #lttrs = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
     if request.method == "POST":
-        if list(request.form.keys()) != ["sub"]:
+        if list(request.form.keys()) != ["sub"]: #if submitted a letter
             print(list(request.form.keys()))
             word += lttrs[int(list(request.form.keys())[0])]
-        else:
+        elif list(request.form.keys()) == ["sub"]: #if submitted a word -- not reloading
             truths = spellingBee.checkword(word)
             if (truths[0] == True and truths[2] == False):
                 goodWords += [word]
@@ -226,6 +226,7 @@ def spellingBeePage():
             else:
                 error = "Word is too short"
             word = ""
+  
     return render_template("spelling.html", letters = lttrs, w = word, error = error, words = goodWords, score = 5 * len(goodWords))
 
 @app.route('/ingredients', methods=["GET", "POST"])
