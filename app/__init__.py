@@ -234,7 +234,7 @@ def spellingBeePage():
                 error = "Word is too short"
             word = ""
   
-    return render_template("spelling.html", letters = lttrs, w = word, error = error, words = goodWords, score = 5 * len(goodWords))
+    return render_template("spellingBee.html", letters = lttrs, w = word, error = error, words = goodWords, score = 5 * len(goodWords))
 
 @app.route('/ingredients', methods=["GET", "POST"])
 def ingredientsGuesserPage():
