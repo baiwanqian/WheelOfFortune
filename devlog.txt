@@ -57,4 +57,9 @@ Spelling Bee:
 
 christineC -- 2025-12-09 7:20
 Connections
-  - Got key and wrote function to find synonyms based off a word
+  - Got key and wrote method to find synonyms based off words
+
+christineC -- 2025-12-09 11:30
+Connections + API Keys
+  - Add new key for Merriam Webster Thesaurus and modified existing key for Merriam Webster Dictionary
+  - Wrote method to find antonyms based off words
