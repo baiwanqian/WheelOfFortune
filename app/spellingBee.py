@@ -29,7 +29,7 @@ def checkword(word):
         with urllib.request.urlopen(f'https://www.dictionaryapi.com/api/v3/references/collegiate/json/{word}?key={key}') as response:
             js = response.read()
         l = json.loads(js) #coverts to dict
-        d = l[0] #list of dictionaries -- now dictionary
+        d = l[0] #list of dictionaries -- now dictionary THIS MIGHT BE PROBLEM EMPTY LIST
         cant = ["abbreviation", "combining form", "geographical name", "trademark", "biographical name", "symbol", "slang"] #words that eist but don't meet requirements for game
         exists = True
         short = False
