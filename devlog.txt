@@ -54,3 +54,7 @@ Spelling Bee:
 - edited spelling bee functions and html
 - added buttons for differnt letters and jinja to display corresponding values
 - implemented Merriam Webster API (Christine added key) to check for existence of a word
+
+christineC -- 2025-12-09 7:20
+Connections
+  - Got key and wrote function to find synonyms based off a word
