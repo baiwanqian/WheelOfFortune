@@ -15,7 +15,7 @@
     </nav>
 
     <div class="main">
-      <form method='POST' action="/spelling">
+      <form method='POST' action="/spellingBee">
         <h1> Play Spelling Bee!!!  </h1>
         <p>
           Be careful! You can only submit three scores per day!
@@ -26,14 +26,14 @@
         {% for i in range(7) %}
           <input type="submit" value= '{{ letters[i] }}'  id= '{{ i }}' name= '{{ i }}'>
         {% endfor %}
-        
+
         <br>
         <h2> {{ w }}</h2>
         <input type="submit" value="Submit Word" id= "sub" name="sub">
 
         <ul>
           {% for wrd in words %}
-            <li>{{ wrd }}</li> 
+            <li>{{ wrd }}</li>
           {% endfor %}
         </il>
 
