@@ -211,7 +211,7 @@ def connectionsPage():
         pass #temp placeholder so it runs)
     return render_template("connections.html")
 
-@app.route('/spelling', methods=["GET", "POST"])
+@app.route('/spellingBee', methods=["GET", "POST"])
 def spellingBeePage():
     if not 'user_id' in session:
         return redirect("/login")
