@@ -29,13 +29,13 @@
         
         <br>
         <h2> {{ w }}</h2>
-        <input type="submit" value="Submit" id= "sub" name="sub">
+        <input type="submit" value="Submit Word" id= "sub" name="sub">
 
-        <p>
+        <ul>
           {% for wrd in words %}
-            {{ wrd }}, 
+            <li>{{ wrd }}</li> 
           {% endfor %}
-        </p>
+        </il>
 
         <p>
           Score: {{ score }}
