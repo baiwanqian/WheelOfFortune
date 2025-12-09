@@ -3,6 +3,7 @@ import random
 from flask import Flask, render_template
 from flask import session, request, redirect
 import os
+import requests
 import spellingBee
 #import requests
 
@@ -129,7 +130,8 @@ def profile():
         xp = user["xp"],
         level = user["level"],
         creatures = creatures,
-        background_img = bg_file
+        # background_img = "/static/background_images/cloudy_weather/OIP-657791057.jpeg"
+        background_img = str(bg_file())
     )
 
 headers = {'IDontKnowWhatTheNameIs' : 'WheelOfFortune'}
@@ -138,17 +140,16 @@ STUY_LAT = 40.7127
 STUY_LON = -74.0061
 
 def currentWeather():
-    #try:
-        #gets data at lat and lon coordinates
+#gets data at lat and lon coordinates
         endpoint = f'https://api.weather.gov/points/{STUY_LAT},{STUY_LON}'
-        print(lat)
-        print(lon)
+        print(STUY_LAT)
+        print(STUY_LON)
         print(endpoint)
         response = requests.get(endpoint, headers = headers)
         data = response.json()
 
         #gets all links about at pt (hourly daily etc)
-        links = data["forecastGridData"]
+        links = data["properties"]["forecastGridData"]
         print(links)
 
         #gets link relating to daily forecast at pt
@@ -166,23 +167,29 @@ def currentWeather():
 
         return forecast
 
+
 def bg_file():
     basepath = './static/background_images'
     print(os.listdir(basepath))
 
-    if "Sunny" in currentWeather() or "sunny" in currentWeather():
+    current_weather = currentWeather()
+
+    if "Sunny" in current_weather or "sunny" in current_weather:
         basepath = './static/background_images/sunny_weather'
-    if "Cloudy" in currentWeather() or "cloudy" in currentWeather():
+    if "Cloudy" in current_weather or "cloudy" in current_weather:
         basepath = './static/background_images/cloudy_weather'
-    if "Rainy" in currentWeather() or "rainy" in currentWeather():
+    if "Rainy" in current_weather or "rainy" in current_weather:
         basepath = './static/background_images/rainy_weather'
-    if "Snowy" in currentWeather() or "snowy" in currentWeather():
+    if "Snowy" in current_weather or "snowy" in current_weather:
         basepath = './static/background_images/snowy_weather'
+    print(basepath)
 
     image = random.choice(os.listdir(basepath))
     print(image)
 
-    return image
+    path = basepath + "/" + os.path.basename(image)
+
+    return path
 
 
 # <-------------------- MINIGAMES -------------------->
