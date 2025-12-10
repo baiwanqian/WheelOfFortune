@@ -15,16 +15,14 @@
     </nav>
 
     <div class="main">
-      <form method='POST' action="/register">
-        <h1> Play &nbsp Connections  </h1>
-        <p>
-          {{ error|safe }}
-          USERNAME:
-        </p>
-        <input type="text" name="word" maxLength="5" required>
-        <br>
+      <form method='POST' action="/spellingBee">
+        
+        <h1> Play Connections!!!  </h1>
 
-        <input type="submit" value="Register" id= "sub1" name="sub1">
+        {% for w in board %}
+          <p>{{ w }}</p>
+        {% endfor %}
+
       </form>
     </div>
 

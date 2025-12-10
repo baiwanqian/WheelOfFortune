@@ -4,8 +4,10 @@ from flask import Flask, render_template
 from flask import session, request, redirect
 import os
 import requests
+
+# <---- Mini Games ---->
 import spellingBee
-#import requests
+import connections
 
 # Flask
 app = Flask(__name__)
@@ -206,10 +208,8 @@ def wordlePage():
 def connectionsPage():
     if not 'user_id' in session:
         return redirect("/login")
-    if request.method == "POST":
-        #word_input =
-        pass #temp placeholder so it runs)
-    return render_template("connections.html")
+    game = connections.build_board()
+    return render_template("connections.html", board = game["board"], groups = game["groups"])
 
 @app.route('/spellingBee', methods=["GET", "POST"])
 def spellingBeePage():
@@ -233,7 +233,7 @@ def spellingBeePage():
             else:
                 error = "Word is too short"
             word = ""
-  
+
     return render_template("spellingBee.html", letters = lttrs, w = word, error = error, words = goodWords, score = 5 * len(goodWords))
 
 @app.route('/ingredients', methods=["GET", "POST"])
