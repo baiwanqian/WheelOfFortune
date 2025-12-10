@@ -63,3 +63,9 @@ christineC -- 2025-12-09 11:30
 Connections + API Keys
   - Add new key for Merriam Webster Thesaurus and modified existing key for Merriam Webster Dictionary
   - Wrote method to find antonyms based off words
+
+naomiK -- 2025-12-08 0:05
+Spelling Bee:
+- fixed bug with API returning empty lists
+- fixed bug with repeated submitted words
+- added catch and except to handle API errors

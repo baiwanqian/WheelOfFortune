@@ -51,6 +51,7 @@ db.close()
 
 # Global variables for spelling bee
 word = ""
+score = 0
 goodWords = []
 lttrs = spellingBee.randNums()
 
@@ -215,7 +216,7 @@ def connectionsPage():
 def spellingBeePage():
     if not 'user_id' in session:
         return redirect("/login")
-    global word, goodWords, ltters
+    global word, goodWords, ltters, score
     error = ""
     #lttrs = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
     if request.method == "POST":
@@ -224,17 +225,21 @@ def spellingBeePage():
             word += lttrs[int(list(request.form.keys())[0])]
         elif list(request.form.keys()) == ["sub"]: #if submitted a word -- not reloading
             truths = spellingBee.checkword(word)
-            if (truths[0] == True and truths[2] == False):
+            used = word in goodWords
+            if (truths[0] == True and truths[2] == False and not used):
                 goodWords += [word]
+                score += len(word)
             elif truths[1] == False:
                 error = "There was an error with the API"
             elif truths[0] == False:
                 error = "Word does not exist"
-            else:
+            elif truths[2] == True:
                 error = "Word is too short"
+            else:
+                error = "Word already used"
             word = ""
   
-    return render_template("spellingBee.html", letters = lttrs, w = word, error = error, words = goodWords, score = 5 * len(goodWords))
+    return render_template("spellingBee.html", letters = lttrs, w = word, error = error, words = goodWords, score = score)
 
 @app.route('/ingredients', methods=["GET", "POST"])
 def ingredientsGuesserPage():
