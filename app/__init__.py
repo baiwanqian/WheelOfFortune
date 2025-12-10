@@ -293,31 +293,33 @@ def connectionsPage():
 def spellingBeePage():
     if not 'user_id' in session:
         return redirect("/login")
-    global word, goodWords, ltters, score
+    global word, goodWords, lttrs, score
     error = ""
     #lttrs = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
+    notLttrs = ["sub", "newL", "sub2"]
     if request.method == "POST":
-        if list(request.form.keys()) != ["sub"]: #if submitted a letter
+        if list(request.form.keys())[0] not in notLttrs and list(request.form.keys())[0]: #if submitted a letter
             print(list(request.form.keys()))
             word += lttrs[int(list(request.form.keys())[0])]
-        elif list(request.form.keys()) == ["sub"]: #if submitted a word -- not reloading
+        elif list(request.form.keys()) == ["sub"] and word: #if submitted a word -- not reloading
             truths = spellingBee.checkword(word, lttrs[0])
             used = word in goodWords
-            if (truths[0] == True and truths[2] == False and not used and truths[3] == False):
+            if (truths[0] == True and truths[2] == False and not used and truths[3] == True):
                 goodWords += [word]
                 score += len(word)
             elif truths[1] == False:
                 error = "There was an error with the API"
             elif truths[0] == False:
                 error = "Word does not exist"
-            elif truths[3] == True:
-                error = "Does not have necessary letter"
             elif truths[2] == True:
                 error = "Word is too short"
+            elif truths[3] == False:
+                error = "Does not have necessary letter"
             else:
                 error = "Word already used"
             word = ""
-
+        elif list(request.form.keys()) == ["newL"]:
+            lttrs = spellingBee.randNums()
     return render_template("spellingBee.html", letters = lttrs, w = word, error = error, words = goodWords, score = score)
 
 @app.route('/ingredients', methods=["GET", "POST"])
