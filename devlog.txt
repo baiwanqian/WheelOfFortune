@@ -69,3 +69,7 @@ Spelling Bee:
 - fixed bug with API returning empty lists
 - fixed bug with repeated submitted words
 - added catch and except to handle API errors
+
+owenZ -- 2025-12-10 4:30
+- Made wordle logic
+- made wordle frontend
