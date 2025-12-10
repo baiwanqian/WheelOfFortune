@@ -23,16 +23,18 @@ def randNums():
         letters[random.randint(0, 6)] = vowels[random.randint(0, 4)]
     return letters
 
-def checkword(word):
-    key = get_key()
+def checkword(word): #returns exists, ran smoothly, short
+    key = get_key() 
     try:
+        exists = True
+        short = False
         with urllib.request.urlopen(f'https://www.dictionaryapi.com/api/v3/references/collegiate/json/{word}?key={key}') as response:
             js = response.read()
         l = json.loads(js) #coverts to dict
+        if not l:
+            return [False, True, True] #when API returns empty list
         d = l[0] #list of dictionaries -- now dictionary THIS MIGHT BE PROBLEM EMPTY LIST
         cant = ["abbreviation", "combining form", "geographical name", "trademark", "biographical name", "symbol", "slang"] #words that eist but don't meet requirements for game
-        exists = True
-        short = False
         if "meta" in d and "fl" in d: #"meta" is to check it's not a list of suggested words
             for typ in cant: 
                 if d["fl"] == typ: #"fl" specifies what type of work
@@ -45,7 +47,7 @@ def checkword(word):
     except Exception as e:
         print("An error occurred")
         return [False, False, False] #second value says if ran without error
-    return [exists, True, short]
+    return [exists, True, short] 
 
 
 #print(checkword("cat"))

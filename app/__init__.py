@@ -7,6 +7,7 @@ import requests
 
 # <---- Mini Games ---->
 import spellingBee
+import wordle
 import connections
 
 # Flask
@@ -53,6 +54,7 @@ db.close()
 
 # Global variables for spelling bee
 word = ""
+score = 0
 goodWords = []
 lttrs = spellingBee.randNums()
 
@@ -199,10 +201,50 @@ def bg_file():
 def wordlePage():
     if not 'user_id' in session:
         return redirect("/login")
+
+    if 'wordle_target' not in session or (request.method == "POST" and 'new_game' in request.form):
+        words = wordle.get_valid_words()
+        session['wordle_target'] = wordle.get_target_word(words)
+        session['wordle_guesses'] = []
+        session['wordle_status'] = 'playing'
+        session['wordle_message'] = ""
+        if request.method == "POST":
+            return redirect('/wordle')
+
     if request.method == "POST":
-        #word_input =
-        pass #temp placeholder so it runs)
-    return render_template("wordle.html")
+        guess = request.form.get('guess', '').strip().upper()
+        guesses = session.get('wordle_guesses', [])
+        target = session.get('wordle_target')
+        status = session.get('wordle_status')
+
+        if status != 'playing':
+             pass # Game over
+        elif len(guess) != 5:
+            session['wordle_message'] = "Word must be 5 letters."
+        else:
+            # Validate
+            words = wordle.get_valid_words()
+            if guess not in words:
+                 session['wordle_message'] = "Not in word list."
+            elif any(g[0] == guess for g in guesses):
+                 session['wordle_message'] = "Already guessed."
+            else:
+                 feedback = wordle.check_guess(guess, target)
+                 guesses.append((guess, feedback))
+                 session['wordle_guesses'] = guesses
+                 session['wordle_message'] = ""
+
+                 if guess == target:
+                     session['wordle_status'] = 'won'
+                     session['wordle_message'] = "You Won!"
+                 elif len(guesses) >= 6:
+                     session['wordle_status'] = 'lost'
+                     session['wordle_message'] = f"Game Over! Word was {target}"
+
+    return render_template("wordle.html",
+                           guesses=session.get('wordle_guesses', []),
+                           status=session.get('wordle_status', 'playing'),
+                           message=session.get('wordle_message', ""))
 
 @app.route('/connections', methods=["GET", "POST"])
 def connectionsPage():
@@ -215,7 +257,7 @@ def connectionsPage():
 def spellingBeePage():
     if not 'user_id' in session:
         return redirect("/login")
-    global word, goodWords, ltters
+    global word, goodWords, ltters, score
     error = ""
     #lttrs = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
     if request.method == "POST":
@@ -224,17 +266,21 @@ def spellingBeePage():
             word += lttrs[int(list(request.form.keys())[0])]
         elif list(request.form.keys()) == ["sub"]: #if submitted a word -- not reloading
             truths = spellingBee.checkword(word)
-            if (truths[0] == True and truths[2] == False):
+            used = word in goodWords
+            if (truths[0] == True and truths[2] == False and not used):
                 goodWords += [word]
+                score += len(word)
             elif truths[1] == False:
                 error = "There was an error with the API"
             elif truths[0] == False:
                 error = "Word does not exist"
-            else:
+            elif truths[2] == True:
                 error = "Word is too short"
+            else:
+                error = "Word already used"
             word = ""
 
-    return render_template("spellingBee.html", letters = lttrs, w = word, error = error, words = goodWords, score = 5 * len(goodWords))
+    return render_template("spellingBee.html", letters = lttrs, w = word, error = error, words = goodWords, score = score)
 
 @app.route('/ingredients', methods=["GET", "POST"])
 def ingredientsGuesserPage():
