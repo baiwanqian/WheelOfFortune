@@ -23,8 +23,7 @@ def randNums():
         letters[random.randint(0, 6)] = vowels[random.randint(0, 4)]
     return letters
 
-def checkword(word, letter): #returns exists, ran smoothly, short
-    
+def checkword(word, letter): #returns exists, ran smoothly, short, has letter
     try:
         key = get_key() 
         exists = True
@@ -48,7 +47,7 @@ def checkword(word, letter): #returns exists, ran smoothly, short
         #print(exists)
     except Exception as e:
         print("An error occurred")
-        return [False, False, False, hasLetter] #second value says if ran without error
+        return [False, False, False, False] #second value says if ran without error
     return [exists, True, short, hasLetter] 
 
 

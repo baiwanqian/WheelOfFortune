@@ -298,15 +298,17 @@ def spellingBeePage():
             print(list(request.form.keys()))
             word += lttrs[int(list(request.form.keys())[0])]
         elif list(request.form.keys()) == ["sub"]: #if submitted a word -- not reloading
-            truths = spellingBee.checkword(word)
+            truths = spellingBee.checkword(word, lttrs[0])
             used = word in goodWords
-            if (truths[0] == True and truths[2] == False and not used):
+            if (truths[0] == True and truths[2] == False and not used and truths[3] == False):
                 goodWords += [word]
                 score += len(word)
             elif truths[1] == False:
                 error = "There was an error with the API"
             elif truths[0] == False:
                 error = "Word does not exist"
+            elif truths[3] == True:
+                error = "Does not have necessary letter"
             elif truths[2] == True:
                 error = "Word is too short"
             else:
