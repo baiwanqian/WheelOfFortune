@@ -15,15 +15,27 @@
     </nav>
 
     <div class="main">
-      <form method='POST' action="/spellingBee">
-        
+      <form method='POST' action="/connections">
+
         <h1> Play Connections!!!  </h1>
+        <p> {{ error }} </p>
+        <p> {{ msg }} </p>
 
         {% for w in board %}
-          <p>{{ w }}</p>
+          <input type = "submit" value = "{{ w }}" name = "choice">
+        {% endfor %}
+
+        <h3>Selected:</h3>
+        {% for s in selected %}
+          <span>{{ s }} </span>
         {% endfor %}
 
       </form>
+      <h3>corretc groups check</h3>
+      {% for g in groups %}
+        <p><b>{{ g[0] }}</b>: {{ g[1] }}</p>
+      {% endfor %}
+
     </div>
 
   </body>

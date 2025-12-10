@@ -145,31 +145,31 @@ STUY_LON = -74.0061
 
 def currentWeather():
 #gets data at lat and lon coordinates
-        endpoint = f'https://api.weather.gov/points/{STUY_LAT},{STUY_LON}'
-        print(STUY_LAT)
-        print(STUY_LON)
-        print(endpoint)
-        response = requests.get(endpoint, headers = headers)
-        data = response.json()
+    endpoint = f'https://api.weather.gov/points/{STUY_LAT},{STUY_LON}'
+    print(STUY_LAT)
+    print(STUY_LON)
+    print(endpoint)
+    response = requests.get(endpoint, headers = headers)
+    data = response.json()
 
-        #gets all links about at pt (hourly daily etc)
-        links = data["properties"]["forecastGridData"]
-        print(links)
+    #gets all links about at pt (hourly daily etc)
+    links = data["properties"]["forecastGridData"]
+    print(links)
 
-        #gets link relating to daily forecast at pt
-        forecast_link = data["properties"]["forecast"]
-        print(forecast_link)
+    #gets link relating to daily forecast at pt
+    forecast_link = data["properties"]["forecast"]
+    print(forecast_link)
 
-        #retrieves forecast data at coordinates
-        forecast_response = requests.get(forecast_link, headers = headers)
-        forecast_data = forecast_response.json()
-        print(forecast_data)
+    #retrieves forecast data at coordinates
+    forecast_response = requests.get(forecast_link, headers = headers)
+    forecast_data = forecast_response.json()
+    print(forecast_data)
 
-        #gets most recently updated forecast for next period (for example: Monday, Monday Night, Tuesday, etc.)
-        forecast = forecast_data["properties"]["periods"][0]["shortForecast"]
-        print(forecast)
+    #gets most recently updated forecast for next period (for example: Monday, Monday Night, Tuesday, etc.)
+    forecast = forecast_data["properties"]["periods"][0]["shortForecast"]
+    print(forecast)
 
-        return forecast
+    return forecast
 
 
 def bg_file():
@@ -250,8 +250,37 @@ def wordlePage():
 def connectionsPage():
     if not 'user_id' in session:
         return redirect("/login")
-    game = connections.build_board()
-    return render_template("connections.html", board = game["board"], groups = game["groups"])
+    if "connections_board" not in session:
+        game = connections.build_board()
+        session["connections_board"] = game["board"]
+        session["connections_groups"] = game["groups"]
+        session["connections_selected"] = []
+        session["connections_error"] = game.get("error", "")
+    board = session["connections_board"]
+    groups = session["connections_groups"]
+    selected = session["connections_selected"]
+    error = session.get("connections_error", "")
+    msg = ""
+    if request.method == "POST":
+        clicked = request.form.get("choice")
+        if clicked in selected:
+            selected.remove(clicked)
+        elif len(selected) < 4:
+            selected.append(clicked)
+        if len(selected) == 4:
+            solved = False
+            for g in groups:
+                match = True
+                for w in selected:
+                    if w not in g[1]:
+                        match = False
+                if match and len(g[1]) == 4:
+                    msg = "Correct Group: " + g[0]
+                    solved = True
+            if not solved:
+                msg = "Not a match"
+            session["connections_selected"] = []
+    return render_template("connections.html", board = board, groups = groups, selected = selected, msg = msg, error = error)
 
 @app.route('/spellingBee', methods=["GET", "POST"])
 def spellingBeePage():
