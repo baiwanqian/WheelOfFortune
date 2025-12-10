@@ -145,32 +145,34 @@ STUY_LON = -74.0061
 
 def currentWeather():
 #gets data at lat and lon coordinates
-    endpoint = f'https://api.weather.gov/points/{STUY_LAT},{STUY_LON}'
-    print(STUY_LAT)
-    print(STUY_LON)
-    print(endpoint)
-    response = requests.get(endpoint, headers = headers)
-    data = response.json()
+    try:
+        endpoint = f'https://api.weather.gov/points/{STUY_LAT},{STUY_LON}'
+        print(STUY_LAT)
+        print(STUY_LON)
+        print(endpoint)
+        response = requests.get(endpoint, headers = headers)
+        data = response.json()
 
-    #gets all links about at pt (hourly daily etc)
-    links = data["properties"]["forecastGridData"]
-    print(links)
+        #gets all links about at pt (hourly daily etc)
+        links = data["properties"]["forecastGridData"]
+        print(links)
 
-    #gets link relating to daily forecast at pt
-    forecast_link = data["properties"]["forecast"]
-    print(forecast_link)
+        #gets link relating to daily forecast at pt
+        forecast_link = data["properties"]["forecast"]
+        print(forecast_link)
 
-    #retrieves forecast data at coordinates
-    forecast_response = requests.get(forecast_link, headers = headers)
-    forecast_data = forecast_response.json()
-    print(forecast_data)
+        #retrieves forecast data at coordinates
+        forecast_response = requests.get(forecast_link, headers = headers)
+        forecast_data = forecast_response.json()
+        print(forecast_data)
 
-    #gets most recently updated forecast for next period (for example: Monday, Monday Night, Tuesday, etc.)
-    forecast = forecast_data["properties"]["periods"][0]["shortForecast"]
-    print(forecast)
-
-    return forecast
-
+        #gets most recently updated forecast for next period (for example: Monday, Monday Night, Tuesday, etc.)
+        forecast = forecast_data["properties"]["periods"][0]["shortForecast"]
+        print(forecast)
+        return forecast
+    except:
+        print("An error occured")
+        return "Sunny"
 
 def bg_file():
     basepath = './static/background_images'
