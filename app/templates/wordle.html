@@ -1,36 +1,116 @@
 <!DOCTYPE html>
+<html lang="en">
 
-<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wordle</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .letter-box {
+      width: 60px;
+      height: 60px;
+      border: 2px solid #dee2e6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
 
-  <head>
-    <title> Wordle </title>
-  </head>
+    .correct {
+      background-color: #198754;
+      color: white;
+      border-color: #198754;
+    }
 
-  <body>
+    .present {
+      background-color: #ffc107;
+      color: white;
+      border-color: #ffc107;
+    }
 
-    <nav>
-      <a href="/">Home</a>
-      <a href="/profile">Profile</a>
-      <a href="/logout">Logout</a>
-    </nav>
+    .absent {
+      background-color: #6c757d;
+      color: white;
+      border-color: #6c757d;
+    }
 
-    <div class="main">
-      <form method='POST' action="/register">
-        <h1> Play &nbsp Wordle </h1>
-        <p>
-          {{ error|safe }}
-          USERNAME:
-        </p>
-        <input type="text" name="word" maxLength="5" required>
-        <br>
+    .empty {
+      background-color: white;
+    }
+  </style>
+</head>
 
-        <input type="submit" value="Register" id= "sub1" name="sub1">
-      </form>
+<body class="bg-light">
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+    <div class="container">
+      <a class="navbar-brand" href="/">WheelOfFortune</a>
+      <div class="navbar-nav ms-auto">
+        <a class="nav-link" href="/">Home</a>
+        <a class="nav-link" href="/profile">Profile</a>
+        <a class="nav-link" href="/logout">Logout</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container text-center">
+    <h1 class="mb-4">Wordle</h1>
+
+    {% if message %}
+    <div class="alert alert-info" role="alert">
+      {{ message }}
+    </div>
+    {% endif %}
+
+    <div class="d-flex flex-column align-items-center mb-4">
+      {% for guess, feedback in guesses %}
+      <div class="d-flex gap-2 mb-2">
+        {% for i in range(5) %}
+        <div class="letter-box {{ feedback[i] }}">
+          {{ guess[i] }}
+        </div>
+        {% endfor %}
+      </div>
+      {% endfor %}
+
+      {% if status == 'playing' and guesses|length < 6 %} <!-- Empty rows for remaining guesses -->
+        {% for i in range(6 - guesses|length) %}
+        <div class="d-flex gap-2 mb-2">
+          {% for j in range(5) %}
+          <div class="letter-box empty"></div>
+          {% endfor %}
+        </div>
+        {% endfor %}
+        {% endif %}
     </div>
 
-  </body>
+    {% if status == 'playing' %}
+    <form method="POST" class="d-flex justify-content-center gap-2">
+      <input type="text" name="guess" class="form-control" style="width: 200px;" maxlength="5" autofocus required
+        placeholder="Enter 5-letter word">
+      <button type="submit" class="btn btn-primary">Guess</button>
+    </form>
+    {% else %}
+    <form method="POST">
+      <button type="submit" name="new_game" value="true" class="btn btn-primary btn-lg">New Game</button>
+    </form>
+    {% endif %}
 
-  <footer>
-  </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Auto-focus input
+    window.onload = function () {
+      const input = document.querySelector('input[name="guess"]');
+      if (input) input.focus();
+    }
+  </script>
+</body>
 
 </html>

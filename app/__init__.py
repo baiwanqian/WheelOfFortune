@@ -5,7 +5,7 @@ from flask import session, request, redirect
 import os
 import requests
 import spellingBee
-#import requests
+import wordle
 
 # Flask
 app = Flask(__name__)
@@ -198,10 +198,50 @@ def bg_file():
 def wordlePage():
     if not 'user_id' in session:
         return redirect("/login")
+
+    if 'wordle_target' not in session or (request.method == "POST" and 'new_game' in request.form):
+        words = wordle.get_valid_words()
+        session['wordle_target'] = wordle.get_target_word(words)
+        session['wordle_guesses'] = []
+        session['wordle_status'] = 'playing'
+        session['wordle_message'] = ""
+        if request.method == "POST":
+            return redirect('/wordle')
+
     if request.method == "POST":
-        #word_input =
-        pass #temp placeholder so it runs)
-    return render_template("wordle.html")
+        guess = request.form.get('guess', '').strip().upper()
+        guesses = session.get('wordle_guesses', [])
+        target = session.get('wordle_target')
+        status = session.get('wordle_status')
+
+        if status != 'playing':
+             pass # Game over
+        elif len(guess) != 5:
+            session['wordle_message'] = "Word must be 5 letters."
+        else:
+            # Validate
+            words = wordle.get_valid_words()
+            if guess not in words:
+                 session['wordle_message'] = "Not in word list."
+            elif any(g[0] == guess for g in guesses):
+                 session['wordle_message'] = "Already guessed."
+            else:
+                 feedback = wordle.check_guess(guess, target)
+                 guesses.append((guess, feedback))
+                 session['wordle_guesses'] = guesses
+                 session['wordle_message'] = ""
+
+                 if guess == target:
+                     session['wordle_status'] = 'won'
+                     session['wordle_message'] = "You Won!"
+                 elif len(guesses) >= 6:
+                     session['wordle_status'] = 'lost'
+                     session['wordle_message'] = f"Game Over! Word was {target}"
+    
+    return render_template("wordle.html", 
+                           guesses=session.get('wordle_guesses', []), 
+                           status=session.get('wordle_status', 'playing'),
+                           message=session.get('wordle_message', ""))
 
 @app.route('/connections', methods=["GET", "POST"])
 def connectionsPage():
