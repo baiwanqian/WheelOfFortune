@@ -172,7 +172,7 @@ def currentWeather():
         return forecast
     except:
         print("An error occured")
-        return "Sunny"
+        return "Unknown"
 
 def bg_file():
     basepath = './static/background_images'
@@ -188,6 +188,9 @@ def bg_file():
         basepath = './static/background_images/rainy_weather'
     if "Snowy" in current_weather or "snowy" in current_weather:
         basepath = './static/background_images/snowy_weather'
+    if "Unknown" in current_weather:
+        basepath = './static/background_images/unknown_weather'
+
     print(basepath)
 
     image = random.choice(os.listdir(basepath))
