@@ -2,28 +2,31 @@ import random
 import urllib.request
 import json
 
-# <---------- API KEY LOADING ---------->
+# <---------- API Calls ---------->
 
-def get_MW_key():
-    with open("keys/key_MerriamWebsterThesaurus.txt", "r") as k:
-        return k.read().strip()
-
-# <---------- Merriam Webster Thesaurus ---------->
-
-def get_synonyms(word):
-    key = get_MW_key()
-    with urllib.request.urlopen(f"https://www.dictionaryapi.com/api/v3/references/thesaurus/json/{word}?key={key}") as response:
-        data = json.loads(response.read())
+def get_rand_topic():
     try:
-        return data[0]["meta"]["syns"][0][:4]
+        with urllib.request.urlopen("https://random-words-api.kushcreates.com/api?words=1") as response:
+            data = json.loads(response.read())
+        return data[0]
     except:
-        return []
-    
-def get_antonyms(word):
-    key = get_MW_key()
-    with urllib.request.urlopen(f"https://www.dictionaryapi.com/api/v3/references/thesaurus/json/{word}?key={key}") as response:
-        data = json.loads(response.read())
+        print("An error occurred")
+        return None
+
+def get_related_words():
     try:
-        return data[0]["meta"]["ants"][0][:4]
+        with urllib.request.urlopen("https://api.datamuse.com/words?ml={topic}&max=4") as response:
+            data = json.loads(response.read())
+        words = []
+        for i in data:
+            words.append(i["word"])
+        return words
     except:
+        print("An error occurred")
         return []
+
+# <----------  ---------->
+
+def build_group():
+
+def build_board():
