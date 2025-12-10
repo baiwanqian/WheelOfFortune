@@ -24,6 +24,7 @@ def randNums():
     return letters
 
 def checkword(word, letter): #returns exists, ran smoothly, short, has letter
+    print(letter)
     try:
         key = get_key() 
         exists = True
