@@ -261,12 +261,14 @@ def connectionsPage():
     selected = session["connections_selected"]
     error = session.get("connections_error", "")
     msg = ""
+
     if request.method == "POST":
         clicked = request.form.get("choice")
         if clicked in selected:
-            selected.remove(clicked)
+            selected = [w for w in selected if w != clicked]
         elif len(selected) < 4:
-            selected.append(clicked)
+            selected = selected + [clicked]
+        session["connections_selected"] = selected
         if len(selected) == 4:
             solved = False
             for g in groups:
