@@ -1,4 +1,3 @@
-
 ethanC -- 2025-11-26 11:00
 - removal of spaces located in team name in readme file
 
@@ -73,3 +72,9 @@ Spelling Bee:
 owenZ -- 2025-12-10 4:30
 - Made wordle logic
 - made wordle frontend
+
+christineC -- 2025-12-10 7:00
+Connections
+  - Added Datmuse API for Connections logic
+  - Functional Connections completed
+  - Nested API Calls in Try-Except to prevent crashing
