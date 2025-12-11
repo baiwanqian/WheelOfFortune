@@ -261,13 +261,17 @@ def connectionsPage():
         session["connections_groups"] = game["groups"]
         session["connections_selected"] = []
         session["connections_error"] = game.get("error", "")
+
+        session["connections_mistakes"] = 0
+        session["connections_solved"] = 0
+        session["connections_status"] = "playing" # playing/win/lose
     board = session["connections_board"]
     groups = session["connections_groups"]
     selected = session["connections_selected"]
     error = session.get("connections_error", "")
     msg = ""
-
-    if request.method == "POST":
+    
+    if request.method == "POST" and session["connections_status"] = "playing":
         clicked = request.form.get("choice")
         if clicked in selected:
             selected = [w for w in selected if w != clicked]
@@ -276,18 +280,41 @@ def connectionsPage():
         session["connections_selected"] = selected
         if len(selected) == 4:
             solved = False
+            correct = None
             for g in groups:
                 match = True
                 for w in selected:
                     if w not in g[1]:
                         match = False
                 if match and len(g[1]) == 4:
-                    msg = "Correct Group: " + g[0]
                     solved = True
-            if not solved:
+                    correct = g
+            if solved:
+                msg = "Correct Group: " + correct[0]
+                session["connections_solved"] += 1
+                board = [w for w in board if w not in correct[1]]
+                session["connections_board"] = board
+                # remove solved group
+                new = []
+                for g in groups:
+                    if g != correct:
+                        new.append(g)
+                groups = new
+                session["connections_groups"] = groups
+                if session["connections_solved"] == 4:
+                    session["connections_status"] = "win"
+                    msg = "yay"
+            else:
+                session["connections_mistakes"] += 1
                 msg = "Not a match"
+                if session["connections_mistakes"] >= 4:
+                    session["connections_status"] = "lose"
+                    msg = "boo"
             session["connections_selected"] = []
-    return render_template("connections.html", board = board, groups = groups, selected = selected, msg = msg, error = error)
+    mistakes = session["connections_mistakes"]
+    solved_count = session["connections_solved"]
+    status = session["connections_status"]
+    return render_template("connections.html", board = board, groups = groups, selected = selected, msg = msg, error = error, solved_count = solved_count, status = status)
 
 @app.route('/spellingBee', methods=["GET", "POST"])
 def spellingBeePage():
