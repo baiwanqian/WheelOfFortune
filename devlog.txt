@@ -78,3 +78,8 @@ Connections
   - Added Datmuse API for Connections logic
   - Functional Connections completed
   - Nested API Calls in Try-Except to prevent crashing
+
+naomiK -- 2025-12-11 0:32
+Spelling Bee:
+- added necessary letter requirement 
+- added new buttons and generate new letters
