@@ -62,7 +62,7 @@ def build_board():
     groups = []
     used = []
     attempts = 0
-    while len(groups) < 4 and attempts < 5:
+    while len(groups) < 4 and attempts < 50:
         attempts += 1
         topic, words = build_group()
         if topic:
@@ -85,6 +85,8 @@ def build_board():
     for g in groups:
         for w in g[1]:
             board.append(w)
+
+    random.shuffle(board)
 
     return {
         "board": board,
