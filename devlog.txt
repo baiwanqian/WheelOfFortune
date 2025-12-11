@@ -79,6 +79,11 @@ Connections
   - Functional Connections completed
   - Nested API Calls in Try-Except to prevent crashing
 
+ethanC -- 2025-12-10 11:00
+Background in Profile
+- added background functionality
+- changed try-except to have a specific set of backgrounds
+
 naomiK -- 2025-12-11 0:32
 Spelling Bee:
 - added necessary letter requirement 
