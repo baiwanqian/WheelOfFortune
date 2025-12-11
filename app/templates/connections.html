@@ -3,7 +3,13 @@
 <html>
 
   <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> Connections </title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+    </style>
   </head>
 
   <body>
@@ -17,9 +23,9 @@
     <div class="main">
       <form method='POST' action="/connections">
 
-        <h1> Play Connections!!!  </h1>
-        <p> {{ error }} </p>
-        <p> {{ msg }} </p>
+        <p class = "text-center"> Create four groups of four! </p>
+        <p class = "text-center"> {{ error }} </p>
+        <p class = "text-center"> {{ msg }} </p>
 
         {% for w in board %}
           <input type = "submit" value = "{{ w }}" name = "choice">
@@ -33,6 +39,11 @@
         <p> Mistakes Remaining: {{ mistakes }} | Solved: {{ solved_count }} </p>
 
       </form>
+
+      <input type="submit" value="Shuffle" id= "shuffle" name="shuffle">
+      <input type="submit" value="Deselect All" id= "deselect" name="deselect">
+      <input type="submit" value="Submit" id= "sub" name="sub">
+      
       <h3>corretc groups check</h3>
       {% for g in groups %}
         <p><b>{{ g[0] }}</b>: {{ g[1] }}</p>
