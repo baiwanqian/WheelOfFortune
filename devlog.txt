@@ -75,7 +75,7 @@ owenZ -- 2025-12-10 4:30
 
 christineC -- 2025-12-10 7:00
 Connections
-  - Added Datmuse API for Connections logic
+  - Added Datamuse API for Connections logic
   - Functional Connections completed
   - Nested API Calls in Try-Except to prevent crashing
 
@@ -88,3 +88,7 @@ naomiK -- 2025-12-11 0:32
 Spelling Bee:
 - added necessary letter requirement 
 - added new buttons and generate new letters
+
+christineC -- 2025-12-11 6:50
+Connections:
+  - Added mistakes count and win/lose
