@@ -262,7 +262,7 @@ def connectionsPage():
         session["connections_selected"] = []
         session["connections_error"] = game.get("error", "")
 
-        session["connections_mistakes"] = 0
+        session["connections_mistakes"] = 4
         session["connections_solved"] = 0
         session["connections_status"] = "playing" # playing/win/lose
     board = session["connections_board"]
@@ -305,16 +305,16 @@ def connectionsPage():
                     session["connections_status"] = "win"
                     msg = "yay"
             else:
-                session["connections_mistakes"] += 1
+                session["connections_mistakes"] -= 1
                 msg = "Not a match"
-                if session["connections_mistakes"] >= 4:
+                if session["connections_mistakes"] <= 0:
                     session["connections_status"] = "lose"
                     msg = "boo"
             session["connections_selected"] = []
     mistakes = session["connections_mistakes"]
     solved_count = session["connections_solved"]
     status = session["connections_status"]
-    return render_template("connections.html", board = board, groups = groups, selected = selected, msg = msg, error = error, solved_count = solved_count, status = status)
+    return render_template("connections.html", board = board, groups = groups, selected = selected, msg = msg, error = error, solved_count = solved_count, mistakes = mistakes)
 
 @app.route('/spellingBee', methods=["GET", "POST"])
 def spellingBeePage():

@@ -27,8 +27,10 @@
 
         <h3>Selected:</h3>
         {% for s in selected %}
-          <span>{{ s }} </span>
+          <span>{{ s }}</span>
         {% endfor %}
+
+        <p> Mistakes Remaining: {{ mistakes }} | Solved: {{ solved_count }} </p>
 
       </form>
       <h3>corretc groups check</h3>
