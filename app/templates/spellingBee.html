@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 
+
+
 <html>
 
   <head>
     <title> Register </title>
+     <!-- Bootstrap CSS -->
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   </head>
 
   <body>
@@ -23,8 +27,9 @@
         <p>
           {{ error|safe }}
         </p>
-        {% for i in range(7) %}
-          <input type="submit" value= '{{ letters[i] }}'  id= '{{ i }}' name= '{{ i }}'>
+        <input class="bg-warning hexagon" type="submit" value= '{{ letters[0] }}'  id= '0' name= '0'>
+        {% for i in range(1, 7) %}
+          <input class="hexagon" type="submit" value= '{{ letters[i] }}'  id= '{{ i }}' name= '{{ i }}'>
         {% endfor %}
 
         <br>
