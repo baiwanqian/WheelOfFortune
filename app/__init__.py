@@ -271,7 +271,7 @@ def connectionsPage():
     error = session.get("connections_error", "")
     msg = ""
     
-    if request.method == "POST" and session["connections_status"] = "playing":
+    if request.method == "POST" and session["connections_status"] == "playing":
         clicked = request.form.get("choice")
         if clicked in selected:
             selected = [w for w in selected if w != clicked]
