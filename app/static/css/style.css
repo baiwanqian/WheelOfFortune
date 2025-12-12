@@ -15,7 +15,7 @@ html, body {
     width: 100%;
 }
 
-.col {
+.co {
     display: flex;
     flex-direction: column;
     gap: 10px;

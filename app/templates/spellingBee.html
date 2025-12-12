@@ -20,47 +20,65 @@
     </nav>
 
     <div class="main">
-      <form method='POST' action="/spellingBee">
-        <h1> Play Spelling Bee!!!  </h1>
+        <h1 class="text-center"> Play Spelling Bee!!!  </h1>
         <p>
           Be careful! You can only submit three scores per day!
         </p>
         <p>
           {{ error|safe }}
         </p>
-        <div class="pattern">
-          <div class="col" id="col1">
-            <input class="hexagon" type="submit" value= '{{ letters[1] }}' name= '1'>
-            <input class="hexagon" type="submit" value= '{{ letters[2] }}' name= '2'>
-          </div>
 
-          <div class="col">
-            <input class="hexagon" type="submit" value= '{{ letters[3] }}' name= '3'>
-            <input class="bg-warning hexagon" type="submit" value= '{{ letters[0] }}' name= '0'>
-            <input class="hexagon" type="submit" value= '{{ letters[4] }}' name= '4'>
-          </div>
 
-          <div class="col" id="col2">
-            <input class="hexagon" type="submit" value= '{{ letters[5] }}' name= '5'>
-            <input class="hexagon" type="submit" value= '{{ letters[6] }}' name= '6'>
-          </div>
+    <form method='POST' action="/spellingBee">
 
+        <div class="container">
+            <div class ="row">
+
+                <div class="col">
+
+                   <div class="pattern">
+
+                      <div class="co" id="col1">
+                        <input class="hexagon" type="submit" value= '{{ letters[1] }}' name= '1'>
+                        <input class="hexagon" type="submit" value= '{{ letters[2] }}' name= '2'>
+                      </div>
+
+                      <div class="co">
+                        <input class="hexagon" type="submit" value= '{{ letters[3] }}' name= '3'>
+                        <input class="bg-warning hexagon" type="submit" value= '{{ letters[0] }}' name= '0'>
+                        <input class="hexagon" type="submit" value= '{{ letters[4] }}' name= '4'>
+                      </div>
+
+                      <div class="co" id="col2">
+                        <input class="hexagon" type="submit" value= '{{ letters[5] }}' name= '5'>
+                        <input class="hexagon" type="submit" value= '{{ letters[6] }}' name= '6'>
+                      </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col border border-3 p-3">
+
+                    <h2> {{ w }}</h2>
+                    <input type="submit" value="Submit Word" id= "sub" name="sub">
+                    <input type="submit" value="New Letters" id= "newL" name="newL">
+                    <input type="submit" value="Submit Score" id= "sub2" name="sub2">
+                    <input type="submit" value="Delete" id= "delete" name="delete">
+
+                    <ul>
+                      {% for wrd in words %}
+                        <li>{{ wrd }}</li>
+                      {% endfor %}
+                    </il>
+
+                    <p> Score: {{ score }} </p>
+
+                </div>
+
+            </div>
         </div>
-
-        <br>
-        <h2> {{ w }}</h2>
-        <input type="submit" value="Submit Word" id= "sub" name="sub">
-        <input type="submit" value="New Letters" id= "newL" name="newL">
-        <input type="submit" value="Submit Score" id= "sub2" name="sub2">
-        <input type="submit" value="Delete" id= "delete" name="delete">
-
-        <ul>
-          {% for wrd in words %}
-            <li>{{ wrd }}</li>
-          {% endfor %}
-        </il>
-
-        <p> Score: {{ score }} </p>
+        
       </form>
     </div>
 
