@@ -18,8 +18,8 @@ def randNums():
     letters = []
     for i in range(7):
         letters += [chr(random.randint(65, 90))] #ASCII values for A-Z
-    vowels = ['A', 'E', 'I', 'O', 'U']
-    for i in range(2):
+    vowels = ['A', 'E', 'I', 'O', 'U', 'Y']
+    for i in range(3):
         letters[random.randint(0, 6)] = vowels[random.randint(0, 4)]
     return letters
 

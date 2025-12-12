@@ -28,10 +28,24 @@
         <p>
           {{ error|safe }}
         </p>
-        <input class="bg-warning hexagon" type="submit" value= '{{ letters[0] }}'  id= '0' name= '0'>
-        {% for i in range(1, 7) %}
-          <input class="hexagon" type="submit" value= '{{ letters[i] }}'  id= '{{ i }}' name= '{{ i }}'>
-        {% endfor %}
+        <div class="pattern">
+          <div class="col" id="col1">
+            <input class="hexagon" type="submit" value= '{{ letters[1] }}' name= '1'>
+            <input class="hexagon" type="submit" value= '{{ letters[2] }}' name= '2'>
+          </div>
+
+          <div class="col">
+            <input class="hexagon" type="submit" value= '{{ letters[3] }}' name= '3'>
+            <input class="bg-warning hexagon" type="submit" value= '{{ letters[0] }}' name= '0'>
+            <input class="hexagon" type="submit" value= '{{ letters[4] }}' name= '4'>
+          </div>
+
+          <div class="col" id="col2">
+            <input class="hexagon" type="submit" value= '{{ letters[5] }}' name= '5'>
+            <input class="hexagon" type="submit" value= '{{ letters[6] }}' name= '6'>
+          </div>
+
+        </div>
 
         <br>
         <h2> {{ w }}</h2>
