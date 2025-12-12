@@ -9,6 +9,7 @@ import requests
 import spellingBee
 import wordle
 import connections
+import ingredients
 
 # Flask
 app = Flask(__name__)
@@ -369,6 +370,7 @@ def ingredientsGuesserPage():
     if request.method == "POST":
         #word_input =
         pass #temp placeholder so it runs)
+    ingredients.random_ingredient()
     return render_template("ingredients.html")
 
 def fetch(table, criteria, data, params = ()):

@@ -14,17 +14,30 @@ import random
 import json
 
 def random_ingredient():
+
     try:
+        # get rand ingredient
         ingredient_basepath = "https://www.themealdb.com/api/json/v1/1/list.php?i=list"
         print("this is ingredient basepath: " + ingredient_basepath)
-        response = requests.get(ingredient_basepath)
-        data = response.json()
+        ingredient_response = requests.get(ingredient_basepath)
+        ing_data = ingredient_response.json()
+        ingredients = ing_data["meals"]
+        print(len(ingredients))
+        rand_num_ing = random.randint(0,len(ingredients))
+        print(rand_num_ing)
+        rand_ing = ingredients[rand_num_ing]
+        str_ingredient = rand_ing["strIngredient"]
+        print(str_ingredient)
 
-        ingredients = data["meals"]
-        rand_ing = randint(0,len(ingredients))
-        print(ingredients)
-        print(rand_ing)
+        # get meals with rand int
+        filtered_ing = str_ingredient.replace(" ", "_")
+        filtered_ing = filtered_ing.lower()
+
+        meal_basepath = f"www.themealdb.com/api/json/v1/1/filter.php?i={filtered_ing}"
+        print(meal_basepath)
+        meal_response = requests.get(meal_basepath)
+        meal_data = meal_response.json()
+
+        print("huh")
     except:
         print("oops")
-
-random_ingredient()
