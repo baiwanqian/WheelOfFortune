@@ -36,14 +36,14 @@
           <span>{{ s }}</span>
         {% endfor %}
 
-        <p> Mistakes Remaining: {{ mistakes }} | Solved: {{ solved_count }} </p>
+        <p> Mistakes Remaining: {{ mistakes }} </p>
+
+        <input type="submit" value="Shuffle" name="shuffle">
+        <input type="submit" value="Deselect All" name="deselect">
+        <input type="submit" value="Submit" name="sub">
 
       </form>
 
-      <input type="submit" value="Shuffle" id= "shuffle" name="shuffle">
-      <input type="submit" value="Deselect All" id= "deselect" name="deselect">
-      <input type="submit" value="Submit" id= "sub" name="sub">
-      
       <h3>corretc groups check</h3>
       {% for g in groups %}
         <p><b>{{ g[0] }}</b>: {{ g[1] }}</p>

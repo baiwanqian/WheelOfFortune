@@ -270,15 +270,26 @@ def connectionsPage():
     selected = session["connections_selected"]
     error = session.get("connections_error", "")
     msg = ""
-    
+
     if request.method == "POST" and session["connections_status"] == "playing":
-        clicked = request.form.get("choice")
-        if clicked in selected:
-            selected = [w for w in selected if w != clicked]
-        elif len(selected) < 4:
-            selected = selected + [clicked]
-        session["connections_selected"] = selected
-        if len(selected) == 4:
+        # shuffle button
+        if "shuffle" in request.form:
+            random.shuffle(board)
+            session["connections_board"] = board
+        # deselect button
+        elif "deselect" in request.form:
+            selected = []
+            session["connections_selected"] = selected
+        # clicking word
+        elif "choice" in request.form:
+            clicked = request.form.get("choice")
+            if clicked in selected:
+                selected = [w for w in selected if w != clicked]
+            elif len(selected) < 4:
+                selected = selected + [clicked]
+            session["connections_selected"] = selected
+        # submit button
+        elif "sub" in request.form and len(selected) == 4:
             solved = False
             correct = None
             for g in groups:
@@ -314,7 +325,7 @@ def connectionsPage():
     mistakes = session["connections_mistakes"]
     solved_count = session["connections_solved"]
     status = session["connections_status"]
-    return render_template("connections.html", board = board, groups = groups, selected = selected, msg = msg, error = error, solved_count = solved_count, mistakes = mistakes)
+    return render_template("connections.html", board = board, groups = groups, selected = selected, msg = msg, error = error,  mistakes = mistakes)
 
 @app.route('/spellingBee', methods=["GET", "POST"])
 def spellingBeePage():
