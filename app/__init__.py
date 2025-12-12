@@ -34,7 +34,7 @@ c.execute("""
     password TEXT,
     xp INTEGER,
     level INTEGER)
-    """);
+    """)
 
 c.execute("""
     CREATE TABLE IF NOT EXISTS creatures (
@@ -47,7 +47,7 @@ c.execute("""
     image_path TEXT,
     status TEXT,
     FOREIGN KEY(user_id) REFERENCES users(user_id))
-    """);
+    """)
 
 db.commit()
 db.close()
@@ -323,12 +323,12 @@ def spellingBeePage():
     global word, goodWords, lttrs, score
     error = ""
     #lttrs = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
-    notLttrs = ["sub", "newL", "sub2"]
+    notLttrs = ["sub", "newL", "sub2", "delete"]
     if request.method == "POST":
         if list(request.form.keys())[0] not in notLttrs and list(request.form.keys())[0]: #if submitted a letter
             print(list(request.form.keys()))
             word += lttrs[int(list(request.form.keys())[0])]
-        elif list(request.form.keys()) == ["sub"] and word: #if submitted a word -- not reloading
+        if list(request.form.keys()) == ["sub"] and word: #if submitted a word -- not reloading
             truths = spellingBee.checkword(word, lttrs[0])
             used = word in goodWords
             if (truths[0] == True and truths[2] == False and not used and truths[3] == True):
@@ -347,6 +347,8 @@ def spellingBeePage():
             word = ""
         elif list(request.form.keys()) == ["newL"]:
             lttrs = spellingBee.randNums()
+        elif list(request.form.keys()) == ["delete"]:
+            word = word[:-1]
     return render_template("spellingBee.html", letters = lttrs, w = word, error = error, words = goodWords, score = score)
 
 @app.route('/ingredients', methods=["GET", "POST"])
