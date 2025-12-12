@@ -8,7 +8,45 @@
     <title> Connections </title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <style>
+
+      .tile {
+        height: 90px;
+        font-weight: 800;
+        border-radius: 6px;
+        background: lightgray;
+        text-transform: uppercase;
+        border: none;
+
+        padding: 0 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .tile-selected {
+        background: gray;
+        color: white;
+      }
+
+      .dot {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: gray;
+        display: inline-block;
+      }
+
+      .button {
+        border-radius: 999px;
+        background: white;
+        border: 1px solid gray;
+        font-weight: 400;
+        padding: 10px 15px;
+      }
+
     </style>
   </head>
 
@@ -20,34 +58,57 @@
       <a href="/logout">Logout</a>
     </nav>
 
-    <div class="main">
-      <form method='POST' action="/connections">
+    <div class="main text-center mt-3 mx-auto" style = "max-width: 630px;">
 
-        <p class = "text-center"> Create four groups of four! </p>
-        <p class = "text-center"> {{ error }} </p>
-        <p class = "text-center"> {{ msg }} </p>
+        <p> Create four groups of four! </p>
+        {% if error %}
+          <p class = "text-danger"> {{ error }} </p>
+        {% endif %}
 
-        {% for w in board %}
-          <input type = "submit" value = "{{ w }}" name = "choice">
+        {% if msg %}
+          <p class = "fw-bold"> {{ msg }} </p>
+        {% endif %}
+
+        <form method='POST' action="/connections">
+
+        {% for row in rows %}
+          <div class = "row mb-2">
+            {% for w in row %}
+              <div class = "col-3 px-1">
+                <button type = "submit" value = "{{ w }}" name = "choice"
+                        class = "tile w-100 {% if w in selected %} tile-selected {% endif %}">
+                          <span style = "font-size:
+                                {% if w|length > 14 %} 0.75rem
+                                {% elif w|length > 10 %} 0.9rem
+                                {% else %} 1.1rem
+                                {% endif %};">
+                            {{ w }}
+                          </span>
+                </button>
+              </div>
+            {% endfor %}
+          </div>
         {% endfor %}
 
-        <h3>Selected:</h3>
-        {% for s in selected %}
-          <span>{{ s }}</span>
-        {% endfor %}
+        <div class = "d-flex mt-3 justify-content-center align-items-center gap-2">
+          <span class = "text-muted"> Mistakes Remaning: </span>
+          {% for i in range(mistakes) %}
+            <span class = "dot"></span>
+          {% endfor %}
+        </div>
 
-        <p> Mistakes Remaining: {{ mistakes }} </p>
-
-        <input type="submit" value="Shuffle" name="shuffle">
-        <input type="submit" value="Deselect All" name="deselect">
-        <input type="submit" value="Submit" name="sub">
+        <div class = "d-flex justify-content-center gap-2 mt-4">
+          <input type="submit" value="Shuffle" name="shuffle" class = "button">
+          <input type="submit" value="Deselect All" name="deselect" class = "button">
+          <input type="submit" value="Submit" name="sub" class = "button">
+        </div>
 
       </form>
 
-      <h3>corretc groups check</h3>
+      <!-- <h3>corretc groups check</h3>
       {% for g in groups %}
         <p><b>{{ g[0] }}</b>: {{ g[1] }}</p>
-      {% endfor %}
+      {% endfor %} -->
 
     </div>
 

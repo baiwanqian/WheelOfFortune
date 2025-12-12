@@ -323,9 +323,8 @@ def connectionsPage():
                     msg = "boo"
             session["connections_selected"] = []
     mistakes = session["connections_mistakes"]
-    solved_count = session["connections_solved"]
-    status = session["connections_status"]
-    return render_template("connections.html", board = board, groups = groups, selected = selected, msg = msg, error = error,  mistakes = mistakes)
+    rows = [board[0:4], board[4:8], board[8:12], board[12:16]]
+    return render_template("connections.html", board = board, groups = groups, selected = selected, msg = msg, error = error,  mistakes = mistakes, rows = rows)
 
 @app.route('/spellingBee', methods=["GET", "POST"])
 def spellingBeePage():
