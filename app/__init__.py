@@ -264,12 +264,14 @@ def connectionsPage():
 
         session["connections_mistakes"] = 4
         session["connections_solved"] = 0
+        session["connections_solved_groups"] = []
         session["connections_status"] = "playing" # playing/win/lose
     board = session["connections_board"]
     groups = session["connections_groups"]
     selected = session["connections_selected"]
     error = session.get("connections_error", "")
     msg = ""
+    solved_groups = session["connections_solved_groups"]
 
     if request.method == "POST" and session["connections_status"] == "playing":
         # shuffle button
@@ -301,17 +303,16 @@ def connectionsPage():
                     solved = True
                     correct = g
             if solved:
-                msg = "Correct Group: " + correct[0]
                 session["connections_solved"] += 1
                 board = [w for w in board if w not in correct[1]]
                 session["connections_board"] = board
                 # remove solved group
-                new = []
-                for g in groups:
-                    if g != correct:
-                        new.append(g)
-                groups = new
+                groups = [g for g in groups if g != correct]
                 session["connections_groups"] = groups
+                # add to solved groups
+                solved_groups.append(correct)
+                session["connections_solved_groups"] = solved_groups
+
                 if session["connections_solved"] == 4:
                     session["connections_status"] = "win"
                     msg = "yay"
@@ -324,7 +325,7 @@ def connectionsPage():
             session["connections_selected"] = []
     mistakes = session["connections_mistakes"]
     rows = [board[0:4], board[4:8], board[8:12], board[12:16]]
-    return render_template("connections.html", board = board, groups = groups, selected = selected, msg = msg, error = error,  mistakes = mistakes, rows = rows)
+    return render_template("connections.html", board = board, groups = groups, selected = selected, msg = msg, error = error,  mistakes = mistakes, solved_groups = solved_groups, rows = rows)
 
 @app.route('/spellingBee', methods=["GET", "POST"])
 def spellingBeePage():

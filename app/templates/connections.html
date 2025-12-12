@@ -26,6 +26,20 @@
         text-align: center;
       }
 
+      .solved-group {
+        height: 90px;
+        text-transform: uppercase;
+        background: #90ee90;
+        border-radius: 6px;
+        padding: 0 12px;
+        font-size: 1.15rem;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
       .tile-selected {
         background: gray;
         color: white;
@@ -70,6 +84,17 @@
         {% endif %}
 
         <form method='POST' action="/connections">
+
+        {% for g in solved_groups %}
+        <div class = "row mb-2">
+          <div class = "col-12 px-1">
+            <div class = "solved-group text-center">
+              <div class = "fw-bold"> {{ g[0] }} </div>
+              <div> {{ g[1]|join(", ") }} </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
 
         {% for row in rows %}
           <div class = "row mb-2">
