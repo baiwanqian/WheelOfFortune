@@ -18,7 +18,6 @@ app.secret_key = 'bdzfgetdzhezt'
 # SQLite
 DB_FILE = "data.db"
 
-# allows sqlite rows to be accessed like dictionaries instead of tuples
 def get_db():
     conn = sqlite3.connect(DB_FILE)
     conn.row_factory = sqlite3.Row
@@ -58,6 +57,7 @@ word = ""
 score = 0
 goodWords = []
 lttrs = spellingBee.randNums()
+submitted = 0
 
 # HTML PAGES
 # LANDING PAGE
@@ -107,8 +107,7 @@ def register():
             u_id = c.fetchall()[0][0]
             c.execute("INSERT INTO users VALUES (?, ?, ?, ?, ?)",(u_id, request.form['username'], request.form['password'], 0, 0,))
             db.commit()
-            c.execute("SELECT user_id FROM users WHERE username = ?", (request.form['username'],))
-            session["user_id"] = c.fetchone()[0]
+            session["user_id"] = fetch("users", "username = ?", "user_id", (request.form['username'],))[0][0]
             db.close()
             return redirect("/")
     return render_template("register.html")
@@ -119,21 +118,24 @@ def profile():
     if 'user_id' not in session:
         return redirect("/login")
 
-    db = get_db()
-    c = db.cursor()
+   # db = get_db()
+   # c = db.cursor()
 
-    c.execute("SELECT * FROM users WHERE user_id = ?", (session["user_id"],))
-    user = c.fetchone()
-    c.execute("SELECT * FROM creatures WHERE user_id = ?", (session["user_id"],))
-    creatures = c.fetchall()
+    user = fetch("users", "user_id = ?", "*", (session["user_id"],))[0]
+    creatures = fetch("creatures", "user_id = ?", "*", (session["user_id"],))
 
-    db.close()
+   # c.execute("SELECT * FROM users WHERE user_id = ?", (session["user_id"],))
+   # user = c.fetchone()
+   # c.execute("SELECT * FROM creatures WHERE user_id = ?", (session["user_id"],))
+   # creatures = c.fetchall()
+
+   # db.close()
 
     return render_template(
         "profile.html",
-        username = user["username"],
-        xp = user["xp"],
-        level = user["level"],
+        username = user[1],
+        xp = user[3],
+        level = user[4],
         creatures = creatures,
         # background_img = "/static/background_images/cloudy_weather/OIP-657791057.jpeg"
         background_img = str(bg_file())
@@ -330,15 +332,16 @@ def connectionsPage():
 
 @app.route('/spellingBee', methods=["GET", "POST"])
 def spellingBeePage():
+    global word, goodWords, lttrs, score, submitted
+    print(submitted)
     if not 'user_id' in session:
         return redirect("/login")
-    global word, goodWords, lttrs, score
     error = ""
     #lttrs = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
     notLttrs = ["sub", "newL", "sub2", "delete"]
     if request.method == "POST":
         if list(request.form.keys())[0] not in notLttrs and list(request.form.keys())[0]: #if submitted a letter
-            print(list(request.form.keys()))
+            #print(list(request.form.keys()))
             word += lttrs[int(list(request.form.keys())[0])]
         if list(request.form.keys()) == ["sub"] and word: #if submitted a word -- not reloading
             truths = spellingBee.checkword(word, lttrs[0])
@@ -359,9 +362,26 @@ def spellingBeePage():
             word = ""
         elif list(request.form.keys()) == ["newL"]:
             lttrs = spellingBee.randNums()
+            goodWords = []
+            word = ""
         elif list(request.form.keys()) == ["delete"]:
             word = word[:-1]
-    return render_template("spellingBee.html", letters = lttrs, w = word, error = error, words = goodWords, score = score)
+        elif list(request.form.keys()) == ["sub2"]:
+            print(fetch("users", "user_id = ?", "xp", (session["user_id"],)))
+            currXP = fetch("users", "user_id = ?", "xp", (session["user_id"],))[0][0]
+            db = sqlite3.connect(DB_FILE)
+            c = db.cursor()
+            newXP = currXP + score
+            c.execute("UPDATE users SET xp = ? WHERE user_id = ?", (newXP, session["user_id"],))
+            db.commit()
+            db.close()
+            print("xp: " + str(fetch("users", "user_id = ?", "xp", (session["user_id"],))[0][0]))
+            submitted += 1
+            score = 0
+            goodWords = []
+            lttrs = spellingBee.randNums()
+            word = ""
+    return render_template("spellingBee.html", letters = lttrs, w = word, error = error, words = goodWords, score = score, able = (submitted == 3))
 
 @app.route('/ingredients', methods=["GET", "POST"])
 def ingredientsGuesserPage():

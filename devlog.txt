@@ -108,3 +108,9 @@ Connections:
   - Proper tile display with visual changes upon selection
   - Solved-group display 
   - Button + mistakes formatting
+
+naomiK -- 2025-12-13 0:41
+Spelling Bee:
+  - added more spelling bee styling
+  - fixed errors regarding usage of API to check accuracy of inputted word
+  - made some edits to profile

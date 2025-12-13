@@ -41,3 +41,28 @@ html, body {
 #col2 {
     margin-left: -35px;
 }
+
+.hr{
+    margin-top: -30px;
+}
+
+h1{
+    padding-top: 15px;
+    padding-bottom: 35px;
+}
+
+h5{
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+
+
+.dot {
+    height: 35px;
+    width: 35px;
+    background-color: #000000;
+    border-radius: 50%;
+    display: inline-block;
+    margin-left: 10%;
+  }

@@ -13,20 +13,37 @@
 
   <body>
 
-    <nav>
-      <a href="/">Home</a>
-      <a href="/profile">Profile</a>
-      <a href="/logout">Logout</a>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+      <div class="container">
+        <a class="navbar-brand" href="/">WheelOfFortune</a>
+        <div class="navbar-nav ms-auto">
+          <a class="nav-link" href="/">Home</a>
+          <a class="nav-link" href="/profile">Profile</a>
+          <a class="nav-link" href="/logout">Logout</a>
+        </div>
+      </div>
     </nav>
+    {% if able == True %}
+      <h1 class="text-center">You have submitted three scores for today</h1>
+    {% endif %}
 
+
+    {% if able == False %}
     <div class="main">
-        <h1 class="text-center"> Play Spelling Bee!!!  </h1>
-        <p>
+        <div class = "hr">
+        <h1 class="text-center bg bg-secondary text-light"> Play Spelling Bee  </h1>
+        </div>
+        <h5 class = "hr text-center bg bg-light">
           Be careful! You can only submit three scores per day!
-        </p>
-        <p>
+        </h5>
+        {%if not error%}
+          <br>
+        {%endif%}
+        <h5 class="text-center">
           {{ error|safe }}
-        </p>
+        </h5>
+        
+        <span class="dot"></span>
 
 
     <form method='POST' action="/spellingBee">
@@ -34,7 +51,7 @@
         <div class="container">
             <div class ="row">
 
-                <div class="col">
+                <div class="col-sm">
 
                    <div class="pattern">
 
@@ -58,10 +75,10 @@
 
                 </div>
 
-                <div class="col border border-3 p-3">
+                <div class="col-sm border border-3 p-3">
 
                     <h2> {{ w }}</h2>
-                    <input type="submit" value="Submit Word" id= "sub" name="sub">
+                    <input class="btn btn-light" type="submit" value="Submit Word" id= "sub" name="sub">
                     <input type="submit" value="New Letters" id= "newL" name="newL">
                     <input type="submit" value="Submit Score" id= "sub2" name="sub2">
                     <input type="submit" value="Delete" id= "delete" name="delete">
@@ -81,6 +98,7 @@
         
       </form>
     </div>
+    {% endif %}
 
   </body>
 
