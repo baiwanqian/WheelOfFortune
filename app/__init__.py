@@ -65,7 +65,8 @@ submitted = 0
 def homepage():
     if not 'user_id' in session:
         return redirect("/login")
-    return render_template("home.html")
+    else:
+        return render_template("home.html")
 
 
 @app.route('/login', methods=["GET", "POST"])
@@ -137,7 +138,7 @@ def profile():
         xp = user[3],
         level = user[4],
         creatures = creatures,
-        # background_img = "/static/background_images/cloudy_weather/OIP-657791057.jpeg"
+        #background_img = "/static/background_images/cloudy_weather/OIP-657791057.jpeg"
         background_img = str(bg_file())
     )
 
@@ -179,27 +180,35 @@ def currentWeather():
 
 def bg_file():
     basepath = './static/background_images'
+    randFold = random.choice(os.listdir(basepath))
+    basepath = basepath + "/" + os.path.basename(randFold) #gives basepath to random folder (will change if key word found in API)
+
     print(os.listdir(basepath))
 
-    current_weather = currentWeather()
+    current_weather = currentWeather().lower()
 
-    if "Sunny" in current_weather or "sunny" in current_weather:
+    print("current weather: " + currentWeather())
+
+    if "sunny" in current_weather or "sun" in current_weather:
         basepath = './static/background_images/sunny_weather'
-    if "Cloudy" in current_weather or "cloudy" in current_weather:
+    if "cloudy" in current_weather or "clouds" in current_weather:
         basepath = './static/background_images/cloudy_weather'
-    if "Rainy" in current_weather or "rainy" in current_weather:
+    if "rainy" in current_weather or "rain" in current_weather:
         basepath = './static/background_images/rainy_weather'
-    if "Snowy" in current_weather or "snowy" in current_weather:
+    if "snowy" in current_weather or "snow" in current_weather:
         basepath = './static/background_images/snowy_weather'
-    if "Unknown" in current_weather:
+    if "unknown" in current_weather:
         basepath = './static/background_images/unknown_weather'
 
-    print(basepath)
+    print("basepath: " + basepath)
 
     image = random.choice(os.listdir(basepath))
-    print(image)
+    
+    print("image: " + image)
 
     path = basepath + "/" + os.path.basename(image)
+    
+    print("path:" + path)
 
     return path
 
