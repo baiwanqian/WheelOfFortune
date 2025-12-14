@@ -12,38 +12,53 @@
   </head>
 
   <body>
+    <div class="container-fluid p-0 bg">
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
-      <div class="container">
-        <a class="navbar-brand" href="/">WheelOfFortune</a>
-        <div class="navbar-nav ms-auto">
-          <a class="nav-link" href="/">Home</a>
-          <a class="nav-link" href="/profile">Profile</a>
-          <a class="nav-link" href="/logout">Logout</a>
+    <div class="bg bg-secondary">
+
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+        <div class="container">
+          <a class="navbar-brand" href="/">WheelOfFortune</a>
+          <div class="navbar-nav ms-auto">
+            <a class="nav-link" href="/">Home</a>
+            <a class="nav-link" href="/profile">Profile</a>
+            <a class="nav-link" href="/logout">Logout</a>
+          </div>
+        </div>
+      </nav>
+
+      <div class="position-absolute">
+        <div class="bee position-relative">
+          <span class="position-absolute dot"></span>
+          <span class="position-absolute d2"></span>
+          <span class="position-absolute d3"></span>
+          <div class="position-absolute triangle"></div>
         </div>
       </div>
-    </nav>
-    {% if able == True %}
-      <h1 class="text-center">You have submitted three scores for today</h1>
-    {% endif %}
+
+      {% if able == True %}
+        <h1 class="text-center">You have submitted three scores for today</h1>
+      {% endif %}
 
 
-    {% if able == False %}
-    <div class="main">
-        <div class = "hr">
-        <h1 class="text-center bg bg-secondary text-light"> Play Spelling Bee  </h1>
-        </div>
-        <h5 class = "hr text-center bg bg-light">
-          Be careful! You can only submit three scores per day!
-        </h5>
-        {%if not error%}
-          <br>
-        {%endif%}
-        <h5 class="text-center">
-          {{ error|safe }}
-        </h5>
+      {% if able == False %}
+            
+      <h1 class="hr z-0 text-center bg bg-secondary text-light"> Play Spelling Bee  </h1>
+
+    </div>
+
+
+    <h5 class = "z-0 text-center bg"> Be careful! You can only submit three scores per day!</h5>
         
-        <span class="dot"></span>
+
+
+
+    {%if not error%}
+    <br>
+    {%endif%}
+
+    <h5 class="text-center">{{ error|safe }}</h5>
+        
 
 
     <form method='POST' action="/spellingBee">
@@ -51,7 +66,7 @@
         <div class="container">
             <div class ="row">
 
-                <div class="col-sm">
+                <div class="col">
 
                    <div class="pattern">
 
@@ -62,7 +77,7 @@
 
                       <div class="co">
                         <input class="hexagon" type="submit" value= '{{ letters[3] }}' name= '3'>
-                        <input class="bg-warning hexagon" type="submit" value= '{{ letters[0] }}' name= '0'>
+                        <input class="hx hexagon" type="submit" value= '{{ letters[0] }}' name= '0'>
                         <input class="hexagon" type="submit" value= '{{ letters[4] }}' name= '4'>
                       </div>
 
@@ -75,21 +90,31 @@
 
                 </div>
 
-                <div class="col-sm border border-3 p-3">
+                <div class="col border border-5 p-0">
+                    <div class="sc p-0">
+                    <h2 class="p-3"> Score: {{ score }} </h2>
+                    </div>
 
                     <h2> {{ w }}</h2>
-                    <input class="btn btn-light" type="submit" value="Submit Word" id= "sub" name="sub">
-                    <input type="submit" value="New Letters" id= "newL" name="newL">
-                    <input type="submit" value="Submit Score" id= "sub2" name="sub2">
-                    <input type="submit" value="Delete" id= "delete" name="delete">
-
+                    <div class="buttons p-3">
+                    <div class="">
+                    <input class="bt btn" type="submit" value="Submit Word" id= "sub" name="sub">
+                    </div>
+                    <div class="">
+                    <input class="bt btn btn-light" type="submit" value="New Letters" id= "newL" name="newL">
+                    </div>
+                    <div class="">
+                    <input class="bt btn" type="submit" value="Submit Score" id= "sub2" name="sub2">
+                    </div>
+                    <div class="">
+                    <input class="bt btn btn-light" type="submit" value="Delete" id= "delete" name="delete">
+                    </div>
+                    </div>
                     <ul>
                       {% for wrd in words %}
                         <li>{{ wrd }}</li>
                       {% endfor %}
                     </il>
-
-                    <p> Score: {{ score }} </p>
 
                 </div>
 
@@ -98,7 +123,10 @@
         
       </form>
     </div>
+
+    <br>
     {% endif %}
+
 
   </body>
 

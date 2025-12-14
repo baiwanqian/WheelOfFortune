@@ -1,18 +1,85 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+}
 
+.bee {
+    left: 50%;
+    width: 20vw;              
+    aspect-ratio: 3 / 2;     
+    margin-top: 5%;
+}
 
+.dot {
+    height: 21%;
+    width: 14%;
+    background-color: #000000;
+    border-radius: 50%;
+    left: 35%;
+}
+
+.d2 {
+    width: 22%;
+    height: 25%;
+    border-radius: 50%;
+    left: 17%;
+    top: 1%;
+    background: repeating-linear-gradient(
+    90deg,
+    #000000,
+    #000000 20%,
+    #ffe02d 20%,
+    #ffe02d 40%
+    );
+}
+
+.d3 {
+    width: 8%;
+    height: 20%;
+    background-color: #ffffff;
+    transform: rotate(-40deg);
+    border-radius: 50%;
+    left: 22%;
+    top: -12%;
+}
+
+.triangle{
+    width: 12%;
+	height: 8%;
+    clip-path: polygon(0 50%, 100% 0, 100% 100%);
+    background: black;
+    left: 7%;
+    top: 10%;
+}
+
+.hr{
+    width: 100%;
+}
+
+h1{
+    margin-top: 0;
+    padding-top: 5px;
+    padding-bottom: 15px;
+}
+
+h5{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
 
 .hexagon {
     height: 150px; 
     aspect-ratio: 1/cos(30deg);
     clip-path: polygon(50% -50%,100% 50%,50% 150%,0 50%);
     border: none;
+    background-color: #d3d3da;
+    box-shadow: 0 3px 8px #7d7651
 }
 
-html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    width: 100%;
+.hx{
+    background-color: #ffe02d;
 }
 
 .co {
@@ -30,6 +97,19 @@ html, body {
 
 }
 
+.buttons{
+    display: flex;
+    justify-content: space-between;
+}
+
+.sc{
+    background-color: #d3d3da;
+}
+
+.bt{
+    box-shadow: 0 3px 8px #7d7651
+}
+
 #col1, #col2 {
     margin-top: 80px;
 }
@@ -42,27 +122,5 @@ html, body {
     margin-left: -35px;
 }
 
-.hr{
-    margin-top: -30px;
-}
-
-h1{
-    padding-top: 15px;
-    padding-bottom: 35px;
-}
-
-h5{
-    padding-top: 15px;
-    padding-bottom: 15px;
-}
 
 
-
-.dot {
-    height: 35px;
-    width: 35px;
-    background-color: #000000;
-    border-radius: 50%;
-    display: inline-block;
-    margin-left: 10%;
-  }
