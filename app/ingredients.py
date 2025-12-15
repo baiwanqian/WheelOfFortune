@@ -33,11 +33,15 @@ def random_ingredient():
         filtered_ing = str_ingredient.replace(" ", "_")
         filtered_ing = filtered_ing.lower()
 
-        meal_basepath = f"www.themealdb.com/api/json/v1/1/filter.php?i={filtered_ing}"
-        print(meal_basepath)
-        meal_response = requests.get(meal_basepath)
-        meal_data = meal_response.json()
 
         print("huh")
+        return (filtered_ing)
     except:
         print("oops")
+
+def random_meal(filtered_ing):
+    meal_basepath = f"www.themealdb.com/api/json/v1/1/filter.php?i={filtered_ing}"
+    print(meal_basepath)
+    meal_response = requests.get(meal_basepath)
+    meal_data = meal_response.json()
+    return ()

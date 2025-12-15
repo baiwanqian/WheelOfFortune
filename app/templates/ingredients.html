@@ -24,15 +24,17 @@
 
     <div class="main">
       <form method='POST' action="/register">
-        <h1> Play &nbsp Ingredients Guesser  </h1>
+        <h1> Play Ingredients Guesser  </h1>
         <p>
-          {{ error|safe }}
-          USERNAME:
-        </p>
-        <input type="text" name="word" maxLength="5" required>
-        <br>
+          Guess what has this ingredient:
+          {{rand_ing}}
 
-        <input type="submit" value="Register" id= "sub1" name="sub1">
+          <br>
+
+          Guess what's in this meal:
+          {{rand_meal}}
+        </p>
+        <br>
       </form>
     </div>
 
