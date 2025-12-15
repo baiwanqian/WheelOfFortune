@@ -134,6 +134,13 @@
           <input type="submit" value="Submit" name="sub" class = "button">
         </div>
 
+        {% if status != "playing" %}
+        <div class="d-flex justify-content-center mt-4">
+          <input type="submit" value="Play Again" name="play_again" class="button">
+        </div>
+      {% endif %}
+
+
       </form>
 
       <!-- <h3>corretc groups check</h3>
