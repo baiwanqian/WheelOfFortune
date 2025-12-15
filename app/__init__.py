@@ -196,7 +196,7 @@ def bg_file():
     basepath = os.path.join(app.root_path, 'static', 'background_images')
     randFold = random.choice(os.listdir(basepath))
     basepath = basepath + "/" + os.path.basename(randFold) #gives basepath to random folder (will change if key word found in API)
-
+    print("before basepath: " + basepath)
     print(os.listdir(basepath))
 
     current_weather = currentWeather().lower()

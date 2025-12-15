@@ -40,8 +40,9 @@ def random_ingredient():
         print("oops")
 
 def random_meal(filtered_ing):
-    meal_basepath = f"www.themealdb.com/api/json/v1/1/filter.php?i={filtered_ing}"
+    f_ing = filtered_ing
+    meal_basepath = f"http://www.themealdb.com/api/json/v1/1/filter.php?i={f_ing}"
     print(meal_basepath)
     meal_response = requests.get(meal_basepath)
     meal_data = meal_response.json()
-    return ()
+    return (meal_data)
