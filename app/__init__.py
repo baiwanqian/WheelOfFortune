@@ -203,7 +203,7 @@ def bg_file():
 
     print("current weather: " + currentWeather())
 
-    if "sunny" in current_weather or "sun" in current_weather:
+    if "sunny" in current_weather or "sun" in current_weather or "clear" in current_weather:
         basepath = './static/background_images/sunny_weather'
     if "cloudy" in current_weather or "clouds" in current_weather:
         basepath = './static/background_images/cloudy_weather'
