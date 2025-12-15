@@ -149,6 +149,11 @@ h5{
     box-shadow: 0 10px 10px #2f3259
 }
 
+.gImg:hover {
+    background-color: rgba(112, 150, 163, 0.5);
+    filter: brightness(80%);
+}
+
 .games {
     box-shadow: 0 3px 10px #2f3259
 }
