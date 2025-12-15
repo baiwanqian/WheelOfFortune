@@ -149,6 +149,13 @@ def profile():
         background_img = str(bg_file())
     )
 
+@app.route('/rewards', methods=["GET", "POST"])
+def rewards():
+    if not 'user_id' in session:
+        return redirect("/login")
+    else:
+        return render_template("rewards.html")
+
 headers = {'IDontKnowWhatTheNameIs' : 'WheelOfFortune'}
 
 STUY_LAT = 40.7127
