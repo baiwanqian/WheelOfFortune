@@ -29,14 +29,54 @@
 
       <div class="col-1"></div>
 
-      <div class="op col-4 border border-3 p-3">
-        <h5> Level: {{ level }} </h5>
-        <h5> Experience: {{ xp }} </h5>
+
+      <div class="op col-4 border border-3">
+
+        <h5 class="text-center"> Animals to Buy: </h5>
+
+        <div class="">
+
+          <div class="row text-center">
+            
+            <div class="col-3 border border-3">Picture</div>
+
+            <div class="col-3 border border-3">Name</div>
+
+            <div class="col-3 border border-3">Level</div>
+
+            <div class="col-3 border border-3">Rarity</div>
+
+          </div>
+
+
+          {% for c in creatures %}
+            <div class="row">
+            
+              <div class="col">
+                <img src="{{ c[6] }}" alt="Pet">
+              </div>
+
+              <div class="col">{{ c[2] }}</div>
+
+              <div class="col">{{ c[5] }}</div>
+
+              <div class="col"> {{ c[3] }} </div>
+
+            </div>
+          {% endfor %}
+
+        </div>
+
       </div>
 
-      <div class="col-1"></div>
 
-      <div class="op col-5 border border-3">
+
+      <div class="col-2"></div>
+
+
+
+
+      <div class="op col-4 border border-3">
 
         <h5 class="text-center"> Your Animals: </h5>
 
@@ -73,8 +113,9 @@
 
         </div>
 
-
       </div>
+
+      
 
       <div class="col-1"> </div>
 
