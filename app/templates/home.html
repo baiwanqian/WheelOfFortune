@@ -3,29 +3,81 @@
 <html>
 
   <head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
     <title> Home </title>
   </head>
 
-  <body style="background-image: url({{ bg_img_path }});">
+  <body class="bg-image" style="background-image: url( {{background_img}} ); background-size: cover;">
 
-    <nav>
-      <a href="/">Home</a>
-      <a href="/profile">Profile</a>
-      <a href="/logout">Logout</a>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+      <div class="container">
+        <a class="navbar-brand" href="/">WheelOfFortune</a>
+        <div class="navbar-nav ms-auto">
+          <a class="nav-link" href="/">Home</a>
+          <a class="nav-link" href="/profile">Profile</a>
+          <a class="nav-link" href="/logout">Logout</a>
+        </div>
+      </div>
     </nav>
 
-    <h1>
-      Homepage
-    </h1>
+    <div class="op games">
+    <h1 class="text-center">Homepage</h1>
 
-    <p> Choose a game below: </p>
+    <h3 class="text-center"> Choose a game below: </h3>
+    </div>
 
-    <ul>
-      <li><a href="/wordle">Wordle</a></li>
-      <li><a href="/spellingBee">Spelling Bee</a></li>
-      <li><a href="/connections">Connections</a></li>
-      <li><a href="/ingredients">Ingredient Guesser</a></li>
-    </ul>
+    <div class="p-3 row text-center">
+
+      <div class="col-1"></div>
+
+      <div class="op col-4 h3 games p-5">
+        Wordle
+        <br>
+        <a href="/wordle">
+          <img class="p-3 gImg" src="/static/game_images/wordle.jpg" alt="game">
+        </a>
+      </div>
+
+      <div class="col-2"></div>
+      
+      <div class="op col-4 h3 games p-5">
+        Spelling Bee
+        <br>
+        <a href="/spellingBee">
+          <img class="p-3 gImg" src="/static/game_images/spelling.jpg" alt="game">
+        </a>
+      </div>
+
+      <div class="col-1"></div>
+      
+    </div>
+
+    <div class="p-3 row text-center">
+
+      <div class="col-1"></div>
+
+      <div class="op col-4 h3 games p-5">
+        Connections
+        <br>
+        <a href="/connections">
+          <img class="p-3 gImg" src="/static/game_images/connections.jpg" alt="game">
+        </a>
+      </div>
+
+      <div class="col-2"></div>
+
+      <div class="op col-4 h3 games p-5">
+        Ingredient Guesser
+        <br>
+        <a href="/ingredients">
+          <img class="p-3 gImg" src="/static/game_images/ingredients.jpg" alt="game">
+        </a>
+      </div>
+
+      <div class="col-1"></div>
+
+    </div>
 
   </body>
 

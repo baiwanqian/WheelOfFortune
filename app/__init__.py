@@ -1,3 +1,9 @@
+#Christine Chen, Naomi Kurian, Ethan Cheung, Owen Zeng
+#WheelOfFortune
+#SoftDev
+#P01 – ArRESTed Development
+#2025-12-02
+
 import sqlite3
 import random
 from flask import Flask, render_template
@@ -10,6 +16,7 @@ import spellingBee
 import wordle
 import connections
 import ingredients
+
 
 # Flask
 app = Flask(__name__)
@@ -66,7 +73,7 @@ def homepage():
     if not 'user_id' in session:
         return redirect("/login")
     else:
-        return render_template("home.html")
+        return render_template("home.html", background_img = str(bg_file()))
 
 
 @app.route('/login', methods=["GET", "POST"])
