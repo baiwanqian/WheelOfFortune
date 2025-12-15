@@ -254,10 +254,10 @@ def wordlePage():
             session['wordle_message'] = "Word must be 5 letters."
         else:
             # Validate
-            words = wordle.get_valid_words()
-            if guess not in words:
-                 session['wordle_message'] = "Not in word list."
-            elif any(g[0] == guess for g in guesses):
+            # words = wordle.get_valid_words()
+            # if guess not in words:
+            #      session['wordle_message'] = "Not in word list."
+            if any(g[0] == guess for g in guesses):
                  session['wordle_message'] = "Already guessed."
             else:
                  feedback = wordle.check_guess(guess, target)
@@ -272,10 +272,33 @@ def wordlePage():
                      session['wordle_status'] = 'lost'
                      session['wordle_message'] = f"Game Over! Word was {target}"
 
+
+    keyboard_status = {}
+    current_guesses = session.get('wordle_guesses', [])
+    
+    for g_word, g_feedback in current_guesses:
+        for i, letter in enumerate(g_word):
+            current_status = keyboard_status.get(letter, 'empty')
+            new_status = g_feedback[i]
+            
+            if current_status == 'correct':
+                continue
+            elif current_status == 'present':
+                if new_status == 'correct':
+                    keyboard_status[letter] = 'correct'
+            elif current_status == 'absent':
+                if new_status == 'correct':
+                    keyboard_status[letter] = 'correct'
+                elif new_status == 'present':
+                    keyboard_status[letter] = 'present'
+            else: # empty
+                keyboard_status[letter] = new_status
+
     return render_template("wordle.html",
                            guesses=session.get('wordle_guesses', []),
                            status=session.get('wordle_status', 'playing'),
-                           message=session.get('wordle_message', ""))
+                           message=session.get('wordle_message', ""),
+                           keyboard_status=keyboard_status)
 
 @app.route('/connections', methods=["GET", "POST"])
 def connectionsPage():
