@@ -154,7 +154,7 @@ def rewards():
     if not 'user_id' in session:
         return redirect("/login")
     else:
-        return render_template("rewards.html")
+        return render_template("rewards.html", background_img = str(bg_file()))
 
 headers = {'IDontKnowWhatTheNameIs' : 'WheelOfFortune'}
 
