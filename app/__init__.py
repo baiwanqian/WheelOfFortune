@@ -193,7 +193,7 @@ def currentWeather():
         return "Unknown"
 
 def bg_file():
-    basepath = os.path.join(app.root_path, 'static', 'background_images')
+    basepath = "./static/background_images"
     randFold = random.choice(os.listdir(basepath))
     basepath = basepath + "/" + os.path.basename(randFold) #gives basepath to random folder (will change if key word found in API)
     print("before basepath: " + basepath)
@@ -204,15 +204,15 @@ def bg_file():
     print("current weather: " + currentWeather())
 
     if "sunny" in current_weather or "sun" in current_weather or "clear" in current_weather:
-        basepath = os.path.join(app.root_path, 'static', 'background_images', 'sunny_weather')
+        basepath = "./static/background_images/sunny_weather"
     if "cloudy" in current_weather or "clouds" in current_weather:
-        basepath = os.path.join(app.root_path, 'static', 'background_images', 'cloudy_weather')
+        basepath = "./static/background_images/cloudy_weather"
     if "rainy" in current_weather or "rain" in current_weather:
-        basepath = os.path.join(app.root_path, 'static', 'background_images', 'rainy_weather')
+        basepath = "./static/background_images/rainy_weather"
     if "snowy" in current_weather or "snow" in current_weather:
-        basepath = os.path.join(app.root_path, 'static', 'background_images', 'snowy_weather')
+        basepath = "./static/background_images/snowy_weather"
     if "unknown" in current_weather:
-        basepath = os.path.join(app.root_path, 'static', 'background_images', 'unknown_weather')
+        basepath = "./static/background_images/unknown_weather"
 
     print("basepath: " + basepath)
 
