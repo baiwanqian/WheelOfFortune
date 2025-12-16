@@ -228,11 +228,11 @@ def bg_file():
 
 #
 def add_xp(user_id, amount):
-    cur = fetch("users", "user_id = ?", "xp", (user_id))[0][0]
+    cur = fetch("users", "user_id = ?", "xp", (user_id,))[0][0]
     newXP = cur + amount
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
-    c.execute("UPDATE users SET xp = ? WHERE user_id = ?", (newXP, user_id))
+    c.execute("UPDATE users SET xp = ? WHERE user_id = ?", (newXP, user_id,))
     db.commit()
     db.close()
 
