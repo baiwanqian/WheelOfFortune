@@ -233,6 +233,7 @@ def add_xp(user_id, amount):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
     c.execute("UPDATE users SET xp = ? WHERE user_id = ?", (newXP, user_id,))
+    c.execute("UPDATE users SET level = ? WHERE user_id = ?", ((newXP // 50), user_id,))
     db.commit()
     db.close()
 
@@ -427,22 +428,16 @@ def spellingBeePage():
             else:
                 error = "Word already used"
             word = ""
-        elif list(request.form.keys()) == ["newL"]:
+        elif list(request.form.keys()) == ["newL"]: #new letters
             lttrs = spellingBee.randNums()
             goodWords = []
             word = ""
+            score = 0
         elif list(request.form.keys()) == ["delete"]:
             word = word[:-1]
-        elif list(request.form.keys()) == ["sub2"]:
+        elif list(request.form.keys()) == ["sub2"]: #submit score
             print(fetch("users", "user_id = ?", "xp", (session["user_id"],)))
-            currXP = fetch("users", "user_id = ?", "xp", (session["user_id"],))[0][0]
-            db = sqlite3.connect(DB_FILE)
-            c = db.cursor()
-            newXP = currXP + score
-            c.execute("UPDATE users SET xp = ? WHERE user_id = ?", (newXP, session["user_id"],))
-            db.commit()
-            db.close()
-            print("xp: " + str(fetch("users", "user_id = ?", "xp", (session["user_id"],))[0][0]))
+            add_xp(session["user_id"], score)
             submitted += 1
             score = 0
             goodWords = []
