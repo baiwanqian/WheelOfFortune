@@ -45,4 +45,16 @@ def random_meal(filtered_ing):
     print(meal_basepath)
     meal_response = requests.get(meal_basepath)
     meal_data = meal_response.json()
-    return (meal_data)
+    meals = meal_data["meals"]
+    try:
+        print(len(meals))
+        print(random.randint(0,len(meals)))
+        rand_num_meal = random.randint(0,len(meals))
+        rand_meal = meals[rand_num_meal]
+    except:
+        try:
+            rand_meal = meals[0]
+        except:
+            rand_meal = {"idMeal": 52772}
+    rand_meal_id = rand_meal["idMeal"]
+    return (rand_meal_id)
