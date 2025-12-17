@@ -157,3 +157,14 @@ h5{
 .games {
     box-shadow: 0 3px 10px #2f3259
 }
+
+.egg{
+    width: 100%;
+    height: auto;
+    position: relative;
+}
+
+.bottomE {
+    transform: translateY(-44%);
+}
+
