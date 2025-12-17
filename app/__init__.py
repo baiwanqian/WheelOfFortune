@@ -392,7 +392,7 @@ def connectionsPage():
                     session["connections_status"] = "lose"
                     session["connections_solved_groups"] = session["connections_all_groups"]
                     msg = "boo"
-            session["connections_selected"] = []
+            session["connections_selected"] = selected
     mistakes = session["connections_mistakes"]
     status = session["connections_status"]
     rows = [board[0:4], board[4:8], board[8:12], board[12:16]]
