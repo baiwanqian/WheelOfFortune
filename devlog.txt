@@ -129,9 +129,21 @@ owenZ -- 2025-12-14 22:31
 - added keyboard for wordle
 - added styling for homepage
 
+christineC -- 2025-12-14 23:00
+Connections:
+  - Add play again option
+  - Display correct groups upon completion (win/loss)
+  - Implement experience gains
+
 ethanC -- 2025-12-16 11:50
 Ingredients:
 - fixed and created random meals
+
+christineC -- 2025-12-16 11:50
+Connections:
+  - Modified connections selection logic
+Creatures:
+  - Added creature images to folder
 
 naomiK -- 2025-12-17 00:05
 Rewards:
