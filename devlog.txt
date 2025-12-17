@@ -128,3 +128,9 @@ Spelling Bee:
 ethanC -- 2025-12-16 11:50
 Ingredients:
 - fixed and created random meals
+
+naomiK -- 2025-12-17 00:05
+Rewards:
+  - added to rewards html
+  - added rewards styling
+  - fixed a spelling bee error and implemented level variable
