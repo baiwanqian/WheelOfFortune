@@ -110,7 +110,7 @@ christineC -- 2025-12-12 7:00
 Connections:
 - Implemented front-end for Connections, including:
   - Proper tile display with visual changes upon selection
-  - Solved-group display 
+  - Solved-group display
   - Button + mistakes formatting
 
 naomiK -- 2025-12-13 0:41
@@ -124,6 +124,10 @@ Spelling Bee:
   - finished up spelling bee styling
   - added profile styling
   - added home styling
+
+owenZ -- 2025-12-14 22:31
+- added keyboard for wordle
+- added styling for homepage
 
 ethanC -- 2025-12-16 11:50
 Ingredients:
