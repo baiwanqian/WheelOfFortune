@@ -39,6 +39,7 @@ def random_ingredient():
     except:
         print("oops")
 
+
 def random_meal(filtered_ing):
     f_ing = filtered_ing
     meal_basepath = f"http://www.themealdb.com/api/json/v1/1/filter.php?i={f_ing}"
@@ -55,6 +56,38 @@ def random_meal(filtered_ing):
         try:
             rand_meal = meals[0]
         except:
-            rand_meal = {"idMeal": 52772}
+            rand_meal = {"idMeal": 0}
     rand_meal_id = rand_meal["idMeal"]
     return (rand_meal_id)
+
+def meal_ingredients(rand_meal_id):
+    id = rand_meal_id
+    meal_basepath = f"http://www.themealdb.com/api/json/v1/1/lookup.php?i={id}"
+    print(meal_basepath)
+    meal_response = requests.get(meal_basepath)
+    meal_data = meal_response.json()
+    meals = meal_data["meals"]
+
+    ingredients = {}
+    i = 0
+    while i < len(meals):
+        if "strIngredient" in meals[i]:
+            ingredient.append(meals[i]["strIngredient" + i])
+        i = i+1
+
+    end = ingredients
+    return end
+
+'''
+def random_meal():
+    meal_basepath = "www.themealdb.com/api/json/v1/1/random.php"
+    meal_response = requests.get(meal_basepath)
+    meal_data = meal_response.json()
+    meal_data = meal_data["meals"][0]
+
+    ingredients = {}
+    i = 10
+    while meal_data[i] <= 20:
+        if ()
+            ingredients.append(meal_data["strIngredient" + i])
+'''

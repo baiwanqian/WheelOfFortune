@@ -454,7 +454,12 @@ def ingredientsGuesserPage():
         pass #temp placeholder so it runs)
     rand_ing=ingredients.random_ingredient()
     rand_meal=ingredients.random_meal(rand_ing)
-    return render_template("ingredients.html", rand_ing=rand_ing,rand_meal=rand_meal)
+    while (rand_meal == 0):
+        rand_ing=ingredients.random_ingredient()
+        rand_meal=ingredients.random_meal(rand_ing)
+    meal_ing = ingredients.meal_ingredients(rand_meal)
+
+    return render_template("ingredients.html", rand_ing=rand_ing,rand_meal=rand_meal,meal_ing=meal_ing)
 
 def fetch(table, criteria, data, params = ()):
     db = sqlite3.connect(DB_FILE)
