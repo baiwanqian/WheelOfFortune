@@ -170,8 +170,12 @@ h5{
 
 
 @keyframes hatching{
-  0%   {top: 0px; background: red; width: 100px;}
-  100% {top: 200px; background: yellow; width: 300px;}
-
+  0%   { }
+  100% {transform: translateY(14%); }
 }
+
+.hatching {
+  animation: hatching 2s;
+}
+
 
