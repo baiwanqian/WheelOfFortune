@@ -25,20 +25,11 @@
     <div class="main">
       <form method='POST' action="/register">
         <h1> Play Ingredients Guesser  </h1>
-        <p>
-          Guess what has this ingredient:
-          {{rand_ing}}
-
-          <br>
-
-          Guess what's in this meal:
-          {{rand_meal}}
-
-          <br>
-
-          {{meal_ing}}
-        </p>
         <br>
+        <img src="{{image_url}}">
+        <label for="input_ing">What is an ingredient in this meal?</label>
+        <input type="text" name="input_ing">
+
       </form>
     </div>
 

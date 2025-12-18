@@ -458,8 +458,8 @@ def ingredientsGuesserPage():
         rand_ing=ingredients.random_ingredient()
         rand_meal=ingredients.random_meal(rand_ing)
     meal_ing = ingredients.meal_ingredients(rand_meal)
-
-    return render_template("ingredients.html", rand_ing=rand_ing,rand_meal=rand_meal,meal_ing=meal_ing)
+    image_url = ingredients.meal_img(rand_ing)
+    return render_template("ingredients.html", image_url=image_url)
 
 def fetch(table, criteria, data, params = ()):
     db = sqlite3.connect(DB_FILE)

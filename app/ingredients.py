@@ -37,28 +37,30 @@ def random_ingredient():
         print("huh")
         return (filtered_ing)
     except:
-        print("oops")
-
+        return "unwaxed_lemon"
 
 def random_meal(filtered_ing):
     f_ing = filtered_ing
-    meal_basepath = f"http://www.themealdb.com/api/json/v1/1/filter.php?i={f_ing}"
-    print(meal_basepath)
-    meal_response = requests.get(meal_basepath)
-    meal_data = meal_response.json()
-    meals = meal_data["meals"]
     try:
-        print(len(meals))
-        print(random.randint(0,len(meals)))
-        rand_num_meal = random.randint(0,len(meals))
-        rand_meal = meals[rand_num_meal]
-    except:
+        meal_basepath = f"http://www.themealdb.com/api/json/v1/1/filter.php?i={f_ing}"
+        print(meal_basepath)
+        meal_response = requests.get(meal_basepath)
+        meal_data = meal_response.json()
+        meals = meal_data["meals"]
         try:
-            rand_meal = meals[0]
+            print(len(meals))
+            print(random.randint(0,len(meals)))
+            rand_num_meal = random.randint(0,len(meals))
+            rand_meal = meals[rand_num_meal]
         except:
-            rand_meal = {"idMeal": 0}
-    rand_meal_id = rand_meal["idMeal"]
-    return (rand_meal_id)
+            try:
+                rand_meal = meals[0]
+            except:
+                rand_meal = {"idMeal": 0}
+        rand_meal_id = rand_meal["idMeal"]
+        return (rand_meal_id)
+    except:
+        return 0
 
 def meal_ingredients(rand_meal_id):
     id = rand_meal_id
@@ -68,15 +70,30 @@ def meal_ingredients(rand_meal_id):
     meal_data = meal_response.json()
     meals = meal_data["meals"]
 
-    ingredients = {}
-    i = 0
-    while i < len(meals):
-        if "strIngredient" in meals[i]:
-            ingredient.append(meals[i]["strIngredient" + i])
-        i = i+1
+    ingredients = []
 
-    end = ingredients
+    for k in meals[0]:
+        if "strIngredient" in k:
+            ingredients.append(meals[0][k])
+    print(ingredients)
+
+
+    sanitized_ingredients = filter(None, ingredients)
+    sanitized_ingredients = list(sanitized_ingredients)
+    end = sanitized_ingredients
     return end
+
+def meal_img(rand_meal_id):
+    id = rand_meal_id
+    meal_basepath = f"http://www.themealdb.com/api/json/v1/1/lookup.php?i={id}"
+    print(meal_basepath)
+    meal_response = requests.get(meal_basepath)
+    meal_data = meal_response.json()
+    meals = meal_data["meals"]
+    image = meals[0][0]
+
+    return image
+
 
 '''
 def random_meal():
