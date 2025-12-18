@@ -264,9 +264,9 @@ def wordlePage():
             session['wordle_message'] = "Word must be 5 letters."
         else:
             # Validate
-            # words = wordle.get_valid_words()
-            # if guess not in words:
-            #      session['wordle_message'] = "Not in word list."
+            words = wordle.get_valid_words()
+            if guess not in words:
+                 session['wordle_message'] = "Not in word list."
             if any(g[0] == guess for g in guesses):
                  session['wordle_message'] = "Already guessed."
             else:
@@ -392,7 +392,7 @@ def connectionsPage():
                     session["connections_status"] = "lose"
                     session["connections_solved_groups"] = session["connections_all_groups"]
                     msg = "boo"
-            session["connections_selected"] = []
+            session["connections_selected"] = selected
     mistakes = session["connections_mistakes"]
     status = session["connections_status"]
     rows = [board[0:4], board[4:8], board[8:12], board[12:16]]
