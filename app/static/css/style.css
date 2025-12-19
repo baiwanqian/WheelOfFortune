@@ -158,24 +158,58 @@ h5{
     box-shadow: 0 3px 10px #2f3259
 }
 
+.area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    aspect-ratio: 1 / 2;
+}
+
 .egg{
     width: 100%;
     height: auto;
     position: relative;
 }
 
+.topE {
+    transform: translateY(23%);
+}
+
 .bottomE {
-    transform: translateY(-44%);
+    transform: translateY(-22%);
+}
+
+.pop{
+    box-shadow: 0 3px 8px #201b36
 }
 
 
+
 @keyframes hatching{
-  0%   { }
-  100% {transform: translateY(14%); }
+    from {
+        transform: translateY(-22%);
+    }
+    to {
+        transform: translateY(14%);
+    }
 }
 
 .hatching {
   animation: hatching 2s;
+}
+
+
+@keyframes hatching2{
+    from {
+        transform: translateY(23%);
+    }
+    to {
+        transform: translateY(-14%);
+    }
+}
+
+.hatching2 {
+  animation: hatching2 2s;
 }
 
 
