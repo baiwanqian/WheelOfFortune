@@ -266,10 +266,10 @@ def wordlePage():
             session['wordle_message'] = "Word must be 5 letters."
         else:
             # Validate
-            words = wordle.get_valid_words()
-            if guess not in words:
+            # words = wordle.get_valid_words()
+            if not wordle.check_word_exists(guess):
                  session['wordle_message'] = "Not in word list."
-            if any(g[0] == guess for g in guesses):
+            elif any(g[0] == guess for g in guesses):
                  session['wordle_message'] = "Already guessed."
             else:
                  feedback = wordle.check_guess(guess, target)
