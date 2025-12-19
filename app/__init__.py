@@ -279,7 +279,8 @@ def wordlePage():
 
                  if guess == target:
                      session['wordle_status'] = 'won'
-                     session['wordle_message'] = "You Won!"
+                     session['wordle_message'] = "You Won! \n+10 xp!"
+                     add_xp(session["user_id"], 10)
                  elif len(guesses) >= 6:
                      session['wordle_status'] = 'lost'
                      session['wordle_message'] = f"Game Over! Word was {target}"
