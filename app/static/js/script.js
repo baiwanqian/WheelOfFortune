@@ -3,13 +3,14 @@ const element = document.getElementById('bttm');
 const element2 = document.getElementById('tp');
 const form = document.getElementById('htc');
 const button = form.querySelector('input[type="submit"]');
+const creature = document.getElementById("hatched-creature");
 
 let reload = 0;
 let moving = false;
 
 form.addEventListener('submit', function(event) {
-    
-    event.preventDefault(); 
+
+    event.preventDefault();
 
     if (moving) return;
     moving = true;
@@ -18,8 +19,14 @@ form.addEventListener('submit', function(event) {
     function onDone() {
         reload++;
         if (reload === 2) {
+          creature.classList.remove("hidden");
+          creature.classList.add("show");
+
+          function onCreatureDone() {
             form.submit();
             moving = false;
+          }
+          creature.addEventListener("transitionend", onCreatureDone, { once: true });
         }
     }
 

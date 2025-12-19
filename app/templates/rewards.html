@@ -34,8 +34,11 @@
 
 
       <div class="op area col-3 border border-3 d-flex flex-column justify-content-center">
-
-
+        {% for c in creatures %}
+          {% if loop.last %}
+            <img id = "hatched-creature" class = "hatched-creature hidden" src = "/static/creature_images/{{ c.species }}_{{ c.level }}.png">
+          {% endif %}
+        {% endfor %}
 
           <img id="tp" class="topE egg z-1" src="/static/game_images/topE.png" alt="game">
 
