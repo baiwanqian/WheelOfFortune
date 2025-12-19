@@ -156,7 +156,9 @@ def rewards():
         return redirect("/login")
     else:
         creatures = fetch("creatures", "user_id = ?", "*", (session["user_id"],))
-        return render_template("rewards.html", creatures = creatures, background_img = str(bg_file()))
+        species = random.choice(["chicken", "greenBird"])
+        level = 1
+        return render_template("rewards.html", creatures = creatures, background_img = str(bg_file()), species = species, level = level)
 
 headers = {'IDontKnowWhatTheNameIs' : 'WheelOfFortune'}
 
@@ -474,11 +476,13 @@ def fetch(table, criteria, data, params = ()):
     return data
 
 # <-------------------- CREATURES -------------------->
-@app.route("/hatch", methods=["POST"])
+'''
+@app.route("/hatch", methods=["POST", "GET"])
 def hatch():
     if "user_id" not in session:
         return redirect("/login")
     user_id = session["user_id"]
+   
     species = random.choice(["chicken", "greenBird"])
     if species == "chicken":
         rarity = "common"
@@ -493,6 +497,7 @@ def hatch():
     db.commit()
     db.close()
     return redirect("/rewards")
+'''
 
 # Flask
 if __name__=='__main__':

@@ -34,15 +34,12 @@
 
 
       <div class="op area col-3 border border-3 d-flex flex-column justify-content-center">
-        {% for c in creatures %}
-          {% if loop.last %}
-            <img id = "hatched-creature" class = "hatched-creature hidden" src = "/static/creature_images/{{ c.species }}_{{ c.level }}.png">
-          {% endif %}
-        {% endfor %}
+       
+          <img id = "hatched-creature" class = "hatched-creature" src = "/static/creature_images/{{ species }}_{{ level }}.png">
+       
 
           <img id="tp" class="topE egg z-1" src="/static/game_images/topE.png" alt="game">
 
-          <div class="chick"></div>
 
           <img id="bttm" class="bottomE egg z-0" src="/static/game_images/bottomE.png" alt="game">
 
@@ -59,7 +56,7 @@
 
         <div class="d-flex flex-row justify-content-center">
 
-          <form id="htc" action = "/hatch" method = "POST">
+          <form id="htc" action = "/rewards" method = "POST">
               <input class="p-3 pop" type="submit" value= 'Hatch'>
           </form>
 
