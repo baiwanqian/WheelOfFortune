@@ -25,7 +25,7 @@
     </nav>
 
     <h1 class="op text-center"> Rewards </h1>
-    
+
     <div class="row align-items-start">
 
 
@@ -45,7 +45,7 @@
 
 
 
-      
+
       </div>
 
 
@@ -56,7 +56,7 @@
 
         <div class="d-flex flex-row justify-content-center">
 
-          <form id="htc" class="">
+          <form id="htc" action = "/hatch" method = "POST">
               <input class="p-3 pop" type="submit" value= 'Hatch'>
           </form>
 
@@ -74,7 +74,7 @@
         <div class="">
 
           <div class="row text-center">
-            
+
             <div class="col-3 border border-3">Picture</div>
 
             <div class="col-3 border border-3">Name</div>
@@ -88,16 +88,16 @@
 
           {% for c in creatures %}
             <div class="row">
-            
+
               <div class="col">
-                <img src="{{ c[6] }}" alt="Pet">
+                <img src="/static/creature_images/{{ c.species }}_{{ c.level }}.png" alt="Pet" width="80">
               </div>
 
-              <div class="col">{{ c[2] }}</div>
+              <div class="col">{{ c.name }}</div>
 
-              <div class="col">{{ c[5] }}</div>
+              <div class="col">{{ c.level }}</div>
 
-              <div class="col"> {{ c[3] }} </div>
+              <div class="col"> {{ c.rarity }} </div>
 
             </div>
           {% endfor %}
@@ -106,7 +106,7 @@
 
       </div>
 
-      
+
 
       <div class="col-1"> </div>
 

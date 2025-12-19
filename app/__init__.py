@@ -28,6 +28,7 @@ DB_FILE = "data.db"
 def get_db():
     conn = sqlite3.connect(DB_FILE)
     conn.row_factory = sqlite3.Row
+    conn.execute("PRAGMA foreign_keys = ON;")
     return conn
 
 # database creation
@@ -45,13 +46,13 @@ c.execute("""
 
 c.execute("""
     CREATE TABLE IF NOT EXISTS creatures (
-    creature_id INTEGER PRIMARY KEY,
+    creature_id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER,
     name TEXT,
     rarity TEXT,
     xp INTEGER,
     level INTEGER,
-    image_path TEXT,
+    species TEXT,
     status TEXT,
     FOREIGN KEY(user_id) REFERENCES users(user_id))
     """)
@@ -154,7 +155,8 @@ def rewards():
     if not 'user_id' in session:
         return redirect("/login")
     else:
-        return render_template("rewards.html", background_img = str(bg_file()))
+        creatures = fetch("creatures", "user_id = ?", "*", (session["user_id"],))
+        return render_template("rewards.html", creatures = creatures, background_img = str(bg_file()))
 
 headers = {'IDontKnowWhatTheNameIs' : 'WheelOfFortune'}
 
@@ -462,17 +464,34 @@ def ingredientsGuesserPage():
     return render_template("ingredients.html", image_url=image_url)
 
 def fetch(table, criteria, data, params = ()):
-    db = sqlite3.connect(DB_FILE)
+    db = get_db()
     c = db.cursor()
     query = f"SELECT {data} FROM {table} WHERE {criteria}"
     c.execute(query, params)
     data = c.fetchall()
-    db.commit()
     db.close()
     return data
 
-
-
+# <-------------------- CREATURES -------------------->
+@app.route("/hatch", methods=["POST"])
+def hatch():
+    if "user_id" not in session:
+        return redirect("/login")
+    user_id = session["user_id"]
+    species = random.choice(["chicken", "greenBird"])
+    if species == "chicken":
+        rarity = "common"
+    elif species == "greenBird":
+        rarity = "uncommon"
+    level = 1
+    db = get_db()
+    c = db.cursor()
+    c.execute("""INSERT INTO creatures (user_id, name, rarity, xp, level, species, status) VALUES (?, ?, ?, ?, ?, ?, ?)""", (
+              user_id, species.capitalize(), rarity, 0, level, species, "hatched"
+    ))
+    db.commit()
+    db.close()
+    return redirect("/rewards")
 
 # Flask
 if __name__=='__main__':
