@@ -34,12 +34,11 @@
 
 
       <div class="op area col-3 border border-3 d-flex flex-column justify-content-center">
-       
-          <img id = "hatched-creature" class = "hatched-creature" src = "/static/creature_images/{{ species }}_{{ level }}.png">
-       
+              
 
-          <img id="tp" class="topE egg z-1" src="/static/game_images/topE.png" alt="game">
+          <img id="tp" class="topE egg z-2" src="/static/game_images/topE.png" alt="game">
 
+          <img id ="" class="egg z-1 hatched-creature" src = "/static/creature_images/{{ species }}_{{ level }}.png">
 
           <img id="bttm" class="bottomE egg z-0" src="/static/game_images/bottomE.png" alt="game">
 
@@ -57,7 +56,8 @@
         <div class="d-flex flex-row justify-content-center">
 
           <form id="htc" action = "/rewards" method = "POST">
-              <input class="p-3 pop" type="submit" value= 'Hatch'>
+              <input class="p-3 pop" name="hatch" type="submit" value= 'Hatch' id="hatch">
+              <input type="hidden" name="action" value="h">
           </form>
 
         </div>

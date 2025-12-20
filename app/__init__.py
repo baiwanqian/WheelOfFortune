@@ -67,6 +67,10 @@ goodWords = []
 lttrs = spellingBee.randNums()
 submitted = 0
 
+species = "chicken"
+level = 1
+
+
 # HTML PAGES
 # LANDING PAGE
 @app.route('/', methods=["GET", "POST"])
@@ -95,7 +99,7 @@ def login():
 
 @app.route('/logout', methods=["GET", "POST"])
 def logout():
-    session.pop("user_id", None)
+    session.clear()
     return redirect("/login")
 
 
@@ -152,13 +156,27 @@ def profile():
 
 @app.route('/rewards', methods=["GET", "POST"])
 def rewards():
+    global species, level
+    print("AAAAAAAAAAAAAAAA")
+    print(request.method)
+    print(request.form)
     if not 'user_id' in session:
         return redirect("/login")
-    else:
-        creatures = fetch("creatures", "user_id = ?", "*", (session["user_id"],))
-        species = random.choice(["chicken", "greenBird"])
-        level = 1
+    else:  
+        if not request.form.get("action") == "h":
+            species = random.choice(["chicken", "greenBird"])
+            level = 1
+        if request.method == "POST":
+            if request.form.get("action") == "h":
+                #print("HHHHHHHHHHHHHHHHHH")
+                hatch(species, level)  
+            return redirect("/rewards")
+        creatures = fetch("creatures", "user_id = ?", "*", (session["user_id"],)) 
         return render_template("rewards.html", creatures = creatures, background_img = str(bg_file()), species = species, level = level)
+
+
+
+
 
 headers = {'IDontKnowWhatTheNameIs' : 'WheelOfFortune'}
 
@@ -186,7 +204,7 @@ def currentWeather():
         #retrieves forecast data at coordinates
         forecast_response = requests.get(forecast_link, headers = headers)
         forecast_data = forecast_response.json()
-        print(forecast_data)
+        #print(forecast_data)
 
         #gets most recently updated forecast for next period (for example: Monday, Monday Night, Tuesday, etc.)
         forecast = forecast_data["properties"]["periods"][0]["shortForecast"]
@@ -476,19 +494,16 @@ def fetch(table, criteria, data, params = ()):
     return data
 
 # <-------------------- CREATURES -------------------->
-'''
-@app.route("/hatch", methods=["POST", "GET"])
-def hatch():
-    if "user_id" not in session:
-        return redirect("/login")
+
+def hatch(s, l):
     user_id = session["user_id"]
-   
-    species = random.choice(["chicken", "greenBird"])
+    species = s
+    level = l
+
     if species == "chicken":
         rarity = "common"
     elif species == "greenBird":
         rarity = "uncommon"
-    level = 1
     db = get_db()
     c = db.cursor()
     c.execute("""INSERT INTO creatures (user_id, name, rarity, xp, level, species, status) VALUES (?, ?, ?, ?, ?, ?, ?)""", (
@@ -496,8 +511,8 @@ def hatch():
     ))
     db.commit()
     db.close()
-    return redirect("/rewards")
-'''
+    return True
+
 
 # Flask
 if __name__=='__main__':

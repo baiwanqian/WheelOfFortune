@@ -173,25 +173,28 @@ h5{
 }
 
 .topE {
-    transform: translateY(23%);
+    transform: translateY(65%);
 }
 
 .bottomE {
-    transform: translateY(-22%);
+    transform: translateY(-100%);
 }
 
 .pop{
     box-shadow: 0 3px 8px #201b36
 }
 
-
+.hatched-creature {
+    transform: translateY(-30%) scale(0.4);
+  }
+ 
 
 @keyframes hatching{
     from {
-        transform: translateY(-22%);
+        transform: translateY(-100%);
     }
     to {
-        transform: translateY(14%);
+        transform: translateY(-80%);
     }
 }
 
@@ -202,10 +205,10 @@ h5{
 
 @keyframes hatching2{
     from {
-        transform: translateY(23%);
+        transform: translateY(65%);
     }
     to {
-        transform: translateY(-14%);
+        transform: translateY(5%);
     }
 }
 
@@ -213,21 +216,3 @@ h5{
   animation: hatching2 2s;
 }
 
-.hidden {
-  display: none;
-}
-
-.hatched-creature {
-  position: absolute;
-  bottom: 5%;
-  left: 50%;
-  transform: translateX(-50%) scale(0.4);
-  opacity: 0;
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-  z-index: 2;
-}
-
-.hatched-creature.show {
-  opacity: 1;
-  transform: translateX(-50%) translateY(-40px) scale(1);
-}

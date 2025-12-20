@@ -19,8 +19,6 @@ form.addEventListener('submit', function(event) {
     function onDone() {
         reload++;
         if (reload === 2) {
-      
-         
             form.submit();
             moving = false;
         
