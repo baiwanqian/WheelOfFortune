@@ -55,10 +55,12 @@
 
         <div class="d-flex flex-row justify-content-center">
 
+          {% if canHatch %}
           <form id="htc" action = "/rewards" method = "POST">
               <input class="p-3 pop" name="hatch" type="submit" value= 'Hatch' id="hatch">
               <input type="hidden" name="action" value="h">
           </form>
+          {% endif %}
 
         </div>
 

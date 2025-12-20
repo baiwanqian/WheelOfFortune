@@ -154,3 +154,9 @@ Rewards:
 owenZ -- 2025-12-18 21:00
 - change wordle api to dicitonary
 - add hardcoded word bank becausen no random word generation from this api
+
+naomiK -- 2025-12-20 00:30
+Rewards:
+  - finished rewards js
+  - added to rewards html
+  - animals can now be hatched

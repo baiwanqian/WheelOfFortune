@@ -67,8 +67,10 @@ goodWords = []
 lttrs = spellingBee.randNums()
 submitted = 0
 
+# Globals for rewards
 species = "chicken"
-level = 1
+lev = 1
+animals = 0
 
 
 # HTML PAGES
@@ -156,23 +158,25 @@ def profile():
 
 @app.route('/rewards', methods=["GET", "POST"])
 def rewards():
-    global species, level
-    print("AAAAAAAAAAAAAAAA")
-    print(request.method)
-    print(request.form)
+    global species, lev, animals
+    #print("AAAAAAAAAAAAAAAA")
+    #print(request.method)
+    #print(request.form)
     if not 'user_id' in session:
         return redirect("/login")
     else:  
         if not request.form.get("action") == "h":
             species = random.choice(["chicken", "greenBird"])
-            level = 1
+            lev = 1
         if request.method == "POST":
             if request.form.get("action") == "h":
-                #print("HHHHHHHHHHHHHHHHHH")
-                hatch(species, level)  
+                hatch(species, lev)
+                animals += 1  
             return redirect("/rewards")
         creatures = fetch("creatures", "user_id = ?", "*", (session["user_id"],)) 
-        return render_template("rewards.html", creatures = creatures, background_img = str(bg_file()), species = species, level = level)
+        level = fetch("users", "user_id = ?", "level", (session["user_id"],))[0][0]
+        print("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL")
+        return render_template("rewards.html", creatures = creatures, background_img = str(bg_file()), species = species, level = lev, canHatch = animals < level)
 
 
 
@@ -300,7 +304,7 @@ def wordlePage():
                  if guess == target:
                      session['wordle_status'] = 'won'
                      session['wordle_message'] = "You Won! \n+10 xp!"
-                     add_xp(session["user_id"], 10)
+                     add_xp(session["user_id"], 30)
                  elif len(guesses) >= 6:
                      session['wordle_status'] = 'lost'
                      session['wordle_message'] = f"Game Over! Word was {target}"
@@ -406,7 +410,7 @@ def connectionsPage():
 
                 if len(session["connections_solved_groups"]) == 4:
                     session["connections_status"] = "win"
-                    add_xp(session["user_id"], 10)
+                    add_xp(session["user_id"], 30)
                     msg = "yay"
             else:
                 session["connections_mistakes"] -= 1
