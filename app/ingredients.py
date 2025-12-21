@@ -26,7 +26,7 @@ def random_ingredient():
         ing_data = ingredient_response.json()
         ingredients = ing_data["meals"]
         print(len(ingredients))
-        rand_num_ing = random.randint(0, len(ingredients))
+        rand_num_ing = random.randint(0, len(ingredients) - 1)
         print(rand_num_ing)
         rand_ing = ingredients[rand_num_ing]
         str_ingredient = rand_ing["strIngredient"]
@@ -41,6 +41,23 @@ def random_ingredient():
     except:
         return "unwaxed_lemon"
 
+def random_wrong_ingredients(correct):
+    try:
+        # get rand ingredient
+        ingredient_basepath = "https://www.themealdb.com/api/json/v1/1/list.php?i=list"
+        ingredient_response = requests.get(ingredient_basepath)
+        ing_data = ingredient_response.json()
+        ingredients = ing_data["meals"]
+
+        wrong = []
+        while len(wrong) < 4:
+            pick = random.choice(ingredients)["strIngredient"]
+            if pick not in correct and pick not in wrong:
+                wrong.append(pick)
+
+        return wrong
+    except:
+        return ["Help", "Help", "Help", "Help"]
 
 def random_meal(filtered_ing):
     print("<------------------------------RANDOM MEAL------------------------------>")
@@ -107,5 +124,3 @@ def meal_img(rand_meal_id):
     print(image)
 
     return image
-
-

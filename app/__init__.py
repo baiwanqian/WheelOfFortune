@@ -595,24 +595,41 @@ def spellingBeePage():
 def ingredientsGuesserPage():
     if not "user_id" in session:
         return redirect("/login")
-
-    word_input = ""
-    if request.method == "POST":
-        word_input = request.form.get("input_ing")
-        print("word input: " + word_input)
-    rand_ing = ingredients.random_ingredient()
-    print("random ingredient: " + rand_ing)
-    rand_meal = ingredients.random_meal(rand_ing)
-    print("random meal id: " + str(rand_meal))
-    while rand_meal == 0:
+    if "correct" not in session:
         rand_ing = ingredients.random_ingredient()
         rand_meal = ingredients.random_meal(rand_ing)
-    meal_ing = ingredients.meal_ingredients(rand_meal)
-    if word_input in meal_ing:
-        print("correct")
-    image_url = ingredients.meal_img(rand_meal)
-    return render_template("ingredients.html", image_url=image_url)
+        while rand_meal == 0:
+            rand_ing = ingredients.random_ingredient()
+            rand_meal = ingredients.random_meal(rand_ing)
+        meal_ing = ingredients.meal_ingredients(rand_meal)
+        correct = random.choice(meal_ing)
+        wrong = ingredients.random_wrong_ingredients(meal_ing)
+        choices = wrong + [correct]
+        random.shuffle(choices)
 
+        session["correct"] = correct
+        session["choices"] = choices
+        session["image_url"] = ingredients.meal_img(rand_meal)
+        session["done"] = False
+
+    msg = ""
+
+    if request.method == "POST":
+        if "play_again" in request.form:
+            session.pop("correct", None)
+            session.pop("choices", None)
+            session.pop("image_url", None)
+            session.pop("answered", None)
+            return redirect("/ingredients")
+
+        picked = request.form.get("choice")
+        if picked == session["correct"]:
+            msg = "Correct!"
+        else:
+            msg = "Incorrect. The ingredient was " + session["correct"]
+        session["done"] = True
+
+    return render_template("ingredients.html", image_url=session["image_url"], choices=session["choices"], msg=msg, done = session["done"])
 
 def fetch(table, criteria, data, params=()):
     db = get_db()
