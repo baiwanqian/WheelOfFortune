@@ -172,6 +172,11 @@ Rewards:
   - added to rewards html
   - animals can now be hatched
 
+ethanC -- 2025-12-21 4:55
+- finished image showing on page
+- changed input form 
+
+
 christineC -- 2025-12-21 9:54
 Connections:
   - Fixed bugs
