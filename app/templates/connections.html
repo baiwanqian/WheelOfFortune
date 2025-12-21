@@ -92,10 +92,6 @@
         animation: reveal 0.65s ease-out both;
       }
 
-      .solved-group.reveal {
-        opacity: 0;
-      }
-
       @keyframes anim {
         0% {
           transform: scale(0.8);
@@ -155,25 +151,14 @@
         <form method='POST' action="/connections">
 
           {% for g in solved_groups %}
-            <div class = "row mb-2">
-              <div class = "col-12 px-1">
-                <div class = "solved-group text-center">
-                  <div class = "fw-bold"> {{ g[0] }} </div>
-                  <div> {{ g[1]|join(", ") }} </div>
-                </div>
+          <div class = "row mb-2">
+            <div class = "col-12 px-1">
+              <div class = "solved-group text-center">
+                <div class = "fw-bold"> {{ g[0] }} </div>
+                <div> {{ g[1]|join(", ") }} </div>
               </div>
             </div>
-          {% endfor %}
-
-          {% for g in rem_groups %}
-            <div class = "row mb-2">
-              <div class = "col-12 px-1">
-                <div class = "solved-group text-center reveal">
-                  <div class = "fw-bold"> {{ g[0] }} </div>
-                  <div> {{ g[1]|join(", ") }} </div>
-                </div>
-              </div>
-            </div>
+          </div>
           {% endfor %}
 
           {% for row in rows %}
@@ -215,19 +200,13 @@
 
           <script>
             window.addEventListener("load", () => {
-              const rem = document.querySelectorAll(".solved-group.reveal");
-              let delay = 0;
+              let delay = 400;
               {% if anim == "rem" %}
-                for (let i = 0; i < rem.length; i++) {
-                  setTimeout(() => {
-                    rem[i].classList.add("animate");
-                  }, delay);
-                  delay += 500;
-                }
+                delay += ({{ solved_groups|length }} - {{ prev_sg }}) * 500;
               {% endif %}
               setTimeout(() => {
                 document.querySelector(".overlay").classList.add("overlay-show");
-              }, delay + 400);
+              }, delay);
             });
           </script>
 
@@ -256,6 +235,23 @@
       {% for g in groups %}
         <p><b>{{ g[0] }}</b>: {{ g[1] }}</p>
       {% endfor %} -->
+
+      {% if solved_groups %}
+        <script>
+          const solved = document.querySelectorAll(".solved-group");
+          {% if anim == "rem" %}
+            let delay = 0;
+            for (let i = {{ prev_sg }}; i < solved.length; i++) {
+              setTimeout(() => {
+                solved[i].classList.add("animate");
+              }, delay);
+              delay += 500;
+            }
+          {% elif anim == "last" %}
+            solved[solved.length - 1].classList.add("animate");
+          {% endif %}
+        </script>
+      {% endif %}
 
     </div>
 
