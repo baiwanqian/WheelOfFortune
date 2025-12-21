@@ -144,9 +144,7 @@
           <p class = "text-danger"> {{ error }} </p>
         {% endif %}
 
-        {% if msg %}
-          <p class = "fw-bold"> {{ msg }} </p>
-        {% endif %}
+        <p class = "fw-bold"> {{ msg }} </p>
 
         <form method='POST' action="/connections">
 
@@ -198,19 +196,30 @@
             {% endfor %}
           </div>
 
-          <div class = "d-flex justify-content-center gap-2 mt-4">
-            <input type="submit" value="Shuffle" name="shuffle" class = "button">
-            <input type="submit" value="Deselect All" name="deselect" class = "button">
-            <input type="submit" value="Submit" name="sub" class = "button">
-          </div>
+          {% if status == "playing" %}
+            <div class="d-flex justify-content-center gap-2 mt-4">
+              <input type="submit" value="Shuffle" name="shuffle" class="button">
+              <input type="submit" value="Deselect All" name="deselect" class="button">
+              <input type="submit" value="Submit" name="sub" class="button">
+            </div>
+          {% else %}
+            <button type="button" id="results" class="button mt-4"> View Results </button>
+          {% endif %}
 
         </form>
-
 
         {% if status != "playing" %}
 
           <div class="overlay">
             <div class = "overlay-body">
+
+              <button type="button" class="mb-3" id="overlayX"> x </button>
+
+              <script>
+                document.getElementById("overlayX")?.addEventListener("click", () => {
+                  document.querySelector(".overlay").classList.remove("overlay-show");
+                });
+              </script>
 
               <h1 class = "mb-3">
                 {% if status == "win" %}
@@ -252,6 +261,14 @@
               document.querySelector(".overlay").classList.add("overlay-show");
             }, delay + 400);
           {% endif %}
+        </script>
+      {% endif %}
+
+      {% if status != "playing" %}
+        <script>
+          document.getElementById("results").addEventListener("click", () => {
+            document.querySelector(".overlay").classList.add("overlay-show");
+          });
         </script>
       {% endif %}
 
