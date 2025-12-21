@@ -624,9 +624,10 @@ def ingredientsGuesserPage():
 
         picked = request.form.get("choice")
         if picked == session["correct"]:
-            msg = "Correct!"
+            add_xp(session["user_id"], 5)
+            msg = "Correct! You gained 5 XP!"
         else:
-            msg = "Incorrect. The ingredient was " + session["correct"]
+            msg = "Incorrect. The ingredient was " + session["correct"] + "."
         session["done"] = True
 
     return render_template("ingredients.html", image_url=session["image_url"], choices=session["choices"], msg=msg, done = session["done"])
