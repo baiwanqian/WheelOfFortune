@@ -74,10 +74,8 @@ lttrs = spellingBee.randNums()
 submitted = 0
 
 # Globals for rewards
-species = "chicken"
+species = "chicken" #values have no effect
 lev = 1
-animals = 0
-
 
 # HTML PAGES
 # LANDING PAGE
@@ -194,11 +192,11 @@ def profile():
 
 @app.route("/rewards", methods=["GET", "POST"])
 def rewards():
-    global species, lev, animals
-    # print("AAAAAAAAAAAAAAAA")
-    # print(request.method)
-    # print(request.form)
-    if not "user_id" in session:
+    global species, lev
+    #print("AAAAAAAAAAAAAAAA")
+    #print(request.method)
+    #print(request.form)
+    if not 'user_id' in session:
         return redirect("/login")
     else:
         if not request.form.get("action") == "h":
@@ -207,19 +205,19 @@ def rewards():
         if request.method == "POST":
             if request.form.get("action") == "h":
                 hatch(species, lev)
-                animals += 1
             return redirect("/rewards")
-        creatures = fetch("creatures", "user_id = ?", "*", (session["user_id"],))
+        creatures = fetch("creatures", "user_id = ?", "*", (session["user_id"],)) 
+
         level = fetch("users", "user_id = ?", "level", (session["user_id"],))[0][0]
-        print("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL")
-        return render_template(
-            "rewards.html",
-            creatures=creatures,
-            background_img=str(bg_file()),
-            species=species,
-            level=lev,
-            canHatch=animals < level,
-        )
+        a = fetch("creatures", "user_id = ?", "name", (session["user_id"],))
+        animals = len(a)
+        #print("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL")
+        #print(level)
+        return render_template("rewards.html", creatures = creatures, background_img = str(bg_file()), species = species, level = lev, canHatch = animals < level)
+
+
+
+
 
 headers = {'IDontKnowWhatTheNameIs' : 'WheelOfFortune'}
 
@@ -359,10 +357,18 @@ def wordlePage():
             elif any(g[0] == guess for g in guesses):
                 session["wordle_message"] = "Already guessed."
             else:
-                feedback = wordle.check_guess(guess, target)
-                guesses.append((guess, feedback))
-                session["wordle_guesses"] = guesses
-                session["wordle_message"] = ""
+                 feedback = wordle.check_guess(guess, target)
+                 guesses.append((guess, feedback))
+                 session['wordle_guesses'] = guesses
+                 session['wordle_message'] = ""
+
+                 if guess == target:
+                     session['wordle_status'] = 'won'
+                     session['wordle_message'] = "You Won! \n+30 xp!"
+                     add_xp(session["user_id"], 30)
+                 elif len(guesses) >= 6:
+                     session['wordle_status'] = 'lost'
+                     session['wordle_message'] = f"Game Over! Word was {target}"
 
                 if guess == target:
                     session["wordle_status"] = "won"
