@@ -431,7 +431,8 @@ def connectionsPage():
             "connections_mistakes",
             "connections_solved_groups",
             "connections_status",
-            "connections_xp"
+            "connections_xp",
+            "connections_anim"
         ]
         for r in reset:
             session.pop(r, None)
@@ -477,6 +478,7 @@ def connectionsPage():
                 session["connections_solved_groups"] = solved_groups
                 selected = []
                 session["connections_selected"] = selected
+                session["connections_anim"] = "last"
 
                 if len(session["connections_solved_groups"]) == 4:
                     session["connections_status"] = "win"
@@ -489,15 +491,31 @@ def connectionsPage():
                     session["connections_status"] = "lose"
                     add_xp(session["user_id"], 5)
                     session["connections_xp"] = 5
-                    session["connections_solved_groups"] = session["connections_all_groups"]
-                    session["connections_board"] = []
+
+                    session["connections_rem"] = groups[:]
+                    session["connections_anim"] = "rem"
             session["connections_selected"] = selected
     mistakes = session["connections_mistakes"]
     status = session["connections_status"]
     rows = [board[0:4], board[4:8], board[8:12], board[12:16]]
     xp_gain = session["connections_xp"]
-    return render_template("connections.html", status = status, board = board, groups = groups, selected = selected, msg = msg, error = error,  mistakes = mistakes, solved_groups = solved_groups, rows = rows, xp_gain = xp_gain)
 
+    anim = session.pop("connections_anim", None)
+    rem_groups = session.pop("connections_rem", [])
+    return render_template("connections.html",
+        status = status,
+        board = board,
+        groups = groups,
+        selected = selected,
+        msg = msg,
+        error = error,
+        mistakes = mistakes,
+        solved_groups = solved_groups,
+        rows = rows,
+        xp_gain = xp_gain,
+        anim = anim,
+        rem_groups = rem_groups
+    )
 
 @app.route("/spellingBee", methods=["GET", "POST"])
 def spellingBeePage():

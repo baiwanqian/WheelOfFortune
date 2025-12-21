@@ -63,20 +63,65 @@
 
       .overlay {
         position: fixed;
-        background: rgba(0, 0, 0, .6);
+        width: 100vw;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        background: rgba(0, 0, 0, .45);
         z-index: 999;
-        display: flex;
-        jusitfy-content: center;
+        display: none;
+        justify-content: center;
         align-items: center;
+      }
+
+      .overlay-show {
+        display: flex;
       }
 
       .overlay-body {
         background: white;
-        border-radius: 12px;
-        padding: 1.5rem;
-        max-wdith: 420px;
+        border-radius: 18px;
+        padding: 2rem;
+        max-width: 420px;
         text-align: center;
         box-shadow: 0 10px 30px;
+        animation: anim 0.35s ease-out;
+      }
+
+      .solved-group.animate {
+        animation: reveal 0.65s ease-out both;
+      }
+
+      .solved-group.reveal {
+        opacity: 0;
+      }
+
+      @keyframes anim {
+        0% {
+          transform: scale(0.8);
+          opacity: 0;
+        }
+        60% {
+          transform: scale(1.05);
+          opacity: 1;
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      @keyframes reveal {
+        0% {
+          transform: translateY(20px) scale(0.95);
+          opacity: 0;
+        }
+        60% {
+          transform: translateY(-4px) scale(1.02);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(0) scale(1);
+        }
       }
 
     </style>
@@ -110,14 +155,25 @@
         <form method='POST' action="/connections">
 
           {% for g in solved_groups %}
-          <div class = "row mb-2">
-            <div class = "col-12 px-1">
-              <div class = "solved-group text-center">
-                <div class = "fw-bold"> {{ g[0] }} </div>
-                <div> {{ g[1]|join(", ") }} </div>
+            <div class = "row mb-2">
+              <div class = "col-12 px-1">
+                <div class = "solved-group text-center">
+                  <div class = "fw-bold"> {{ g[0] }} </div>
+                  <div> {{ g[1]|join(", ") }} </div>
+                </div>
               </div>
             </div>
-          </div>
+          {% endfor %}
+
+          {% for g in rem_groups %}
+            <div class = "row mb-2">
+              <div class = "col-12 px-1">
+                <div class = "solved-group text-center reveal">
+                  <div class = "fw-bold"> {{ g[0] }} </div>
+                  <div> {{ g[1]|join(", ") }} </div>
+                </div>
+              </div>
+            </div>
           {% endfor %}
 
           {% for row in rows %}
@@ -156,24 +212,44 @@
 
 
         {% if status != "playing" %}
-        <div class="overlay">
-          <div class = "overlay-body">
 
-            <h1 class = "mb-3">
-              {% if status == "win" %}
-                You Win!
-              {% else %}
-                Game Over
+          <script>
+            window.addEventListener("load", () => {
+              const rem = document.querySelectorAll(".solved-group.reveal");
+              let delay = 0;
+              {% if anim == "rem" %}
+                for (let i = 0; i < rem.length; i++) {
+                  setTimeout(() => {
+                    rem[i].classList.add("animate");
+                  }, delay);
+                  delay += 500;
+                }
               {% endif %}
-            </h1>
-            <h2 class = "fw-bold mb-4"> +{{ xp_gain }} XP </h2>
+              setTimeout(() => {
+                document.querySelector(".overlay").classList.add("overlay-show");
+              }, delay + 400);
+            });
+          </script>
 
-            <form method = "POST" action = "/connections">
-              <input type="submit" value="Play Again" name="play_again" class="button">
-            </form>
+          <div class="overlay">
+            <div class = "overlay-body">
 
-          </div>
-      </div>
+              <h1 class = "mb-3">
+                {% if status == "win" %}
+                  You Win!
+                {% else %}
+                  Game Over
+                {% endif %}
+              </h1>
+              <h2 class = "fw-bold mb-4"> +{{ xp_gain }} XP </h2>
+
+              <form method = "POST" action = "/connections">
+                <input type="submit" value="Play Again" name="play_again" class="button">
+              </form>
+
+            </div>
+        </div>
+
       {% endif %}
 
       <!-- <h3>corretc groups check</h3>
