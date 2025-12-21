@@ -23,27 +23,27 @@
       </div>
     </nav>
 
-    <div class="main">
+    <div class="main text-center">
       <form method="POST" action="/ingredients">
-        <h1>Play Ingredients Guesser</h1>
-        <img src="{{image_url}}" />
-        <label for="input_ing">What is an ingredient in this meal?</label>
+        <h1 class = "mb-4">Play Ingredients Guesser</h1>
+        <img src="{{ image_url }}" class="img-fluid rounded mb-4" alt="Meal Image">
+        <h5 class="mb-3">Which ingredient is in this meal?</h5>
 
-          {% if msg %}
-            <p class="fw-bold">{{ msg }}</p>
-          {% endif %}
+        {% if msg %}
+          <p class="fw-bold">{{ msg }}</p>
+        {% endif %}
 
-          {% if not done %}
-            {% for c in choices %}
-              <button type="submit" name="choice" value="{{ c }}">
-                {{ c }}
-              </button>
-            {% endfor %}
-          {% else %}
-            <button type="submit" name="play_again">
-              Play Again
+        {% if not done %}
+          {% for c in choices %}
+            <button type="submit" name="choice" value="{{ c }}">
+              {{ c }}
             </button>
-          {% endif %}
+          {% endfor %}
+        {% else %}
+          <button type="submit" name="play_again" class = "btn btn-primary mt-3">
+            Play Again
+          </button>
+        {% endif %}
 
       </form>
     </div>
