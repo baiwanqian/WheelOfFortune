@@ -158,28 +158,26 @@ def profile():
 
 @app.route('/rewards', methods=["GET", "POST"])
 def rewards():
-    global species, lev, animals
+    #global species, lev, animals
     #print("AAAAAAAAAAAAAAAA")
     #print(request.method)
     #print(request.form)
     if not 'user_id' in session:
         return redirect("/login")
-    else:  
-        if not request.form.get("action") == "h":
+    species = None
+    lev = None
+    if request.method == "POST":
+        if request.form.get("action") == "h":
             species = random.choice(["chicken", "greenBird"])
             lev = 1
-        if request.method == "POST":
-            if request.form.get("action") == "h":
-                hatch(species, lev)
-                animals += 1  
-            return redirect("/rewards")
-        creatures = fetch("creatures", "user_id = ?", "*", (session["user_id"],)) 
-        level = fetch("users", "user_id = ?", "level", (session["user_id"],))[0][0]
-        print("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL")
-        return render_template("rewards.html", creatures = creatures, background_img = str(bg_file()), species = species, level = lev, canHatch = animals < level)
+            hatch(species, lev)
+        return redirect("/rewards")
 
-
-
+    creatures = fetch("creatures", "user_id = ?", "*", (session["user_id"],))
+    level = fetch("users", "user_id = ?", "level", (session["user_id"],))[0][0]
+    canHatch = (level % 5 == 0) and level > 0
+    print("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL")
+    return render_template("rewards.html", creatures = creatures, background_img = str(bg_file()), species = species, level = lev, canHatch = canHatch)
 
 
 headers = {'IDontKnowWhatTheNameIs' : 'WheelOfFortune'}
@@ -352,6 +350,7 @@ def connectionsPage():
         session["connections_mistakes"] = 4
         session["connections_solved_groups"] = []
         session["connections_status"] = "playing" # playing/win/lose
+        session["connections_xp"] = 0
     board = session["connections_board"]
     groups = session["connections_groups"]
     selected = session["connections_selected"]
@@ -363,7 +362,7 @@ def connectionsPage():
         # play again
         reset = [ "connections_board", "connections_groups", "connections_all_groups",
                   "connections_selected", "connections_error", "connections_mistakes",
-                  "connections_solved_groups", "connections_status"
+                  "connections_solved_groups", "connections_status", "connections_xp"
                 ]
         for r in reset:
             session.pop(r, None)
@@ -407,23 +406,28 @@ def connectionsPage():
                 # add to solved groups
                 solved_groups.append(correct)
                 session["connections_solved_groups"] = solved_groups
+                selected = []
+                session["connections_selected"] = selected
 
                 if len(session["connections_solved_groups"]) == 4:
                     session["connections_status"] = "win"
                     add_xp(session["user_id"], 30)
-                    msg = "yay"
+                    session["connections_xp"] = 30
             else:
                 session["connections_mistakes"] -= 1
                 msg = "Not a match"
                 if session["connections_mistakes"] <= 0:
                     session["connections_status"] = "lose"
+                    add_xp(session["user_id"], 5)
+                    session["connections_xp"] = 5
                     session["connections_solved_groups"] = session["connections_all_groups"]
-                    msg = "boo"
+                    session["connections_board"] = []
             session["connections_selected"] = selected
     mistakes = session["connections_mistakes"]
     status = session["connections_status"]
     rows = [board[0:4], board[4:8], board[8:12], board[12:16]]
-    return render_template("connections.html", status = status, board = board, groups = groups, selected = selected, msg = msg, error = error,  mistakes = mistakes, solved_groups = solved_groups, rows = rows)
+    xp_gain = session["connections_xp"]
+    return render_template("connections.html", status = status, board = board, groups = groups, selected = selected, msg = msg, error = error,  mistakes = mistakes, solved_groups = solved_groups, rows = rows, xp_gain = xp_gain)
 
 @app.route('/spellingBee', methods=["GET", "POST"])
 def spellingBeePage():

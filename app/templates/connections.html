@@ -61,6 +61,24 @@
         padding: 10px 15px;
       }
 
+      .overlay {
+        position: fixed;
+        background: rgba(0, 0, 0, .6);
+        z-index: 999;
+        display: flex;
+        jusitfy-content: center;
+        align-items: center;
+      }
+
+      .overlay-body {
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        max-wdith: 420px;
+        text-align: center;
+        box-shadow: 0 10px 30px;
+      }
+
     </style>
   </head>
 
@@ -91,57 +109,72 @@
 
         <form method='POST' action="/connections">
 
-        {% for g in solved_groups %}
-        <div class = "row mb-2">
-          <div class = "col-12 px-1">
-            <div class = "solved-group text-center">
-              <div class = "fw-bold"> {{ g[0] }} </div>
-              <div> {{ g[1]|join(", ") }} </div>
+          {% for g in solved_groups %}
+          <div class = "row mb-2">
+            <div class = "col-12 px-1">
+              <div class = "solved-group text-center">
+                <div class = "fw-bold"> {{ g[0] }} </div>
+                <div> {{ g[1]|join(", ") }} </div>
+              </div>
             </div>
           </div>
-        </div>
-        {% endfor %}
+          {% endfor %}
 
-        {% for row in rows %}
-          <div class = "row mb-2">
-            {% for w in row %}
-              <div class = "col-3 px-1">
-                <button type = "submit" value = "{{ w }}" name = "choice"
-                        class = "tile w-100 {% if w in selected %} tile-selected {% endif %}">
-                          <span style = "font-size:
-                                {% if w|length > 14 %} 0.75rem
-                                {% elif w|length > 10 %} 0.9rem
-                                {% else %} 1.1rem
-                                {% endif %};">
-                            {{ w }}
-                          </span>
-                </button>
-              </div>
+          {% for row in rows %}
+            <div class = "row mb-2">
+              {% for w in row %}
+                <div class = "col-3 px-1">
+                  <button type = "submit" value = "{{ w }}" name = "choice"
+                          class = "tile w-100 {% if w in selected %} tile-selected {% endif %}">
+                            <span style = "font-size:
+                                  {% if w|length > 14 %} 0.75rem
+                                  {% elif w|length > 10 %} 0.9rem
+                                  {% else %} 1.1rem
+                                  {% endif %};">
+                              {{ w }}
+                            </span>
+                  </button>
+                </div>
+              {% endfor %}
+            </div>
+          {% endfor %}
+
+          <div class = "d-flex mt-3 justify-content-center align-items-center gap-2">
+            <span class = "text-muted"> Mistakes Remaning: </span>
+            {% for i in range(mistakes) %}
+              <span class = "dot"></span>
             {% endfor %}
           </div>
-        {% endfor %}
 
-        <div class = "d-flex mt-3 justify-content-center align-items-center gap-2">
-          <span class = "text-muted"> Mistakes Remaning: </span>
-          {% for i in range(mistakes) %}
-            <span class = "dot"></span>
-          {% endfor %}
-        </div>
+          <div class = "d-flex justify-content-center gap-2 mt-4">
+            <input type="submit" value="Shuffle" name="shuffle" class = "button">
+            <input type="submit" value="Deselect All" name="deselect" class = "button">
+            <input type="submit" value="Submit" name="sub" class = "button">
+          </div>
 
-        <div class = "d-flex justify-content-center gap-2 mt-4">
-          <input type="submit" value="Shuffle" name="shuffle" class = "button">
-          <input type="submit" value="Deselect All" name="deselect" class = "button">
-          <input type="submit" value="Submit" name="sub" class = "button">
-        </div>
+        </form>
+
 
         {% if status != "playing" %}
-        <div class="d-flex justify-content-center mt-4">
-          <input type="submit" value="Play Again" name="play_again" class="button">
-        </div>
+        <div class="overlay">
+          <div class = "overlay-body">
+
+            <h1 class = "mb-3">
+              {% if status == "win" %}
+                You Win!
+              {% else %}
+                Game Over
+              {% endif %}
+            </h1>
+            <h2 class = "fw-bold mb-4"> +{{ xp_gain }} XP </h2>
+
+            <form method = "POST" action = "/connections">
+              <input type="submit" value="Play Again" name="play_again" class="button">
+            </form>
+
+          </div>
+      </div>
       {% endif %}
-
-
-      </form>
 
       <!-- <h3>corretc groups check</h3>
       {% for g in groups %}
