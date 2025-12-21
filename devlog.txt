@@ -151,12 +151,34 @@ Rewards:
   - added rewards styling
   - fixed a spelling bee error and implemented level variable
 
+christineC -- 2025-12-17 11:30
+Register:
+  - Add styling (same as login)
+Creatures:
+  - Modify creature image names and add more images to folder
+
 owenZ -- 2025-12-18 21:00
-- change wordle api to dicitonary
-- add hardcoded word bank becausen no random word generation from this api
+- change wordle api to dictionary
+- add hardcoded word bank because no random word generation from this api
+
+christineC -- 2025-12-19 6:50
+Creatures:
+  - Add random creature to creatures table upon hatch
+  - Add semi-functional creature animation when hatching
 
 naomiK -- 2025-12-20 00:30
 Rewards:
   - finished rewards js
   - added to rewards html
   - animals can now be hatched
+
+christineC -- 2025-12-21 9:54
+Connections:
+  - Fixed bugs
+  - Added JS animations to Connections
+  - Added results overlay upon completion
+Ingredients:
+  - Created method to find wrong ingredients
+  - Converted game to MCQ format
+  - Completed styling
+  - Implement experience gains and play again
