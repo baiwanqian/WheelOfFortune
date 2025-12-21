@@ -194,27 +194,32 @@ def profile():
 
 @app.route("/rewards", methods=["GET", "POST"])
 def rewards():
-    #global species, lev, animals
-    #print("AAAAAAAAAAAAAAAA")
-    #print(request.method)
-    #print(request.form)
-    if not 'user_id' in session:
+    global species, lev, animals
+    # print("AAAAAAAAAAAAAAAA")
+    # print(request.method)
+    # print(request.form)
+    if not "user_id" in session:
         return redirect("/login")
-    species = None
-    lev = None
-    if request.method == "POST":
-        if request.form.get("action") == "h":
+    else:
+        if not request.form.get("action") == "h":
             species = random.choice(["chicken", "greenBird"])
             lev = 1
-            hatch(species, lev)
-        return redirect("/rewards")
-
-    creatures = fetch("creatures", "user_id = ?", "*", (session["user_id"],))
-    level = fetch("users", "user_id = ?", "level", (session["user_id"],))[0][0]
-    canHatch = (level % 5 == 0) and level > 0
-    print("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL")
-    return render_template("rewards.html", creatures = creatures, background_img = str(bg_file()), species = species, level = lev, canHatch = canHatch)
-
+        if request.method == "POST":
+            if request.form.get("action") == "h":
+                hatch(species, lev)
+                animals += 1
+            return redirect("/rewards")
+        creatures = fetch("creatures", "user_id = ?", "*", (session["user_id"],))
+        level = fetch("users", "user_id = ?", "level", (session["user_id"],))[0][0]
+        print("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL")
+        return render_template(
+            "rewards.html",
+            creatures=creatures,
+            background_img=str(bg_file()),
+            species=species,
+            level=lev,
+            canHatch=animals < level,
+        )
 
 headers = {'IDontKnowWhatTheNameIs' : 'WheelOfFortune'}
 
