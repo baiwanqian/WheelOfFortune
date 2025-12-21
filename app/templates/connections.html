@@ -161,11 +161,22 @@
           </div>
           {% endfor %}
 
+          {% for g in rem %}
+            <div class="row mb-2">
+              <div class="col-12 px-1">
+                <div class="solved-group text-center">
+                  <div class="fw-bold">{{ g[0] }}</div>
+                  <div>{{ g[1]|join(", ") }}</div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+
           {% for row in rows %}
             <div class = "row mb-2">
               {% for w in row %}
                 <div class = "col-3 px-1">
-                  <button type = "submit" value = "{{ w }}" name = "choice"
+                  <button type = "submit" value = "{{ w }}" name = "choice" data-word = "{{ w }}"
                           class = "tile w-100 {% if w in selected %} tile-selected {% endif %}">
                             <span style = "font-size:
                                   {% if w|length > 14 %} 0.75rem
@@ -198,18 +209,6 @@
 
         {% if status != "playing" %}
 
-          <script>
-            window.addEventListener("load", () => {
-              let delay = 400;
-              {% if anim == "rem" %}
-                delay += ({{ solved_groups|length }} - {{ prev_sg }}) * 500;
-              {% endif %}
-              setTimeout(() => {
-                document.querySelector(".overlay").classList.add("overlay-show");
-              }, delay);
-            });
-          </script>
-
           <div class="overlay">
             <div class = "overlay-body">
 
@@ -236,19 +235,22 @@
         <p><b>{{ g[0] }}</b>: {{ g[1] }}</p>
       {% endfor %} -->
 
-      {% if solved_groups %}
+      {% if solved_groups or rem %}
         <script>
           const solved = document.querySelectorAll(".solved-group");
-          {% if anim == "rem" %}
+          {% if anim == "last" %}
+            solved[solved.length - 1].classList.add("animate");
+          {% elif anim == "rem" %}
             let delay = 0;
-            for (let i = {{ prev_sg }}; i < solved.length; i++) {
+            for (let i = {{ solved_groups|length }}; i < solved.length; i++) {
               setTimeout(() => {
                 solved[i].classList.add("animate");
               }, delay);
-              delay += 500;
+              delay += 700;
             }
-          {% elif anim == "last" %}
-            solved[solved.length - 1].classList.add("animate");
+            setTimeout(() => {
+              document.querySelector(".overlay").classList.add("overlay-show");
+            }, delay + 400);
           {% endif %}
         </script>
       {% endif %}

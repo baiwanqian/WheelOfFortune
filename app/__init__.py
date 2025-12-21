@@ -491,12 +491,12 @@ def connectionsPage():
                     session["connections_status"] = "lose"
                     add_xp(session["user_id"], 5)
                     session["connections_xp"] = 5
-                    session["connections_prev_SG"] = len(solved_groups)
-                    session["connections_solved_groups"] = session["connections_all_groups"]
-                    solved_groups = session["connections_solved_groups"]
 
-                    session["connections_board"] = []
                     session["connections_anim"] = "rem"
+                    session["connections_rem"] = groups[:]
+                    session["connections_board"] = []
+                    board = session["connections_board"]
+
             session["connections_selected"] = selected
     mistakes = session["connections_mistakes"]
     status = session["connections_status"]
@@ -504,7 +504,7 @@ def connectionsPage():
     xp_gain = session["connections_xp"]
 
     anim = session.pop("connections_anim", None)
-    prev_sg = session.pop("connections_prev_SG", None)
+    rem = session.pop("connections_rem", [])
     return render_template("connections.html",
         status = status,
         board = board,
@@ -517,7 +517,7 @@ def connectionsPage():
         rows = rows,
         xp_gain = xp_gain,
         anim = anim,
-        prev_sg = prev_sg
+        rem = rem
     )
 
 @app.route("/spellingBee", methods=["GET", "POST"])
