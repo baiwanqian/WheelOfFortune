@@ -44,7 +44,10 @@ def get_related_words(topic):
 
 # <---------- Connections Logic ---------->
 fallback_topics = [
-    "weather", "food", "color", "animal", "travel", "nature", "place", "movie"
+    "strong", "food", "color", "travel", "world", "movie", "fruit",
+    "consistent", "brave", "happy", "sad", "exam", "student",
+    "person", "enemy", "envious", "polite", "unique",
+    "entertainment", "persistent", "speedy", "stoic", "laugh"
 ]
 
 def build_group():
