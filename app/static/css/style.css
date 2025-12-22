@@ -17,6 +17,14 @@ html, body {
     padding: 0;
     height: 100%;
     width: 100%;
+    overflow-x: hidden;
+}
+
+.bg-image {
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .bee {
