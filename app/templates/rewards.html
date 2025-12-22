@@ -34,7 +34,7 @@
 
 
       <div class="op area col-3 border border-3 d-flex flex-column justify-content-center">
-              
+
 
           <img id="tp" class="topE egg z-2" src="/static/game_images/topE.png" alt="game">
 
@@ -113,6 +113,12 @@
       <div class="col-1"> </div>
 
     </div>
+
+    {% if active_creature %}
+    <div id="creature-buddy">
+      <img src="/static/creature_images/{{ active_creature.species }}_{{ active_creature.level }}.png" alt="creature">
+    </div>
+    {% endif %}
 
   </body>
 

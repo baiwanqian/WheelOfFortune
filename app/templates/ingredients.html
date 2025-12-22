@@ -67,6 +67,12 @@
 
       </form>
     </div>
+    
+    {% if active_creature %}
+    <div id="creature-buddy">
+      <img src="/static/creature_images/{{ active_creature.species }}_{{ active_creature.level }}.png" alt="creature">
+    </div>
+    {% endif %}
   </body>
 
   <footer></footer>

@@ -84,7 +84,7 @@ def homepage():
     if not "user_id" in session:
         return redirect("/login")
     else:
-        return render_template("home.html", background_img=str(bg_file()))
+        return render_template("home.html", background_img=str(bg_file()), active_creature=get_active_creature(session["user_id"]))
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -187,6 +187,7 @@ def profile():
         creatures=creatures,
         # background_img = "/static/background_images/cloudy_weather/OIP-657791057.jpeg"
         background_img=str(bg_file()),
+        active_creature=get_active_creature(session["user_id"])
     )
 
 
@@ -206,18 +207,27 @@ def rewards():
             if request.form.get("action") == "h":
                 hatch(species, lev)
             return redirect("/rewards")
-        creatures = fetch("creatures", "user_id = ?", "*", (session["user_id"],)) 
+        creatures = fetch("creatures", "user_id = ?", "*", (session["user_id"],))
 
         level = fetch("users", "user_id = ?", "level", (session["user_id"],))[0][0]
         a = fetch("creatures", "user_id = ?", "name", (session["user_id"],))
         animals = len(a)
         #print("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL")
         #print(level)
-        return render_template("rewards.html", creatures = creatures, background_img = str(bg_file()), species = species, level = lev, canHatch = animals < level)
+        return render_template("rewards.html", creatures = creatures, background_img = str(bg_file()), species = species, level = lev, canHatch = animals < level, active_creature=get_active_creature(session["user_id"]))
 
+@app.route("/activate_creature/<int:creature_id>")
+def activate_creature(creature_id):
+    if "user_id" not in session:
+        return redirect("/login")
 
-
-
+    db = get_db()
+    c = db.cursor()
+    c.execute("UPDATE creatures SET status = 'inactive' WHERE user_id = ?", (session["user_id"],))
+    c.execute("UPDATE creatures SET status = 'active' WHERE creature_id = ? AND user_id = ?", (creature_id, session["user_id"]))
+    db.commit()
+    db.close()
+    return redirect("/profile")
 
 headers = {'IDontKnowWhatTheNameIs' : 'WheelOfFortune'}
 
@@ -298,7 +308,12 @@ def bg_file():
     return path
 
 
-#
+def get_active_creature(user_id):
+    stuff = fetch("creatures", "user_id = ? AND status = 'active'", "*", (user_id,))
+    if stuff:
+        return stuff[0]
+    return None
+
 def add_xp(user_id, amount):
     cur = fetch("users", "user_id = ?", "xp", (user_id,))[0][0]
     newXP = cur + amount
@@ -316,6 +331,27 @@ def add_xp(user_id, amount):
         (
             (newXP // 50),
             user_id,
+        ),
+    )
+    db.commit()
+    db.close()
+
+def add_creature_xp(user_id, amount):
+    stuff = get_active_creature(user_id)
+    if not stuff:
+        return
+    creature_id = stuff["creature_id"]
+    cur = stuff["xp"]
+    newXP = cur + amount
+    newLevel = newXP // 30
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+    c.execute(
+        "UPDATE creatures SET xp = ?, level = ? WHERE creature_id = ?",
+        (
+            newXP,
+            newLevel,
+            creature_id,
         ),
     )
     db.commit()
@@ -366,6 +402,7 @@ def wordlePage():
                      session['wordle_status'] = 'won'
                      session['wordle_message'] = "You Won! \n+30 xp!"
                      add_xp(session["user_id"], 30)
+                     add_creature_xp(session["user_id"], 30)
                  elif len(guesses) >= 6:
                      session['wordle_status'] = 'lost'
                      session['wordle_message'] = f"Game Over! Word was {target}"
@@ -397,6 +434,7 @@ def wordlePage():
         status=session.get("wordle_status", "playing"),
         message=session.get("wordle_message", ""),
         keyboard_status=keyboard_status,
+        active_creature=get_active_creature(session["user_id"])
     )
 
 
@@ -486,6 +524,7 @@ def connectionsPage():
                 if len(session["connections_solved_groups"]) == 4:
                     session["connections_status"] = "win"
                     add_xp(session["user_id"], 30)
+                    add_creature_xp(session["user_id"], 30)
                     session["connections_xp"] = 30
             else:
                 session["connections_mistakes"] -= 1
@@ -493,6 +532,7 @@ def connectionsPage():
                 if session["connections_mistakes"] <= 0:
                     session["connections_status"] = "lose"
                     add_xp(session["user_id"], 5)
+                    add_creature_xp(session["user_id"], 5)
                     session["connections_xp"] = 5
 
                     session["connections_anim"] = "rem"
@@ -520,7 +560,8 @@ def connectionsPage():
         rows = rows,
         xp_gain = xp_gain,
         anim = anim,
-        rem = rem
+        rem = rem,
+        active_creature=get_active_creature(session["user_id"])
     )
 
 @app.route("/spellingBee", methods=["GET", "POST"])
@@ -573,6 +614,7 @@ def spellingBeePage():
         elif list(request.form.keys()) == ["sub2"]:  # submit score
             print(fetch("users", "user_id = ?", "xp", (session["user_id"],)))
             add_xp(session["user_id"], score)
+            add_creature_xp(session["user_id"], score)
             submitted += 1
             score = 0
             goodWords = []
@@ -586,6 +628,7 @@ def spellingBeePage():
         words=goodWords,
         score=score,
         able=(submitted == 3),
+        active_creature=get_active_creature(session["user_id"])
     )
 
 
@@ -623,12 +666,13 @@ def ingredientsGuesserPage():
         picked = request.form.get("choice")
         if picked == session["correct"]:
             add_xp(session["user_id"], 5)
+            add_creature_xp(session["user_id"], 5)
             msg = "Correct! You gained 5 XP!"
         else:
             msg = "Incorrect. The ingredient was " + session["correct"] + "."
         session["done"] = True
 
-    return render_template("ingredients.html", image_url=session["image_url"], choices=session["choices"], msg=msg, done = session["done"])
+    return render_template("ingredients.html", image_url=session["image_url"], choices=session["choices"], msg=msg, done = session["done"], active_creature=get_active_creature(session["user_id"]))
 
 def fetch(table, criteria, data, params=()):
     db = get_db()

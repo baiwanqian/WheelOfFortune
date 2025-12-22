@@ -43,14 +43,14 @@
 
 
       {% if able == False %}
-            
+
       <h1 class="hr z-0 text-center bg bg-secondary text-light"> Play Spelling Bee  </h1>
 
     </div>
 
 
     <h5 class = "z-0 text-center bg"> Be careful! You can only submit three scores per session!</h5>
-        
+
 
 
 
@@ -59,7 +59,7 @@
     {%endif%}
 
     <h5 class="text-center">{{ error|safe }}</h5>
-        
+
 
 
     <form method='POST' action="/spellingBee">
@@ -121,13 +121,18 @@
 
             </div>
         </div>
-        
+
       </form>
     </div>
 
     <br>
     {% endif %}
-
+    
+    {% if active_creature %}
+    <div id="creature-buddy">
+      <img src="/static/creature_images/{{ active_creature.species }}_{{ active_creature.level }}.png" alt="creature">
+    </div>
+    {% endif %}
 
   </body>
 
