@@ -200,7 +200,7 @@ def rewards():
         return redirect("/login")
     else:
         if not request.form.get("action") == "h":
-            species = random.choice(["chicken", "greenBird"])
+            species = random.choice(["chicken", "greenBird", "duck"])
             lev = 1
         if request.method == "POST":
             if request.form.get("action") == "h":
@@ -652,6 +652,8 @@ def hatch(s, l):
         rarity = "common"
     elif species == "greenBird":
         rarity = "uncommon"
+    elif species == "duck":
+        rarity = "rare"
     db = get_db()
     c = db.cursor()
     c.execute(
