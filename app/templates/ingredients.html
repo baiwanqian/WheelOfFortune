@@ -67,12 +67,16 @@
 
       </form>
     </div>
-    
+
     {% if active_creature %}
-    <div id="creature-buddy">
+    <div id="creature-buddy" onclick="creatureSpeak()">
       <img src="/static/creature_images/{{ active_creature.species }}_{{ active_creature.level }}.png" alt="creature">
+      <div id="creature-speech" class="hidden"></div>
     </div>
     {% endif %}
+
+    <script src="/static/js/creatureScript.js"></script>
+
   </body>
 
   <footer></footer>

@@ -42,7 +42,7 @@
 
         <div class="">
 
-          <div class="row text-center border-bottom mb-2">
+          <div class="row fw-semibold text-center border-bottom mb-2">
 
             <div class="col-3 ">Picture</div>
 
@@ -74,9 +74,7 @@
               {% if c.status == "active" %}
                 <span class="badge bg-success">Active</span>
               {% else %}
-                <a href="/activate_creature/{{ c.creature_id }}" class="btn btn-sm btn-outline-primary">
-                   Make Active
-                </a>
+                <a href="/activate_creature/{{ c.creature_id }}" class="badge bg-secondary text-decoration-none"> Inactive </a>
               {% endif %}
             </div>
 
@@ -93,10 +91,13 @@
     </div>
 
     {% if active_creature %}
-    <div id="creature-buddy">
+    <div id="creature-buddy" onclick="creatureSpeak()">
       <img src="/static/creature_images/{{ active_creature.species }}_{{ active_creature.level }}.png" alt="creature">
+      <div id="creature-speech" class="hidden"></div>
     </div>
     {% endif %}
+
+    <script src="/static/js/creatureScript.js"></script>
 
   </body>
 
