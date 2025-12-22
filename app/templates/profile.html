@@ -32,6 +32,13 @@
       <div class="op col-4 border border-3 p-3">
         <h5> Level: {{ level }} </h5>
         <h5> Experience: {{ xp }} </h5>
+
+        <div class="text-center mt-4">
+          <button class="btn btn-outline-dark" data-bs-toggle="offcanvas" data-bs-target="#archive">
+            View Creature Archive
+          </button>
+        </div>
+
       </div>
 
       <div class="col-1"></div>
@@ -50,7 +57,7 @@
 
             <div class="col-1 ">Level</div>
 
-            <div class="col-3 ">Rarity</div>
+            <div class="col-3">Rarity</div>
 
             <div class="col-2 ">Status</div>
 
@@ -68,7 +75,7 @@
 
               <div class="col-1">{{ c.level }}</div>
 
-              <div class="col-3"> {{ c.rarity }} </div>
+              <div class="col-3 text-capitalize"> {{ c.rarity }} </div>
 
               <div class="col-2">
               {% if c.status == "active" %}
@@ -90,6 +97,47 @@
 
     </div>
 
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="archive">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title">Creature Archive</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+      </div>
+
+      <div class="offcanvas-body">
+
+        {% set all_creatures = [
+          "chicken", "frog", "greenBird",
+          "blueBird", "turtle",
+          "panda", "nakedMoleRat",
+          "phoenix"
+        ] %}
+
+        {% for name in all_creatures %}
+         <div class="text-center mb-4">
+           <div class="fw-semibold text-capitalize mb-2"> {{ name }} </div>
+
+            <div class="d-flex justify-content-center gap-3">
+              {% for lvl in [1, 2, 3] %}
+                <img src="/static/creature_images/{{ name }}_{{ lvl }}.png" class="rounded
+                  {% if owned.get(name, 0) < lvl %} opacity-25 {% endif %}"
+                  style="width: 100px; height: auto;" title="Level {{ lvl }}"
+                >
+              {% endfor %}
+            </div>
+          </div>
+        {% endfor %}
+
+      </div>
+
+      <p class="text-muted small text-center">
+        Creature artwork attributed to
+        <a href="https://www.irasutoya.com/" target="_blank" class="text-decoration-none">
+          いらすとや (Irasutoya)
+        </a>
+      </p>
+
+    </div>
+
     <div id="loading-screen" class="hidden">
       <div class="wheel-container">
         <div class="wheel"></div>
@@ -104,6 +152,7 @@
     </div>
     {% endif %}
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/static/js/creatureScript.js"></script>
 
   </body>

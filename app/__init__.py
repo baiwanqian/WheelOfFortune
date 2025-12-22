@@ -179,6 +179,12 @@ def profile():
 
     # db.close()
 
+    owned = {}
+    for c in creatures:
+        s = c["species"]
+        lvl = c["level"]
+        owned[s] = max(owned.get(species, 0), lvl)
+
     return render_template(
         "profile.html",
         username=user[1],
@@ -187,7 +193,8 @@ def profile():
         creatures=creatures,
         # background_img = "/static/background_images/cloudy_weather/OIP-657791057.jpeg"
         background_img=str(bg_file()),
-        active_creature=get_active_creature(session["user_id"])
+        active_creature=get_active_creature(session["user_id"]),
+        owned = owned
     )
 
 
@@ -201,7 +208,7 @@ def rewards():
         return redirect("/login")
     else:
 
-        weights = {"common": 60, "rare": 25, "epic": 10, "legendary": 5}
+        weights = {"common": 60, "rare": 25, "epic": 13, "legendary": 2}
         creatures = {
             "common": ["chicken", "frog", "greenBird"],
             "rare": ["blueBird", "turtle"],
@@ -719,7 +726,7 @@ def hatch(s, l):
     c = db.cursor()
     c.execute(
         """INSERT INTO creatures (user_id, name, rarity, xp, level, species, status) VALUES (?, ?, ?, ?, ?, ?, ?)""",
-        (user_id, species.capitalize(), rarity, 0, level, species, "hatched"),
+        (user_id, species, rarity, 0, level, species, "hatched"),
     )
     db.commit()
     db.close()
