@@ -13,12 +13,12 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
       <div class="container">
-        <a class="navbar-brand" href="/">WheelOfFortune</a>
+        <a class="navbar-brand" href="/" onclick = "loadingScreen()">WheelOfFortune</a>
         <div class="navbar-nav ms-auto">
-          <a class="nav-link" href="/">Home</a>
-          <a class="nav-link" href="/profile">Profile</a>
-          <a class="nav-link" href="/rewards">Rewards</a>
-          <a class="nav-link" href="/logout">Logout</a>
+          <a class="nav-link" href="/" onclick = "loadingScreen()">Home</a>
+          <a class="nav-link" href="/profile" onclick = "loadingScreen()">Profile</a>
+          <a class="nav-link" href="/rewards" onclick = "loadingScreen()">Rewards</a>
+          <a class="nav-link" href="/logout" onclick = "loadingScreen()">Logout</a>
         </div>
       </div>
     </nav>
@@ -88,6 +88,13 @@
 
       <div class="col-1"> </div>
 
+    </div>
+
+    <div id="loading-screen" class="hidden">
+      <div class="wheel-container">
+        <div class="wheel"></div>
+        <p class="mt-3">Spinning the wheel...</p>
+      </div>
     </div>
 
     {% if active_creature %}

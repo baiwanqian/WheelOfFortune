@@ -259,3 +259,53 @@ h5{
 .hidden {
   display: none;
 }
+
+#loading-screen {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#loading-screen.hidden {
+  display: none;
+}
+
+.wheel-container {
+  text-align: center;
+  color: white;
+  font-size: 1.2rem;
+}
+
+.wheel {
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+
+  background: conic-gradient(
+    red 0deg 45deg,
+    yellow 90deg 135deg,
+    green 135deg 180deg,
+    cyan 180deg 225deg,
+    blue 225deg 270deg,
+    purple 270deg 315deg,
+    pink 315deg 360deg
+  );
+
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -25,3 +25,24 @@ function creatureSpeak() {
   }, 3000);
 
 }
+
+let timer = null;
+function loadingScreen() {
+  timer = setTimeout(() => {
+    const overlay = document.getElementById("loading-screen");
+    if (overlay) {
+      overlay.classList.remove("hidden");
+    }
+  }, 250);
+}
+
+window.addEventListener("pageshow", function() {
+  if (timer) {
+    clearTimeout(timer);
+    timer = null;
+  }
+  const overlay = document.getElementById("loading-screen");
+  if (overlay) {
+    overlay.classList.add("hidden");
+  }
+});
