@@ -8,7 +8,7 @@ Developer: Owen Zeng
 
 ## Description of Website:
 **Wheel of Fortune** is a collection of various interactive mini-games where users earn XP, level up, and collect virtual creatures. With each level, players can hatch eggs to obtain collectible creatures of different rarities.
-Players can select an active creature which will gain XP alongside the player and stay with them on screen, visually evolving as they level.
+Players can select an active creature which will gain XP alongside the player and stay with them on screen, visually evolving as they level up.
 
 ### Install Guide:
 1. **Clone the repository**: `git clone git@github.com:baiwanqian/WheelOfFortune.git`
