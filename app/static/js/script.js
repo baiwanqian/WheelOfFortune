@@ -1,3 +1,8 @@
+// Christine Chen, Naomi Kurian, Ethan Cheung, Owen Zeng
+// WheelOfFortune
+// SoftDev
+// P01 – ArRESTed Development
+// 2025-12-22
 
 const element = document.getElementById('bttm');
 const element2 = document.getElementById('tp');
@@ -21,7 +26,7 @@ form.addEventListener('submit', function(event) {
         if (reload === 2) {
             form.submit();
             moving = false;
-        
+
 
         }
     }
@@ -30,7 +35,7 @@ form.addEventListener('submit', function(event) {
         element.classList.remove('hatching');
     }
     void element.offsetWidth;
-    
+
 
     element.classList.add('hatching');
     element.addEventListener('animationend', onDone, { once: true });
@@ -48,5 +53,3 @@ form.addEventListener('submit', function(event) {
 
 
 });
-
-

@@ -1,8 +1,8 @@
-#Christine Chen, Naomi Kurian, Ethan Cheung, Owen Zeng
-#WheelOfFortune
-#SoftDev
-#P01 – ArRESTed Development
-#2025-12-02
+# Christine Chen, Naomi Kurian, Ethan Cheung, Owen Zeng
+# WheelOfFortune
+# SoftDev
+# P01 – ArRESTed Development
+# 2025-12-22
 
 import random
 import urllib.request
@@ -26,7 +26,7 @@ def randNums():
 def checkword(word, letter): #returns exists, ran smoothly, short, has letter
     print(letter)
     try:
-        key = get_key() 
+        key = get_key()
         short = False
         exists = False
         cant = ["abbreviation", "combining form", "geographical name", "trademark", "biographical name", "symbol", "slang", "proper noun", "abbrev", "latin phrase"] #words that eist but don't meet requirements for game
@@ -39,7 +39,7 @@ def checkword(word, letter): #returns exists, ran smoothly, short, has letter
         #print(l[1])
 
         for i in range(len(l)): #for each definition
-            d = l[i] #list of dictionaries  meta not in every dict 
+            d = l[i] #list of dictionaries  meta not in every dict
             print(d)
             if "meta" in d and (word.lower() in d["meta"]["stems"]): #"meta" is to check it's not a list of suggested words
                 if "fl" in d:
@@ -54,7 +54,7 @@ def checkword(word, letter): #returns exists, ran smoothly, short, has letter
     except Exception as e:
         print("An error occurred")
         return [False, False, False, False] #second value says if ran without error
-    return [exists, True, short, hasLetter] 
+    return [exists, True, short, hasLetter]
 
 
 #print(checkword("cat"))

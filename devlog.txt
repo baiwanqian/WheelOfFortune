@@ -177,7 +177,7 @@ Rewards:
 
 ethanC -- 2025-12-21 4:55
   - finished image showing on page
-  - changed input form 
+  - changed input form
 
 christineC -- 2025-12-21 9:54
 Connections:
@@ -191,5 +191,21 @@ Ingredients:
   - Implement experience gains and play again
 
 ethanC -- 2025-12-22 00:39
-  - replaced homepage image for ingredients 
+  - replaced homepage image for ingredients
   - fixed devlog stuff
+
+christineC -- 2025-12-22 6:40
+Connections:
+  - Persistent end screen
+  - Add one away and already guessed message
+  - Add message styling and animation
+Creatures:
+  - Implement creature leveling and rarity weights
+  - Add active creature and allow for creature to talk on click
+  - Add additional creatures
+  - Add creature archive on profile page
+Overall:
+  - Add loading screen
+  - Add favicon
+  - Modify styling
+  - Update Design Doc and README

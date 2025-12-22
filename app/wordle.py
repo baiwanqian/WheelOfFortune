@@ -1,3 +1,9 @@
+# Christine Chen, Naomi Kurian, Ethan Cheung, Owen Zeng
+# WheelOfFortune
+# SoftDev
+# P01 – ArRESTed Development
+# 2025-12-22
+
 import requests
 import json
 import random
@@ -13,14 +19,14 @@ def get_valid_words():
     # Since we can't get random words from M-W API, we use a static list for targets
     # This list can be expanded
     return [
-        "APPLE", "BEACH", "BRAIN", "BREAD", "BRUSH", "CHAIR", "CHEST", "CHORD", 
-        "CLICK", "CLOCK", "CLOUD", "DANCE", "DIARY", "DRINK", "DRIVE", "EARTH", 
-        "FEAST", "FIELD", "FRUIT", "GLASS", "GRAIN", "GRAPE", "GREEN", "GHOST", 
-        "HEART", "HOUSE", "JUICE", "LIGHT", "LEMON", "MELON", "MONEY", "MUSIC", 
-        "NIGHT", "OCEAN", "PARTY", "PHONE", "PIANO", "PILOT", "PLANE", "PLATE", 
-        "RADIO", "RIVER", "ROBOT", "SHIRT", "SHOES", "SMILE", "SNAKE", "SPACE", 
-        "SPOON", "STARS", "STORM", "SUGAR", "TABLE", "TASTE", "TIGER", "TOAST", 
-        "TOUCH", "TRAIN", "TRUCK", "VOICE", "WATCH", "WATER", "WHALE", "WORLD", 
+        "APPLE", "BEACH", "BRAIN", "BREAD", "BRUSH", "CHAIR", "CHEST", "CHORD",
+        "CLICK", "CLOCK", "CLOUD", "DANCE", "DIARY", "DRINK", "DRIVE", "EARTH",
+        "FEAST", "FIELD", "FRUIT", "GLASS", "GRAIN", "GRAPE", "GREEN", "GHOST",
+        "HEART", "HOUSE", "JUICE", "LIGHT", "LEMON", "MELON", "MONEY", "MUSIC",
+        "NIGHT", "OCEAN", "PARTY", "PHONE", "PIANO", "PILOT", "PLANE", "PLATE",
+        "RADIO", "RIVER", "ROBOT", "SHIRT", "SHOES", "SMILE", "SNAKE", "SPACE",
+        "SPOON", "STARS", "STORM", "SUGAR", "TABLE", "TASTE", "TIGER", "TOAST",
+        "TOUCH", "TRAIN", "TRUCK", "VOICE", "WATCH", "WATER", "WHALE", "WORLD",
         "WRITE", "YOUTH", "ADIEU", "STERN", "AUDIO", "VIDEO", "GAMES", "REACT",
         "FLASK", "HELLO", "PIZZA", "SUSHI"
     ]
@@ -30,18 +36,18 @@ def check_word_exists(word):
         key = get_key()
         if not key:
             print("No API key found")
-            return False 
+            return False
 
         cant = ["abbreviation", "combining form", "geographical name", "trademark", "biographical name", "symbol", "slang", "proper noun", "abbrev", "latin phrase"]
-        
+
         url = f'https://www.dictionaryapi.com/api/v3/references/collegiate/json/{word.lower()}?key={key}'
-        
+
         response = requests.get(url)
         data = response.json()
-        
+
         if not data:
             return False
-            
+
         # Check if it's a valid word entry
         for item in data:
             if isinstance(item, dict):
@@ -59,11 +65,11 @@ def check_word_exists(word):
                          return True
 
         return False
-        
+
     except Exception as e:
         print(f"Validation Error: {e}")
         return False
-                    
+
 def get_target_word(word_list):
     if not word_list:
         return "HELLO"

@@ -1,3 +1,9 @@
+// Christine Chen, Naomi Kurian, Ethan Cheung, Owen Zeng
+// WheelOfFortune
+// SoftDev
+// P01 – ArRESTed Development
+// 2025-12-22
+
 const lines = [
   "You got this!",
   "XP!!!",
