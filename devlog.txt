@@ -113,6 +113,9 @@ Connections:
   - Solved-group display
   - Button + mistakes formatting
 
+owenZ -- 2025-12-12 19:50
+- working on styling
+
 naomiK -- 2025-12-13 0:41
 Spelling Bee:
   - added more spelling bee styling
