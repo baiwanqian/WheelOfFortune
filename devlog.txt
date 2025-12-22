@@ -1,9 +1,9 @@
 ethanC -- 2025-11-26 11:00
-- removal of spaces located in team name in readme file
+  - removal of spaces located in team name in readme file
 
 ethanC -- 2025-12-01 11:00
-- creation of team flag
-- rename team flag
+  - creation of team flag
+  - rename team flag
 
 christineC -- 2025-12-02 23:15
 [INITIAL DD REVIEW]
@@ -21,38 +21,38 @@ Summary of DD Changes:
   - Ensured all APIs are present in KB and included usages for each one
 
 ethanC -- 2025-12-03 11:00
-- removal of header in devlog
+  - removal of header in devlog
 
 christineC -- 2025-12-04 7:30
-- Update README with Project Description
-- Update README for api keys
+  - Update README with Project Description
+  - Update README for api keys
 
 naomiK -- 2025-12-05 3:00
-- finished login/register functions
-- added register, home, and login html files
+  - finished login/register functions
+  - added register, home, and login html files
 
 christineC -- 2025-12-05 11:10
-- Update README with launch codes and install guide
+  - Update README with launch codes and install guide
 
 ethanC -- 2025-12-05 11:14
-- add os library for background photo
-- remove extra template folder
+  - add os library for background photo
+  - remove extra template folder
 
 owenZ -- 2025-12-05 11:46
-- working on wordle
-- added route to wordle page and html
+  - working on wordle
+  - added route to wordle page and html
 
 christineC -- 2025-12-08 4:40
-- Fixed bugs, imported request, and adjusted database logic
-- Updated register to directly start user session
-- Created basic templates and routes for all mini-games and profile page
-- Added navbar
+  - Fixed bugs, imported request, and adjusted database logic
+  - Updated register to directly start user session
+  - Created basic templates and routes for all mini-games and profile page
+  - Added navbar
 
 naomiK -- 2025-12-08 17:00
 Spelling Bee:
-- edited spelling bee functions and html
-- added buttons for differnt letters and jinja to display corresponding values
-- implemented Merriam Webster API (Christine added key) to check for existence of a word
+  - edited spelling bee functions and html
+  - added buttons for differnt letters and jinja to display corresponding values
+  - implemented Merriam Webster API (Christine added key) to check for existence of a word
 
 christineC -- 2025-12-09 7:20
 Connections
@@ -65,13 +65,13 @@ Connections + API Keys
 
 naomiK -- 2025-12-08 0:05
 Spelling Bee:
-- fixed bug with API returning empty lists
-- fixed bug with repeated submitted words
-- added catch and except to handle API errors
+  - fixed bug with API returning empty lists
+  - fixed bug with repeated submitted words
+  - added catch and except to handle API errors
 
 owenZ -- 2025-12-10 4:30
-- Made wordle logic
-- made wordle frontend
+  - Made wordle logic
+  - made wordle frontend
 
 christineC -- 2025-12-10 7:00
 Connections
@@ -81,13 +81,13 @@ Connections
 
 ethanC -- 2025-12-10 11:00
 Background in Profile
-- added background functionality
-- changed try-except to have a specific set of backgrounds
+  - added background functionality
+  - changed try-except to have a specific set of backgrounds
 
 naomiK -- 2025-12-11 0:32
 Spelling Bee:
-- added necessary letter requirement
-- added new buttons and generate new letters
+  - added necessary letter requirement
+  - added new buttons and generate new letters
 
 christineC -- 2025-12-11 6:50
 Connections:
@@ -108,10 +108,13 @@ Spelling Bee:
 
 christineC -- 2025-12-12 7:00
 Connections:
-- Implemented front-end for Connections, including:
+  - Implemented front-end for Connections, including:
   - Proper tile display with visual changes upon selection
   - Solved-group display
   - Button + mistakes formatting
+
+owenZ -- 2025-12-12 19:50
+  - working on styling
 
 naomiK -- 2025-12-13 0:41
 Spelling Bee:
@@ -158,8 +161,8 @@ Creatures:
   - Modify creature image names and add more images to folder
 
 owenZ -- 2025-12-18 21:00
-- change wordle api to dictionary
-- add hardcoded word bank because no random word generation from this api
+  - change wordle api to dictionary
+  - add hardcoded word bank because no random word generation from this api
 
 christineC -- 2025-12-19 6:50
 Creatures:
@@ -173,9 +176,8 @@ Rewards:
   - animals can now be hatched
 
 ethanC -- 2025-12-21 4:55
-- finished image showing on page
-- changed input form 
-
+  - finished image showing on page
+  - changed input form 
 
 christineC -- 2025-12-21 9:54
 Connections:
@@ -187,3 +189,7 @@ Ingredients:
   - Converted game to MCQ format
   - Completed styling
   - Implement experience gains and play again
+
+ethanC -- 2025-12-22 00:39
+  - replaced homepage image for ingredients 
+  - fixed devlog stuff
