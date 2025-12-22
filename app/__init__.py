@@ -456,7 +456,6 @@ def wordlePage():
         active_creature=get_active_creature(session["user_id"])
     )
 
-
 @app.route("/connections", methods=["GET", "POST"])
 def connectionsPage():
     if not "user_id" in session:
@@ -467,6 +466,7 @@ def connectionsPage():
         session["connections_groups"] = game["groups"]
         session["connections_all_groups"] = game["groups"][:]
         session["connections_selected"] = []
+        session["connections_guesses"] = []
         session["connections_error"] = game.get("error", "")
 
         session["connections_mistakes"] = 4
@@ -476,7 +476,7 @@ def connectionsPage():
     board = session["connections_board"]
     groups = session["connections_groups"]
     selected = session["connections_selected"]
-    error = session.get("connections_error", "")
+    error = session.pop("connections_error", "")
     msg = ""
     solved_groups = session["connections_solved_groups"]
 
@@ -492,7 +492,9 @@ def connectionsPage():
             "connections_solved_groups",
             "connections_status",
             "connections_xp",
-            "connections_anim"
+            "connections_anim",
+            "connections_rem",
+            "connections_guesses"
         ]
         for r in reset:
             session.pop(r, None)
@@ -517,13 +519,25 @@ def connectionsPage():
             session["connections_selected"] = selected
         # submit button
         elif "sub" in request.form and len(selected) == 4:
+            guess = ",".join(sorted(selected))
+            if guess in session["connections_guesses"]:
+                session["connections_error"] = "Already guessed!"
+                return redirect("/connections")
+            session["connections_guesses"].append(guess)
+
             solved = False
             correct = None
+            one_off = False
             for g in groups:
+                count = 0
                 match = True
                 for w in selected:
+                    if w in g[1]:
+                        count += 1
                     if w not in g[1]:
                         match = False
+                if count == 3:
+                    one_off = True
                 if match and len(g[1]) == 4:
                     solved = True
                     correct = g
@@ -542,13 +556,18 @@ def connectionsPage():
 
                 if len(session["connections_solved_groups"]) == 4:
                     session["connections_status"] = "win"
+                    msg = "Good job"
                     add_xp(session["user_id"], 30)
                     add_creature_xp(session["user_id"], 30)
                     session["connections_xp"] = 30
             else:
                 session["connections_mistakes"] -= 1
-                msg = "Not a match"
+                if one_off:
+                    msg = "One away..."
+                else:
+                    msg = "Not a match"
                 if session["connections_mistakes"] <= 0:
+                    msg = "Next time"
                     session["connections_status"] = "lose"
                     add_xp(session["user_id"], 5)
                     add_creature_xp(session["user_id"], 5)
@@ -566,7 +585,7 @@ def connectionsPage():
     xp_gain = session["connections_xp"]
 
     anim = session.pop("connections_anim", None)
-    rem = session.pop("connections_rem", [])
+    rem = session.get("connections_rem", [])
     return render_template("connections.html",
         status = status,
         board = board,

@@ -62,6 +62,20 @@
         padding: 10px 15px;
       }
 
+      .msg {
+        position: fixed;
+        top: 150px;
+        left: 50%;
+        z-index: 999;
+        background: #111;
+        color: white;
+        padding: 14px 28px;
+        border-radius: 999px;
+        font-size: 1rem;
+
+        animation: dis 2.5s ease forwards;
+      }
+
       .overlay {
         position: fixed;
         width: 100vw;
@@ -91,6 +105,25 @@
 
       .solved-group.animate {
         animation: reveal 0.65s ease-out both;
+      }
+
+
+      @keyframes dis {
+        0% {
+          opacity: 0;
+          transform: translate(-50%, -5px);
+        }
+        20% {
+          opacity: 1;
+          transform: translate(-50%, 0);
+        }
+        80% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+          transform: translate(-50%, -5px);
+        }
       }
 
       @keyframes anim {
@@ -140,12 +173,21 @@
 
     <div class="main text-center mt-3 mx-auto" style = "max-width: 630px;">
 
-        <p> Create four groups of four! </p>
+        <h1 class = "fw-bold"> Connections </h1>
+        <hr class = "mt-1 mb-4">
+        <p class = "text-muted mb-4"> Create four groups of four! </p>
+
         {% if error %}
-          <p class = "text-danger"> {{ error }} </p>
+          <div class = "msg">
+            {{ error }}
+          </div>
         {% endif %}
 
-        <p class = "fw-bold"> {{ msg }} </p>
+        {% if msg %}
+          <div class = "msg">
+            {{ msg }}
+          </div>
+        {% endif %}
 
         <form method='POST' action="/connections">
 
@@ -190,14 +232,14 @@
             </div>
           {% endfor %}
 
+          {% if status == "playing" %}
           <div class = "d-flex mt-3 justify-content-center align-items-center gap-2">
-            <span class = "text-muted"> Mistakes Remaning: </span>
+            <span class = "text-muted"> Mistakes Remaining: </span>
             {% for i in range(mistakes) %}
               <span class = "dot"></span>
             {% endfor %}
           </div>
 
-          {% if status == "playing" %}
             <div class="d-flex justify-content-center gap-2 mt-4">
               <input type="submit" value="Shuffle" name="shuffle" class="button">
               <input type="submit" value="Deselect All" name="deselect" class="button">
@@ -226,7 +268,7 @@
                 {% if status == "win" %}
                   You Win!
                 {% else %}
-                  Game Over
+                  Next Time!
                 {% endif %}
               </h1>
               <h2 class = "fw-bold mb-4"> +{{ xp_gain }} XP </h2>
