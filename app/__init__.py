@@ -200,8 +200,18 @@ def rewards():
     if not 'user_id' in session:
         return redirect("/login")
     else:
+
+        weights = {"common": 60, "rare": 25, "epic": 10, "legendary": 5}
+        creatures = {
+            "common": ["chicken", "frog", "greenBird"],
+            "rare": ["blueBird", "turtle"],
+            "epic": ["panda", "nakedMoleRat"],
+            "legendary": ["phoenix"]
+        }
+
         if not request.form.get("action") == "h":
-            species = random.choice(["chicken", "greenBird", "duck"])
+            rarity = random.choices(list(weights.keys()), weights = weights.values(), k = 1)[0]
+            species = random.choice(creatures[rarity])
             lev = 1
         if request.method == "POST":
             if request.form.get("action") == "h":
@@ -344,6 +354,8 @@ def add_creature_xp(user_id, amount):
     cur = stuff["xp"]
     newXP = cur + amount
     newLevel = newXP // 30
+    if newLevel > 3:
+        newLevel = 3
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
     c.execute(
@@ -692,12 +704,17 @@ def hatch(s, l):
     species = s
     level = l
 
-    if species == "chicken":
+    if species in ["chicken", "frog", "greenBird"]:
         rarity = "common"
-    elif species == "greenBird":
-        rarity = "uncommon"
-    elif species == "duck":
+    elif species in ["blueBird", "turtle"]:
         rarity = "rare"
+    elif species in ["panda", "nakedMoleRat"]:
+        rarity = "epic"
+    elif species == "phoenix":
+        rarity = "legendary"
+    else:
+        rarity = "common"
+
     db = get_db()
     c = db.cursor()
     c.execute(
