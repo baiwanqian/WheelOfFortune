@@ -1,13 +1,14 @@
-# ORIGIN by WheelofFortune
+# Wheel of Fortune by WheelOfFortune
 
-## Roster/Roles:
+## Roles/Roster:
 Project Manager: Christine Chen  
-Dev1: Naomi Kurian  
-Dev2: Ethan Cheung  
-Dev3: Owen Zeng
+Developer: Naomi Kurian  
+Developer: Ethan Cheung  
+Developer: Owen Zeng
 
 ## Description of Website:
-A collection of various mini-games where users play to earn XP and collect virtual creatures. Creatures hatch from eggs obtained from the user leveling up and can also be leveled up themselves.
+**Wheel of Fortune** is a collection of various interactive mini-games where users earn XP, level up, and collect virtual creatures. With each level, players can hatch eggs to obtain collectible creatures of different rarities.
+Players can select an active creature which will gain XP alongside the player and stay with them on screen, visually evolving as they level.
 
 ### Install Guide:
 1. **Clone the repository**: `git clone git@github.com:baiwanqian/WheelOfFortune.git`
@@ -21,4 +22,3 @@ A collection of various mini-games where users play to earn XP and collect virtu
 ### Launch Codes:
 1. **Navigate into app directory**: `cd app`
 2. **Run**:`python __init__.py`
-
